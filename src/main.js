@@ -8,7 +8,8 @@ Vue.use(VueRouter)
 
 const router = new VueRouter({
     routes,
-    linkExactActiveClass: "active"
+    linkExactActiveClass: "active",
+    mode: 'history'
 })
 new Vue({
     el: '#app',
