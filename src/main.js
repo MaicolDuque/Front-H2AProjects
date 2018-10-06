@@ -6,7 +6,10 @@ import routes from './routes'
 
 Vue.use(VueRouter)
 
-const router = new VueRouter({ routes })
+const router = new VueRouter({
+    routes,
+    linkExactActiveClass: "active"
+})
 new Vue({
     el: '#app',
     render: h => h(App),

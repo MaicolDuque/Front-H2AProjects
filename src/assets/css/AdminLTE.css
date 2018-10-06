@@ -92,6 +92,7 @@ body {
 }
 
 .content-wrapper {
+    height: 540px;
     min-height: 100%;
     background-color: #ecf0f5;
     z-index: 800;
@@ -5999,7 +6000,7 @@ table.text-center th {
     .right-side,
     .main-footer {
         margin-left: 0 !important;
-        min-height: 0 !important;
+        min-height: 100% !important;
         -webkit-transform: translate(0, 0) !important;
         -ms-transform: translate(0, 0) !important;
         -o-transform: translate(0, 0) !important;
