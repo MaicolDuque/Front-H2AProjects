@@ -5,6 +5,9 @@
  * This file is for demo purposes only.
  */
 
+
+
+
 $(document).ready(function() {
     console.log("ready!");
     $('#example1').DataTable()
@@ -17,6 +20,8 @@ $(document).ready(function() {
         'autoWidth': false
     })
 });
+
+
 $(function() {
 
 })
