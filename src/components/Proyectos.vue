@@ -1,5 +1,6 @@
 <template>
-     <div class="content-wrapper">
+    
+  <div class="content-wrapper">
             <div id="secciones" style="padding: 1% 4%; ">
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
@@ -244,3 +245,17 @@
             </div>
         </div>
 </template>
+
+
+<script>
+ export default {  
+    data () {
+        return {
+        msg: 'Welcome to Your Vue.js App'
+        }
+    },
+    mounted: function () {
+       $('.box').boxWidget('toggle')
+    }
+}
+</script>

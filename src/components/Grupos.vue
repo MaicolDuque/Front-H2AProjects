@@ -6,12 +6,7 @@
             <section class="content-header">
                 <h1>
                     Grupos
-                </h1>
-                <!-- <ol class="breadcrumb">
-                    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                    <li><a href="#">Tables</a></li>
-                    <li class="active">Data tables</li>
-                </ol> -->
+                </h1>                
             </section>
             <section class="content">
                         <div class="row">
@@ -155,5 +150,34 @@
 
             
     </div>
+
+    
     
 </template>
+
+<script>
+// $(document).ready(function() {
+//     console.log("Desde componente Grupos.vue");
+//     $('#tableGrupos').DataTable()
+//     // $('#example2').DataTable({
+//     //     'paging': true,
+//     //     'lengthChange': false,
+//     //     'searching': false,
+//     //     'ordering': true,
+//     //     'info': true,
+//     //     'autoWidth': false
+//     // })
+// });
+
+export default {  
+    data () {
+        return {
+        msg: 'Welcome to Your Vue.js App'
+        }
+    },
+    mounted: function () {
+        //this.$options.components.TreeFolderContents = require('./tree-folder-contents.vue')
+        $('#tableGrupos').DataTable()
+    }
+}
+</script>
