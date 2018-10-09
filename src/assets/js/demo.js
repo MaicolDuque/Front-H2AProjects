@@ -10,7 +10,7 @@
 
 $(document).ready(function() {
     console.log("ready!");
-    $('#example1').DataTable()
+    $('#tableUsuarios').DataTable()
     $('#example2').DataTable({
         'paging': true,
         'lengthChange': false,
