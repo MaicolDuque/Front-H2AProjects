@@ -3974,9 +3974,11 @@ table.text-center th {
 .login-box-body,
 .register-box-body {
     background: #fff;
-    padding: 20px;
+    padding: 68px 28px;
     border-top: 0;
     color: #666;
+    border-radius: 4px;
+    ;
 }
 
 .login-box-body .form-control-feedback,

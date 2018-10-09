@@ -1,10 +1,15 @@
 <template>
   <div id="app">
-    <MDheaders></MDheaders>
-    <MDmenuLeft></MDmenuLeft>
-    <router-view></router-view>
+    <div v-if="auth">
+      <MDheaders></MDheaders>
+      <MDmenuLeft></MDmenuLeft>
+      <router-view></router-view>
 
-    <MDfooter></MDfooter>
+      <MDfooter></MDfooter>
+    </div>
+    <div v-else>
+      <login></login>
+    </div>
   </div>
   
 </template>
@@ -14,13 +19,14 @@
 import MDheaders from "./components/layout/Header.vue"
 import MDfooter from "./components/layout/Footer.vue"
 import MDmenuLeft from "./components/layout/MenuLeft.vue"
+import Login from "./components/Login.vue"
 
 export default {
   name: 'app',
-  components: {MDheaders, MDfooter, MDmenuLeft},
+  components: {MDheaders, MDfooter, MDmenuLeft, Login},
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      auth: true
     }
   }
 }
