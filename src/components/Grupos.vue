@@ -1,6 +1,16 @@
 <template>
     <div class="content-wrapper">
+        <!-- <pre>
+{{usuarios}}
 
+        </pre> -->
+
+        <ul id="example-1">
+            <li v-for="item in usuarios">
+                {{ item.title }}
+            </li>
+        </ul>
+        
        
             <!-- Content Header (Page header) -->
             <section class="content-header">
@@ -169,15 +179,29 @@
 //     // })
 // });
 
+import {HTTP} from '../services/config.js';
+
 export default {  
+
     data () {
         return {
-        msg: 'Welcome to Your Vue.js App'
+            usuarios: []
         }
     },
+    created() {
+        HTTP.get(`posts`)
+            .then(response => {
+            this.usuarios = response.data
+        })
+        .catch(e => {
+        this.errors.push(e)
+        })
+    },    
     mounted: function () {
         //this.$options.components.TreeFolderContents = require('./tree-folder-contents.vue')
         $('#tableGrupos').DataTable()
     }
 }
+
 </script>
+
