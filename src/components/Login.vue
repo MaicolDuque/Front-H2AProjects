@@ -6,14 +6,14 @@
   <!-- /.login-logo -->
   <div class="login-box-body">
     <p class="login-box-msg">Sign in to start your session</p>
-
-    <form action="../../index2.html" method="post">
+    <div class="alert alert-danger" v-if="error">{{ error }}</div>
+    <form @submit.prevent="login">
       <div class="form-group has-feedback">
-        <input type="email" class="form-control" placeholder="Email">
+        <input v-model="email" type="email" class="form-control" placeholder="Email">
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input type="password" class="form-control" placeholder="Password">
+        <input v-model="password" type="password" class="form-control" placeholder="Password">
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
       <div class="row">
@@ -21,6 +21,10 @@
         <!-- /.col -->
         <div class="col-xs-4">
           <button type="submit" class="btn btn-primary btn-block btn-flat">Ingresar</button>
+        </div>
+
+        <div class="col-xs-4">
+          <button type="button" @click="loginFailed" class="btn btn-primary btn-block btn-flat">Ingresar</button>
         </div>
         <!-- /.col -->
       </div>
@@ -35,7 +39,54 @@
 </template>
 
 <script>
+import {HTTP} from '../services/config.js';
 export default {
+
+  data () {
+        return {
+            email: '',
+            password: '',
+            error: false
+        }
+  },
+
+  methods: {
+    login() {
+      // console.log(this.email)
+      // console.log(this.password)
+      var credentials = {
+          email: this.email,
+          password: this.password
+        }
+      HTTP.post('auth_login', credentials)
+        .then(response => {
+            this.loginSuccessful(response)
+            console.log(response)
+        })
+        .catch(e => {
+          this.loginFailed()
+          console.log("error")
+        })
+    },
+    loginSuccessful (req) {
+      console.log("acaaa")
+      if (!req.data.token) {
+        this.loginFailed()
+        return
+      }
+
+      localStorage.token = req.data.token
+      this.error = false
+
+      this.$router.push('/usuarios')
+    },
+
+    loginFailed () {
+      this.error = 'Login failed!'
+      delete localStorage.token
+    }
+  }
+    
     
 }
 </script>

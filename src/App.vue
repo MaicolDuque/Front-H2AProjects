@@ -1,15 +1,10 @@
 <template>
-  <div id="app">
-    <div v-if="auth">
+  <div id="app">  
       <MDheaders></MDheaders>
-      <MDmenuLeft></MDmenuLeft>
+      <MDmenuLeft></MDmenuLeft> 
+      <login></login>   
       <router-view></router-view>
-
-      <MDfooter></MDfooter>
-    </div>
-    <div v-else>
-      <login></login>
-    </div>
+      <MDfooter></MDfooter>  
   </div>
   
 </template>

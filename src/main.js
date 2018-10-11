@@ -2,15 +2,13 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import App from './App.vue'
 
-import routes from './routes'
+import router from './routes'
+import VueAxios from 'vue-axios'
 
-Vue.use(VueRouter)
+import http from './services/config.js'
 
-const router = new VueRouter({
-    routes,
-    linkExactActiveClass: "active",
-    mode: 'history'
-})
+Vue.use(VueAxios, http)
+
 new Vue({
     el: '#app',
     render: h => h(App),
