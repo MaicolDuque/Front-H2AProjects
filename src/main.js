@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from './store'
 import App from './App.vue'
 
 import router from './routes'
@@ -12,5 +13,6 @@ Vue.use(VueAxios, http)
 new Vue({
     el: '#app',
     render: h => h(App),
+    store,
     router
 })

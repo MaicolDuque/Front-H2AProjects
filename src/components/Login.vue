@@ -40,6 +40,7 @@
 
 <script>
 import {HTTP} from '../services/config.js';
+
 export default {
 
   data () {
@@ -77,6 +78,7 @@ export default {
 
       localStorage.token = req.data.token
       this.error = false
+      this.$store.state.authenticate = true
 
       this.$router.push('/usuarios')
     },
@@ -86,6 +88,7 @@ export default {
       delete localStorage.token
     }
   }
+
     
     
 }

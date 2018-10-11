@@ -1,10 +1,13 @@
 <template>
   <div id="app">  
-      <MDheaders></MDheaders>
-      <MDmenuLeft></MDmenuLeft> 
-      <login></login>   
-      <router-view></router-view>
-      <MDfooter></MDfooter>  
+      <div v-if="isAuth">
+        <MDheaders></MDheaders>
+        <MDmenuLeft></MDmenuLeft> 
+        <router-view></router-view>
+        <MDfooter></MDfooter>  
+      </div>  
+
+      <login v-else></login>   
   </div>
   
 </template>
@@ -21,7 +24,13 @@ export default {
   components: {MDheaders, MDfooter, MDmenuLeft, Login},
   data () {
     return {
-      auth: true
+      auth: false
+    }
+  },
+
+  computed: {
+    isAuth() {
+      return this.$store.state.authenticate
     }
   }
 }
