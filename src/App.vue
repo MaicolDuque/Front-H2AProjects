@@ -28,6 +28,15 @@ export default {
     }
   },
 
+  created () {
+    if(localStorage.token) {
+      this.$store.state.authenticate = true      
+      this.$store.commit('addUser', {name: localStorage.user})
+    }
+
+      
+  },
+
   computed: {
     isAuth() {
       return this.$store.state.authenticate

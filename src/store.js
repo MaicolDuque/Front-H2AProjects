@@ -5,20 +5,25 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
     state: {
-        nombre: 'Maicol Duque',
+        user: {},
         authenticate: false
     },
 
     getters: {
         isAuthenticated(state) {
             return `${state.authenticate}`
-        }
+        },
+
     },
 
     mutations: {
-        setAthenticate(state) {
-            state.authenticate = true
+        setAthenticate(state, valor = false) {
+            state.authenticate = valor
+        },
+        addUser(state, infoUser) {
+            state.user = infoUser
         }
+
     },
 
     actions: {

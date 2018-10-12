@@ -69,23 +69,27 @@ export default {
           console.log("error")
         })
     },
-    loginSuccessful (req) {
-      console.log("acaaa")
+    loginSuccessful (req) {      
       if (!req.data.token) {
         this.loginFailed()
         return
       }
-
+      console.log(req.data.user)
+      let us = req.data.user
       localStorage.token = req.data.token
+      localStorage.user  = req.data.user
       this.error = false
-      this.$store.state.authenticate = true
+      this.$store.commit('setAthenticate', true)
+      this.$store.commit('addUser', {name: req.data.user})
 
-      this.$router.push('/usuarios')
+      this.$router.push('/')
     },
 
     loginFailed () {
       this.error = 'Login failed!'
+      this.$store.commit('setAthenticate', false)
       delete localStorage.token
+      this.$router.push('/')
     }
   }
 

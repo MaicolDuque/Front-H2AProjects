@@ -194,7 +194,7 @@ export default {
             this.usuarios = response.data
         })
         .catch(e => {
-        this.errors.push(e)
+        // this.errors.push(e)
         })
     },    
     mounted: function () {
