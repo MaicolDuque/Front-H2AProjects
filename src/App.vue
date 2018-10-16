@@ -31,10 +31,8 @@ export default {
   created () {
     if(localStorage.token) {
       this.$store.state.authenticate = true      
-      this.$store.commit('addUser', {name: localStorage.user})
+      this.$store.commit('addUser', JSON.parse(localStorage.user))
     }
-
-      
   },
 
   computed: {

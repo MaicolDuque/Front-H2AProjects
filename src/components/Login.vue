@@ -62,7 +62,7 @@ export default {
       HTTP.post('auth_login', credentials)
         .then(response => {
             this.loginSuccessful(response)
-            console.log(response)
+            // console.log(response)
         })
         .catch(e => {
           this.loginFailed()
@@ -74,13 +74,16 @@ export default {
         this.loginFailed()
         return
       }
-      console.log(req.data.user)
+      // console.log(req.data.user)
+
       let us = req.data.user
       localStorage.token = req.data.token
-      localStorage.user  = req.data.user
+      localStorage.user  = JSON.stringify(req.data.user)
+      // localStorage.user  = req.data.user
+     
       this.error = false
       this.$store.commit('setAthenticate', true)
-      this.$store.commit('addUser', {name: req.data.user})
+      this.$store.commit('addUser', req.data.user)
 
       this.$router.push('/')
     },

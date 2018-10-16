@@ -75,7 +75,7 @@
 export default {
     data () {
         return {
-           // userName: ''
+           nameUser: ''
         }
     },
     methods: {
@@ -89,13 +89,13 @@ export default {
     },
 
     computed: {
-        userName() {
+        userName() {               
             return this.$store.state.user.name
         }
     },
 
     mounted: function () {
-       this.userName()
+       //this.userName()
     }
 
 }
