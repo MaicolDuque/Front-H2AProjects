@@ -2077,6 +2077,7 @@ a:focus {
 .box-header .box-title {
     display: inline-block;
     font-size: 18px;
+    padding-left: 28px;
     margin: 0;
     line-height: 1;
 }
@@ -2089,7 +2090,7 @@ a:focus {
 
 .box-header>.box-tools {
     position: absolute;
-    right: 10px;
+    /* right: 10px; */
     top: 5px;
 }
 
