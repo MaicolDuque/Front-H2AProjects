@@ -5,19 +5,19 @@
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
                     <div class="row">
-                        <div class="col-xs-12 col-md-6">
+                        <div class="col-xs-8 col-md-8">
                             <h1>
                                 Proyecto 1
                             </h1>
 
                         </div>
-                        <div class="col-xs-12 col-md-6" style="padding-top: 1.9em;">
-                            <div class="col-md-6">
+                        <div class="col-xs-8 col-md-4" style="padding-top: 1.9em;">
+                            <!-- <div class="col-md-6">
                                 <button type="button" class="btn btn-block btn-info">Agregar tarea</button>
-                            </div>
-                            <div class="col-md-6">
+                            </div> -->
+                            
                                 <button type="button" class="btn btn-block btn-info">Agregar sección</button>
-                            </div>
+                            
                         </div>
 
                     </div>
@@ -30,6 +30,52 @@
 
                 <!-- Main content -->
                 <section class="content">
+                    <div class="modal fade" id="modal-default">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title">Editar sección</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="box box-primary">
+                                        <div class="box-header with-border">
+                                        <h3 class="box-title">Quick Example</h3>
+                                        </div>
+                                        <!-- /.box-header -->
+                                        <!-- form start -->
+                                        <form role="form">
+                                        <div class="box-body">
+                                            <div class="form-group">
+                                            <label for="exampleInputEmail1">Email address</label>
+                                            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+                                            </div>
+                                            <div class="form-group">
+                                            <label for="exampleInputPassword1">Password</label>
+                                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                                            </div>
+                                            
+                                        </div>
+                                        <!-- /.box-body -->
+
+                                        <div class="box-footer">
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                        </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </div>
+                            <!-- /.modal-content -->
+                        </div>
+                    <!-- /.modal-dialog -->
+                    </div>
+
+
                     <div class="row">
                         <div class="col-md-12">
                             <div class="row">
@@ -44,6 +90,7 @@
                                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                                                 <!-- <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button> -->
                                             </div>
+                                            <i class="fa fa-pencil-square-o editarSeccion" data-toggle="modal" data-target="#modal-default" aria-hidden="true"></i>
                                         </div>
                                         <!-- /.box-header -->
                                         <div class="box-body">
@@ -121,8 +168,8 @@
                                         </div>
                                         <!-- /.box-body -->
                                         <div class="box-footer clearfix">
-                                            <a href="javascript:void(0)" class="btn btn-sm btn-info btn-flat pull-left">Place New Order</a>
-                                            <a href="javascript:void(0)" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a>
+                                            <a href="javascript:void(0)" class="btn btn-sm btn-info btn-flat pull-left">Agregar tarea</a>
+                                            <!-- <a href="javascript:void(0)" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a> -->
                                         </div>
                                         <!-- /.box-footer -->
                                     </div>
@@ -132,9 +179,8 @@
                                 </div>
                                 <!-- /.col -->
                             </div>
-                            <!-- /.row -->
-
-
+                          
+        
                             <div class="row">
                                 <div class="col-xs-12 ">
 
@@ -147,6 +193,7 @@
                                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                                                 <!-- <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button> -->
                                             </div>
+                                            <i class="fa fa-pencil-square-o editarSeccion" aria-hidden="true"></i>
                                         </div>
                                         <!-- /.box-header -->
                                         <div class="box-body">
@@ -235,11 +282,10 @@
                                 </div>
                                 <!-- /.col -->
                             </div>
-                            <!-- /.row -->
-                        </div>
-
+                            <!-- /.row -->                           
+                        </div>                        
                     </div>
-
+                    
                 </section>
                 <!-- /.content -->
             </div>

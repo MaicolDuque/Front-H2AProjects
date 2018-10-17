@@ -2082,6 +2082,11 @@ a:focus {
     line-height: 1;
 }
 
+.editarSeccion {
+    float: right;
+    cursor: pointer;
+}
+
 .box-header>.fa,
 .box-header>.glyphicon,
 .box-header>.ion {

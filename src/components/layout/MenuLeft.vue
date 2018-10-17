@@ -15,6 +15,7 @@
                     <!-- <router-link :to="{name: 'proyectos'}" tag="li"><a><i class="fa fa-circle-o text-red"></i>Proyecto 11</a></router-link>                                                             -->
                     <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Proyecto 2</span></a></li>
                     <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Proyecto 3</span></a></li>
+                 
                 </ul>
             </section>
             <!-- /.sidebar -->
