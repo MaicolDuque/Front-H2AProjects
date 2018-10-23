@@ -1,19 +1,13 @@
 
 <template>
-  
+ 
     <div class="content-wrapper">
 
-       
-            <!-- Content Header (Page header) -->
+        {{allUsers}}          
             <section class="content-header">
                 <h1>
                     Usuarios
-                </h1>
-                <!-- <ol class="breadcrumb">
-                    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                    <li><a href="#">Tables</a></li>
-                    <li class="active">Data tables</li>
-                </ol> -->
+                </h1>               
             </section>
             <section class="content">
                         <div class="row">
@@ -32,109 +26,16 @@
                                                 <th>Ver detalles</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>Trident</td>
-                                                <td>Internet Explorer 4.0
-                                                </td>
-                                                <td><span class="label label-success">Activo</span></td>
+                                        <tbody v-for="user in allUsers">
+                                            <tr >
+                                                <td>{{ user.name }}</td>
+                                                <td>{{ user.email }}</td>
+                                                <td v-if="user.state"><span class="label label-success">Activo</span></td>
+                                                <td v-else><span class="label label-danger">Inactivo</span></td>
                                                 <td> 4</td>
                                                 <td>X</td>
                                             </tr>
-                                            <tr>
-                                                <td>Trident</td>
-                                                <td>Internet Explorer 5.0
-                                                </td>
-                                                <td><span class="label label-success">Activo</span></td>
-                                                <td>5</td>
-                                                <td>C</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Trident</td>
-                                                <td>Internet Explorer 5.5
-                                                </td>
-                                                <td><span class="label label-success">Activo</span></td>
-                                                <td>5.5</td>
-                                                <td>A</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Trident</td>
-                                                <td>Internet Explorer 6
-                                                </td>
-                                                <td><span class="label label-danger">Inactivo</span></td>
-                                                <td>6</td>
-                                                <td>A</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Trident</td>
-                                                <td>Internet Explorer 7</td>
-                                                <td>Win XP SP2+</td>
-                                                <td>7</td>
-                                                <td>A</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Trident</td>
-                                                <td>AOL browser (AOL desktop)</td>
-                                                <td>Win XP</td>
-                                                <td>6</td>
-                                                <td>A</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Gecko</td>
-                                                <td>Firefox 1.0</td>
-                                                <td><span class="label label-danger">Inactivo</span> / OSX.2+</td>
-                                                <td>1.7</td>
-                                                <td>A</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Gecko</td>
-                                                <td>Firefox 1.5</td>
-                                                <td><span class="label label-danger">Inactivo</span> / OSX.2+</td>
-                                                <td>1.8</td>
-                                                <td>A</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Gecko</td>
-                                                <td>Firefox 2.0</td>
-                                                <td><span class="label label-danger">Inactivo</span> / OSX.2+</td>
-                                                <td>1.8</td>
-                                                <td>A</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Gecko</td>
-                                                <td>Firefox 3.0</td>
-                                                <td>Win 2k+ / OSX.3+</td>
-                                                <td>1.9</td>
-                                                <td>A</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Gecko</td>
-                                                <td>Camino 1.0</td>
-                                                <td>OSX.2+</td>
-                                                <td>1.8</td>
-                                                <td>A</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Gecko</td>
-                                                <td>Camino 1.5</td>
-                                                <td>OSX.3+</td>
-                                                <td>1.8</td>
-                                                <td>A</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Gecko</td>
-                                                <td>Netscape 7.2</td>
-                                                <td><span class="label label-success">Activo</span> / Mac OS 8.6-9.2</td>
-                                                <td>1.7</td>
-                                                <td>A</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Gecko</td>
-                                                <td>Netscape Browser 8</td>
-                                                <td>Win 98SE+</td>
-                                                <td>1.7</td>
-                                                <td>A</td>
-                                            </tr>
+                                            
 
                                         </tbody>
                                         <tfoot>
@@ -166,11 +67,31 @@
  export default {  
     data () {
         return {
-        msg: 'Welcome to Your Vue.js App'
+            msg: 'Welcome to Your Vue.js App',
+            users: {}
         }
     },
+    created () {       
+        this.returnAllUsers()                    
+    },
     mounted: function () {
-        $('#tableUsuarios').DataTable()
-    }
+        $( document ).ready(function() {
+            $('#tableUsuarios').DataTable()
+            //console.log( "ready!" );
+        });
+    },
+
+    methods: {
+        returnAllUsers () {   //Hacer llamado a la API que retorne total usuarios         
+            this.$store.dispatch('returnUsers')
+                .then(() => console.log('Track loaded...'))
+        }
+    },
+    computed: {
+        allUsers () {
+            return  this.$store.state.allUsers
+        }
+    },
+
 }
 </script>

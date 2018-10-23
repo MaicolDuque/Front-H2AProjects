@@ -6,7 +6,7 @@ import App from './App.vue'
 import router from './routes'
 import VueAxios from 'vue-axios'
 
-import http from './services/config.js'
+import { http } from './services/config.js'
 
 Vue.use(VueAxios, http)
 

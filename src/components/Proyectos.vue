@@ -1,6 +1,6 @@
 <template>
     
-  <div class="content-wrapper">
+        <div class="content-wrapper" style="position: relative">
             <div id="secciones" style="padding: 1% 4%; ">
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
@@ -21,60 +21,59 @@
                         </div>
 
                     </div>
-                    <!-- <ol class="breadcrumb">
-                    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                    <li><a href="#">Tables</a></li>
-                    <li class="active">Data tables</li>
-                </ol> -->
+                    
                 </section>
 
                 <!-- Main content -->
-                <section class="content">
-                    <div class="modal fade" id="modal-default">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span></button>
-                                    <h4 class="modal-title">Editar sección</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="box box-primary">
-                                        <div class="box-header with-border">
-                                        <h3 class="box-title">Quick Example</h3>
-                                        </div>
-                                        <!-- /.box-header -->
-                                        <!-- form start -->
-                                        <form role="form">
-                                        <div class="box-body">
-                                            <div class="form-group">
-                                            <label for="exampleInputEmail1">Email address</label>
-                                            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
-                                            </div>
-                                            <div class="form-group">
-                                            <label for="exampleInputPassword1">Password</label>
-                                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                                            </div>
+                <section class="content" style="position: relative">
+                    <div class="row">
+                        <div class="modal fade" id="modal-default">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title">Editar sección</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="box box-primary">
+                                        
+                                            <h3 class="box-title">Quick Example</h3>
                                             
-                                        </div>
-                                        <!-- /.box-body -->
+                                            <!-- /.box-header -->
+                                            <!-- form start -->
+                                            <form role="form">
+                                            <div class="box-body">
+                                                <div class="form-group">
+                                                <label for="exampleInputEmail1">Email address</label>
+                                                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+                                                </div>
+                                                <div class="form-group">
+                                                <label for="exampleInputPassword1">Password</label>
+                                                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                                                </div>
+                                                
+                                            </div>
+                                            <!-- /.box-body -->
 
-                                        <div class="box-footer">
-                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                            <div class="box-footer">
+                                                <button type="submit" class="btn btn-primary">Submit</button>
+                                            </div>
+                                            </form>
                                         </div>
-                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary">Save changes</button>
                                     </div>
                                 </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Save changes</button>
-                                </div>
+                                <!-- /.modal-content -->
                             </div>
-                            <!-- /.modal-content -->
+                        <!-- /.modal-dialog -->
                         </div>
-                    <!-- /.modal-dialog -->
-                    </div>
+                    
 
+                    </div>
 
                     <div class="row">
                         <div class="col-md-12">
@@ -90,7 +89,7 @@
                                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                                                 <!-- <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button> -->
                                             </div>
-                                            <i class="fa fa-pencil-square-o editarSeccion" data-toggle="modal" data-target="#modal-default" aria-hidden="true"></i>
+                                            <i class="fa fa-pencil-square-o editarSeccion" data-toggle="modal" data-target="#modal-default" aria-hidden="false"></i>
                                         </div>
                                         <!-- /.box-header -->
                                         <div class="box-body">
@@ -106,7 +105,7 @@
                                                     </thead>
                                                     <tbody>
                                                         <tr>
-                                                            <td><a href="pages/examples/invoice.html">OR9842</a></td>
+                                                            <td @click="editarTarea" style="cursor: pointer" >OR9842</td>
                                                             <td>Call of Duty IV</td>
                                                             <td><span class="label label-success">Shipped</span></td>
                                                             <td>
@@ -289,7 +288,38 @@
                 </section>
                 <!-- /.content -->
             </div>
+
+
+
+            <div id="contentEditar" style="position: fixed; width: 50%; height: 100%; top: 0; right: -50%">
+                <div class="box box-primary">
+                                       
+                    <h3 class="box-title">Quick Example</h3>
+                    
+                    <!-- /.box-header -->
+                    <!-- form start -->
+                    <form role="form">
+                    <div class="box-body">
+                        <div class="form-group">
+                        <label for="exampleInputEmail1">Email address</label>
+                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+                        </div>
+                        <div class="form-group">
+                        <label for="exampleInputPassword1">Password</label>
+                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                        </div>
+                        
+                    </div>
+                    <!-- /.box-body -->
+
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
         </div>
+
 </template>
 
 
@@ -297,11 +327,29 @@
  export default {  
     data () {
         return {
-        msg: 'Welcome to Your Vue.js App'
+            controlEditar: 0, 
         }
     },
     mounted: function () {
        $('.box').boxWidget('toggle')
-    }
+    },
+
+    methods: {
+            editarTarea: function (event) {        
+                let position = ""
+                let control = this.controlEditar
+                if(control == 0){
+                    position = "0%"
+                    this.controlEditar = 1
+                }else{
+                    position = "-50%"
+                }
+                $( "#contentEditar" ).animate({
+                    right: position,                   
+                }, 1300, function() {
+                    // Animation complete.
+                });
+            }
+        }
 }
 </script>
