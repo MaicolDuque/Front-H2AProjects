@@ -26,8 +26,8 @@
                                                 <th>Ver detalles</th>
                                             </tr>
                                         </thead>
-                                        <tbody v-for="user in allUsers">
-                                            <tr >
+                                        <tbody >
+                                            <tr v-for="user in allUsers" :key="user.id">
                                                 <td>{{ user.name }}</td>
                                                 <td>{{ user.email }}</td>
                                                 <td v-if="user.state"><span class="label label-success">Activo</span></td>
