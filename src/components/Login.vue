@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import {HTTP} from '../services/config.js';
+import HTTP from '../services/config.js';
 
 export default {
 

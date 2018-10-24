@@ -3,7 +3,7 @@
  
     <div class="content-wrapper">
 
-        {{allUsers}}          
+             
             <section class="content-header">
                 <h1>
                     Usuarios
@@ -32,8 +32,8 @@
                                                 <td>{{ user.email }}</td>
                                                 <td v-if="user.state"><span class="label label-success">Activo</span></td>
                                                 <td v-else><span class="label label-danger">Inactivo</span></td>
-                                                <td> 4</td>
-                                                <td>X</td>
+                                                <td> {{ user.group.name }}</td>
+                                                <td style="text-align: center; font-size: 1.6em"><i style="cursor:pointer" class="fa fa-eye"></i></td>
                                             </tr>
                                             
 
@@ -73,6 +73,7 @@
     },
     created () {       
         this.returnAllUsers()                    
+        //this.$store.dispatch('returnUsers')
     },
     mounted: function () {
         $( document ).ready(function() {
@@ -89,6 +90,7 @@
     },
     computed: {
         allUsers () {
+            console.log(this.$store.state.allUsers);
             return  this.$store.state.allUsers
         }
     },

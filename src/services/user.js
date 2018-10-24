@@ -1,4 +1,4 @@
-import { HTTP } from './config'
+import HTTP from './config'
 
 const userService = {}
 
@@ -17,7 +17,7 @@ userService.getById = function(id) {
 }
 
 userService.allUsers = function() {
-    return HTTP.get(`/users`)
+    return HTTP.get('/users')
         .then(res => res.data)
 }
 

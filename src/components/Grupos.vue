@@ -6,7 +6,7 @@
         </pre> -->
 
         <ul id="example-1">
-            <li v-for="item in usuarios">
+            <li v-for="item in usuarios" :key="item.id">
                 {{ item.title }}
             </li>
         </ul>
@@ -179,7 +179,7 @@
 //     // })
 // });
 
-import {HTTP} from '../services/config.js';
+import HTTP from '../services/config.js';
 
 export default {  
 
