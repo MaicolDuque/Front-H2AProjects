@@ -11,8 +11,8 @@ userService.search = function(q) {
         .then(res => res.data)
 }
 
-userService.getById = function(id) {
-    return HTTP.get(`/tracks/${id}`)
+userService.userTasks = function(id) {
+    return HTTP.get(`/user_tasks/${id}`)
         .then(res => res.data)
 }
 

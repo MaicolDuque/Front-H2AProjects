@@ -8,13 +8,21 @@ const store = new Vuex.Store({
     state: {
         user: '',
         authenticate: false,
-        allUsers: {}
+        allUsers: {},
+        userTasks: {}
     },
 
     getters: {
         isAuthenticated(state) {
             return `${state.authenticate}`
         },
+
+        returnTasksPending(state) {
+            // family.filter(person => person.age > 18);
+            // difficult_tasks = tasks.filter((task) => task.duration >= 120);
+            // return state.userTasks.filter(tasks => tasks.state_id == 3)
+            return state.userTasks
+        }
 
     },
 
@@ -27,16 +35,19 @@ const store = new Vuex.Store({
         },
         MUTATION_allUsers(state, infoUser) {
             state.allUsers = infoUser
+        },
+        MUTATION_userTasks(state, infoUser) {
+            state.userTasks = infoUser
         }
 
     },
 
     actions: {
-        getTrackById(context, payload) {
-            return userService.getById(payload.id)
+        getUserTasks(context, payload) {
+            return userService.userTasks(payload.id)
                 .then(res => {
-                    context.commit('setTrack', res)
-                    return res
+                    context.commit('MUTATION_userTasks', res.tasks)
+                    return res.tasks
                 })
         },
         returnUsers(context) {
