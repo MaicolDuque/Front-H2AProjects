@@ -22,7 +22,7 @@
                                                 <th>Nombre completo</th>
                                                 <th>Correo</th>
                                                 <th>Estado</th>
-                                                <th>Tareas </th>
+                                                <th>Grupo </th>
                                                 <th>Ver detalles</th>
                                             </tr>
                                         </thead>
@@ -33,7 +33,7 @@
                                                 <td v-if="user.state"><span class="label label-success">Activo</span></td>
                                                 <td v-else><span class="label label-danger">Inactivo</span></td>
                                                 <td> {{ user.group.name }}</td>
-                                                <td style="text-align: center; font-size: 1.6em"><i style="cursor:pointer" class="fa fa-eye"></i></td>
+                                                <td style="text-align: center; font-size: 1.6em"><i @click="eidtarUsuario(user.id)" style="cursor:pointer" :id="user.id" class="fa fa-eye"></i></td>
                                             </tr>
                                             
 
@@ -72,8 +72,8 @@
         }
     },
     created () {       
-        this.returnAllUsers()                    
-        //this.$store.dispatch('returnUsers')
+        //this.returnAllUsers()                    
+        this.$store.dispatch('returnUsers')
     },
     mounted: function () {
         $( document ).ready(function() {
@@ -84,13 +84,17 @@
 
     methods: {
         returnAllUsers () {   //Hacer llamado a la API que retorne total usuarios         
-            this.$store.dispatch('returnUsers')
-                .then(() => console.log('Track loaded...'))
+            // this.$store.dispatch('returnUsers')
+            //     .then(() => console.log('Track loaded...'))
+        },
+
+        eidtarUsuario(id) {           
+            // alert("Editar usuario!->"+id)
+            this.$router.push(`/tareas/${id}`)
         }
     },
     computed: {
-        allUsers () {
-            console.log(this.$store.state.allUsers);
+        allUsers () {           
             return  this.$store.state.allUsers
         }
     },

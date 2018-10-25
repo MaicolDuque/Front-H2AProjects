@@ -83,6 +83,7 @@ export default {
            
             this.error = 'Login failed!'
             this.$store.commit('setAthenticate', false)
+            this.$store.commit('MUTATION_allUsers', {})
             delete localStorage.token
             this.$router.push('/')
         }

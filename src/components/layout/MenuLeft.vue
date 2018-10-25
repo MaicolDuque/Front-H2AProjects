@@ -9,7 +9,7 @@
                     <router-link to="/" tag="li"> <a><i class="fa fa-dashboard"></i>Inicio</a> </router-link>
                     <router-link :to="{name: 'usuarios'}" tag="li"><a><i class="fa fa-users"></i>Usuarios</a></router-link> 
                     <router-link :to="{name: 'grupos'}" tag="li"><a><i class="fa fa-group"></i>Grupos</a></router-link>   
-                    <router-link :to="{name: 'mis-taraes', params: {id: 1}}" tag="li"><a><i class="fa fa-tasks"></i>Mis tareas</a></router-link>                                                            
+                    <router-link :to="{name: 'mis-taraes', params: {id: idTareas}}" tag="li"><a><i class="fa fa-tasks"></i>Mis tareas</a></router-link>                                                            
                     <li class="header">PROYECTOS</li>                    
                     <router-link :to="{name: 'proyectos', params: {id: 1}}" tag="li"><a><i class="fa fa-circle-o text-red"></i>Proyecto 1</a></router-link>                                                            
                     <!-- <router-link :to="{name: 'proyectos'}" tag="li"><a><i class="fa fa-circle-o text-red"></i>Proyecto 11</a></router-link>                                                             -->
@@ -23,3 +23,18 @@
 </template>
 
 
+<script>
+ export default {  
+    data () {
+        return {
+            msg: 'Welcome to Your Vue.js App',
+            users: {}
+        }
+    },
+     computed: {
+        idTareas () {            
+            return  this.$store.state.user.id
+        }
+    },
+ }
+</script>
