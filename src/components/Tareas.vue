@@ -17,7 +17,7 @@
 
                             <div class="info-box-content">
                                 <span class="info-box-text">Tareas en revisión</span>
-                                <span class="info-box-number">5</span>
+                                <span class="info-box-number">{{reviewTasks}}</span>
 
                                 <div class="progress">
                                     <div class="progress-bar" style="width: 50%"></div>
@@ -36,7 +36,7 @@
 
                             <div class="info-box-content">
                                 <span class="info-box-text">Tareas finalizadas</span>
-                                <span class="info-box-number">26</span>
+                                <span class="info-box-number">{{completedTasks}}</span>
 
                                 <div class="progress">
                                     <div class="progress-bar" style="width: 20%"></div>
@@ -112,7 +112,13 @@
     },
     computed: {
         getTaskPending () {           
-            return  this.$store.getters.returnTasksPending.length
+            return  this.$store.state.userTasks.filter(tasks => tasks.state_id == 5).length           
+        },
+        completedTasks (){
+            return  this.$store.state.userTasks.filter(tasks => tasks.state_id == 4).length           
+        },
+        reviewTasks (){
+            return  this.$store.state.userTasks.filter(tasks => tasks.state_id == 3).length           
         }
     },
 

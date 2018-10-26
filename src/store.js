@@ -21,6 +21,7 @@ const store = new Vuex.Store({
             // family.filter(person => person.age > 18);
             // difficult_tasks = tasks.filter((task) => task.duration >= 120);
             // return state.userTasks.filter(tasks => tasks.state_id == 3)
+
             return state.userTasks
         }
 
