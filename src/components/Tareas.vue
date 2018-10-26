@@ -20,10 +20,10 @@
                                 <span class="info-box-number">{{reviewTasks}}</span>
 
                                 <div class="progress">
-                                    <div class="progress-bar" style="width: 50%"></div>
+                                    <div class="progress-bar" :style="{width: porcentageReview+'%'}"></div>
                                 </div>
                                 <span class="progress-description">
-                                50% Increase in 30 Days
+                                {{porcentageReview}}% En revisión
                               </span>
                             </div>
                             <!-- /.info-box-content -->
@@ -39,10 +39,10 @@
                                 <span class="info-box-number">{{completedTasks}}</span>
 
                                 <div class="progress">
-                                    <div class="progress-bar" style="width: 20%"></div>
+                                    <div class="progress-bar" :style="{width: porcentageCompleted+'%'}"></div>
                                 </div>
                                 <span class="progress-description">
-                                20% Increase in 30 Days
+                                {{porcentageCompleted}}% Finalizadas
                               </span>
                             </div>
                             <!-- /.info-box-content -->
@@ -58,10 +58,10 @@
                                 <span class="info-box-number">{{getTaskPending}}</span>
 
                                 <div class="progress">
-                                    <div class="progress-bar" style="width: 70%"></div>
+                                    <div class="progress-bar" :style="{width: porcentagePending+'%'}"></div>
                                 </div>
                                 <span class="progress-description">
-                                70% Increase in 30 Days
+                                {{porcentagePending}}% Pendientes
                               </span>
                             </div>
                             <!-- /.info-box-content -->
@@ -111,15 +111,31 @@
         }
     },
     computed: {
-        getTaskPending () {           
+        totalTasks() {
+            return  this.$store.state.userTasks.length
+        },
+        getTaskPending () {                       
             return  this.$store.state.userTasks.filter(tasks => tasks.state_id == 5).length           
+        },
+        porcentagePending(){
+            return (this.getTaskPending*100)/this.totalTasks
         },
         completedTasks (){
             return  this.$store.state.userTasks.filter(tasks => tasks.state_id == 4).length           
         },
+
+        porcentageCompleted(){
+            return (this.completedTasks*100)/this.totalTasks
+        },
+
         reviewTasks (){
             return  this.$store.state.userTasks.filter(tasks => tasks.state_id == 3).length           
+        },
+
+        porcentageReview(){
+            return (this.reviewTasks*100)/this.totalTasks
         }
+
     },
 
 }
