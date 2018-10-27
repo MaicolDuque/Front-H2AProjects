@@ -74,14 +74,13 @@
     created () {       
         //this.returnAllUsers()                    
         this.$store.dispatch('returnUsers')
-            .then((res) => this.users = res)
+            // .then((res) => this.users = res)
+            .then((res) => $('#tableUsuarios').DataTable())
+
 
     },
-    mounted: function () {
-        // $( document ).ready(function() {    
-            $('#tableUsuarios').DataTable()
-            //console.log( "ready!" );
-        // });
+    mounted: function () {        
+        $('#tableUsuarios').DataTable()        
     },
 
     methods: {

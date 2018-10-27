@@ -23,7 +23,7 @@
 
                             <div class="info-box-content">
                                 <span class="info-box-text">TAREAS PENDIENTES</span>
-                                <span class="info-box-number">41</span>
+                                <span class="info-box-number">{{getTaskPending}}</span>
                             </div>
                             <!-- /.info-box-content -->
                         </div>
@@ -40,7 +40,7 @@
 
                             <div class="info-box-content">
                                 <span class="info-box-text">TAREAS FINALIZADAS</span>
-                                <span class="info-box-number">760</span>
+                                <span class="info-box-number">{{completedTasks}}</span>
                             </div>
                             <!-- /.info-box-content -->
                         </div>
@@ -53,7 +53,7 @@
 
                             <div class="info-box-content">
                                 <span class="info-box-text">TAREAS EN REVISIÓN</span>
-                                <span class="info-box-number">29</span>
+                                <span class="info-box-number">{{reviewTasks}}</span>
                             </div>
                             <!-- /.info-box-content -->
                         </div>
@@ -198,3 +198,67 @@
             </section>
     </div>
 </template>
+ <script>
+ export default {  
+    data () {
+        return {
+            msg: 'Welcome to Your Vue.js App',            
+        }
+    },
+    created () {       
+        //this.returnAllUsers()                    
+        this.$store.dispatch('returnTasks')
+            .then((res) => console.log(res))
+            // .then((res) => $('#tableUsuarios').DataTable())
+
+
+    },
+    mounted: function () {        
+        // $('#tableUsuarios').DataTable()        
+    },
+
+    methods: {
+        returnAllUsers () {   //Hacer llamado a la API que retorne total usuarios         
+            // this.$store.dispatch('returnUsers')
+            //     .then(() => console.log('Track loaded...'))
+        },
+
+        eidtarUsuario(id) {           
+            // alert("Editar usuario!->"+id)
+            this.$router.push(`/tareas/${id}`)
+        }
+    },
+    computed: {
+        allTasks () {           
+            return  this.$store.state.allTasks
+        },
+
+        totalTasks() {
+            return  this.$store.state.allTasks.length
+        },
+        getTaskPending () {                       
+            return  this.$store.state.allTasks.filter(tasks => tasks.state_id == 5).length           
+        },
+        porcentagePending(){
+            return (this.getTaskPending*100)/this.totalTasks
+        },
+        completedTasks (){
+            return  this.$store.state.allTasks.filter(tasks => tasks.state_id == 4).length           
+        },
+
+        porcentageCompleted(){
+            return (this.completedTasks*100)/this.totalTasks
+        },
+
+        reviewTasks (){
+            return  this.$store.state.allTasks.filter(tasks => tasks.state_id == 3).length           
+        },
+
+        porcentageReview(){
+            return (this.reviewTasks*100)/this.totalTasks
+        }
+
+    },
+
+}
+</script>

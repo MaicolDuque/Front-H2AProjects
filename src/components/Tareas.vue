@@ -93,20 +93,14 @@
             .then((res) => console.log('Res->', res))
     },
     mounted: function () {
-        $( document ).ready(function() {
-            $('#tableUsuarios').DataTable()
-            //console.log( "ready!" );
-        });
+        
     },
 
     methods: {
-        returnAllUsers () {   //Hacer llamado a la API que retorne total usuarios         
-            // this.$store.dispatch('returnUsers')
-            //     .then(() => console.log('Track loaded...'))
+        returnAllUsers () { 
         },
 
-        eidtarUsuario(id) {           
-            // alert("Editar usuario!->"+id)
+        detallesTarea(id) {                     
             this.$router.push(`/tareas/${id}`)
         }
     },

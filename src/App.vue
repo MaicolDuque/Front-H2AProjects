@@ -29,10 +29,12 @@ export default {
   },
 
   created () {
+    //Funcion para que al momento de refrescar la página no se cierrre la sesión
     if(localStorage.token) {
       this.$store.state.authenticate = true      
       this.$store.commit('addUser', JSON.parse(localStorage.user))
     }
+    
   },
 
   computed: {

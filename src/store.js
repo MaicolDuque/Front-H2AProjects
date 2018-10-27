@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import userService from './services/user'
+import taskService from './services/task'
 
 Vue.use(Vuex)
 
@@ -9,7 +10,8 @@ const store = new Vuex.Store({
         user: '',
         authenticate: false,
         allUsers: {},
-        userTasks: {}
+        userTasks: {},
+        allTasks: {}
     },
 
     getters: {
@@ -37,9 +39,15 @@ const store = new Vuex.Store({
         MUTATION_allUsers(state, infoUser) {
             state.allUsers = infoUser
         },
+
         MUTATION_userTasks(state, infoUser) {
             state.userTasks = infoUser
-        }
+        },
+
+        MUTATION_allTasks(state, infoTasks) {
+            state.allTasks = infoTasks
+        },
+
 
     },
 
@@ -55,6 +63,14 @@ const store = new Vuex.Store({
             return userService.allUsers()
                 .then(res => {
                     context.commit('MUTATION_allUsers', res)
+                    return res
+                })
+        },
+
+        returnTasks(context) {
+            return taskService.allTasks()
+                .then(res => {
+                    context.commit('MUTATION_allTasks', res)
                     return res
                 })
         }
