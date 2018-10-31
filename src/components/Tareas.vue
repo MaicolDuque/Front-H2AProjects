@@ -13,7 +13,7 @@
                     <div class="col-xs-12 ">
 
                         <div class="info-box bg-yellow">
-                            <span class="info-box-icon"><i class="ion ion-ios-eye"></i></span>
+                            <span class="info-box-icon"><i @click="detalleTareas(userID, 3)" style="cursor:pointer" class="ion ion-ios-eye"></i></span>
 
                             <div class="info-box-content">
                                 <span class="info-box-text">Tareas en revisión</span>
@@ -32,7 +32,7 @@
 
                         <!-- /.info-box -->
                         <div class="info-box bg-green">
-                            <span class="info-box-icon"><i class="ion ion-ios-eye"></i></span>
+                            <span class="info-box-icon"><i @click="detalleTareas(userID, 4)" style="cursor:pointer" class="ion ion-ios-eye"></i></span>
 
                             <div class="info-box-content">
                                 <span class="info-box-text">Tareas finalizadas</span>
@@ -51,7 +51,7 @@
                         
                         <!-- /.info-box -->
                         <div class="info-box bg-red">
-                            <span class="info-box-icon"><i class="ion ion-ios-eye"></i></span>
+                            <span class="info-box-icon"><i @click="detalleTareas(userID, 5)" style="cursor:pointer" class="ion ion-ios-eye"></i></span>
 
                             <div class="info-box-content">
                                 <span class="info-box-text">Tareas pendientes</span>
@@ -83,11 +83,13 @@
     data () {
         return {
             msg: 'Welcome to Your Vue.js App',
-            users: {}
+            users: {},
+            userID: ''
         }
     },
     created () {       
-        //this.returnAllUsers()                    
+        //this.returnAllUsers()        
+        this.userID =  this.$route.params.id           
         const idUser = this.$route.params.id
         this.$store.dispatch('getUserTasks', {id: idUser})
             .then((res) => console.log('Res->', res))
@@ -97,11 +99,16 @@
     },
 
     methods: {
-        returnAllUsers () { 
-        },
+        // detalleTareas () { 
+        //     alert("aca")
+        // },
 
-        detallesTarea(id) {                     
-            this.$router.push(`/tareas/${id}`)
+        detalleTareas(id,idTask) {    
+             this.$router.push({
+                name: 'detalles-tarea',
+                params: { id: id, tipoTask: idTask }
+            });                 
+            //  this.$router.push(`/tareas/${id}/detalles`)
         }
     },
     computed: {
