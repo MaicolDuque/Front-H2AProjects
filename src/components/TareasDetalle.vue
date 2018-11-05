@@ -30,10 +30,10 @@
                                                 </tr>
                                             </thead>
                                             <tbody style="text-align: center">                                                
-                                                <tr v-if="retornarTareasEstado" v-for="task in retornarTareasEstado" :key="task.id">
+                                                <tr v-if="validarTareas" v-for="task in retornarTareasEstado" :key="task.id">
                                                     <td>{{ task.name }}</td>
                                                     <td>{{ task.fecha_fin }}</td>
-                                                    <td>{{ task.duration }} horas</td>
+                                                    <td><i class="fa fa-clock-o"></i> {{ task.duration }} horas</td>
                                                     <td>{{ task.priority }}</td>
                                                     <td>{{ task.name }}</td>
                                                 </tr>
@@ -109,6 +109,12 @@
 
         retornarTareasEstado(){            
             return  this.$store.state.userTasks.filter(tasks => tasks.state_id == this.tipoTask)
+        },
+        validarTareas() {
+            if(this.retornarTareasEstado.length > 0){
+                return true
+            }
+            return false
         }
         
     },

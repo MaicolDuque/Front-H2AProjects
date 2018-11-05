@@ -3,11 +3,73 @@
  
     <div class="content-wrapper">
 
-             
+             <div class="modal fade" id="addUser">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Default Modal</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form role="form">
+                            <div class="box-body">
+                                <div class="form-group">
+                                    <label for="name">Nombre completo</label>
+                                    <input type="text" class="form-control" id="name" placeholder="Nombre completo">
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Correo electrónico</label>
+                                    <input type="email" class="form-control" id="email" placeholder="Correo electrónico">
+                                </div>
+                                <div class="form-group">
+                                    <label for="password">Password</label>
+                                    <input type="password" class="form-control" id="password" placeholder="Password">
+                                </div>
+                                <div class="form-group">
+                                    <label for="password">Grupo</label>
+                                    <select name="group" id="group">
+                                        <option value=""></option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                <label for="exampleInputFile">File input</label>
+                                <input type="file" id="exampleInputFile">
+
+                                <p class="help-block">Example block-level help text here.</p>
+                                </div>
+                                <div class="checkbox">
+                                <label>
+                                    <input type="checkbox"> Check me out
+                                </label>
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+
+                            <!-- <div class="box-footer">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div> -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary pull-left">Guardar</button>
+                                <button type="button" class="btn btn-default " data-dismiss="modal">Cerrar</button>
+                            </div>
+                        </form>
+                    </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <!-- /.modal -->
+
+
             <section class="content-header">
-                <h1>
-                    Usuarios
-                </h1>               
+                <div>
+                    <h1>
+                        Usuarios
+                    </h1> 
+                    <button type="button" data-toggle="modal" data-target="#addUser" style="float: right;width: 10%;margin-bottom: 15px" class="btn btn-block btn-info btn-sm">Agregar &nbsp;<i class="fa fa-plus"></i></button>              
+                </div>
             </section>
             <section class="content">
                         <div class="row">
@@ -33,7 +95,7 @@
                                                 <td v-if="user.state"><span class="label label-success">Activo</span></td>
                                                 <td v-else><span class="label label-danger">Inactivo</span></td>
                                                 <td> {{ user.group.name }}</td>
-                                                <td style="text-align: center; font-size: 1.6em"><i @click="eidtarUsuario(user.id)" style="cursor:pointer" :id="user.id" class="fa fa-eye"></i></td>
+                                                <td style="text-align: center; font-size: 1.6em"><i @click="editarTarea(user.id)" style="cursor:pointer" :id="user.id" class="fa fa-eye"></i></td>
                                             </tr>
                                             
 
@@ -68,7 +130,8 @@
     data () {
         return {
             msg: 'Welcome to Your Vue.js App',
-            users: {}
+            users: {},
+            groups: {}
         }
     },
     created () {       
@@ -76,6 +139,9 @@
         this.$store.dispatch('returnUsers')
             // .then((res) => this.users = res)
             .then((res) => $('#tableUsuarios').DataTable())
+        
+        this.$store.dispatch('returnGroups')
+            .then((res) => this.groups = this.$store.state.allGroups)            
 
 
     },
@@ -89,7 +155,7 @@
             //     .then(() => console.log('Track loaded...'))
         },
 
-        eidtarUsuario(id) {           
+        editarTarea(id) {           
             // alert("Editar usuario!->"+id)
             this.$router.push(`/tareas/${id}`)
         }
