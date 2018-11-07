@@ -9,40 +9,46 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">Default Modal</h4>
+                        <h4 class="modal-title">Agregar usuario</h4>
                     </div>
                     <div class="modal-body">
                         <form role="form">
                             <div class="box-body">
                                 <div class="form-group">
                                     <label for="name">Nombre completo</label>
-                                    <input type="text" class="form-control" id="name" placeholder="Nombre completo">
+                                    <input type="text" class="form-control" id="name" v-model="newUser.name" placeholder="Nombre completo">
                                 </div>
                                 <div class="form-group">
                                     <label for="email">Correo electrónico</label>
-                                    <input type="email" class="form-control" id="email" placeholder="Correo electrónico">
+                                    <input type="email" class="form-control" id="email" v-model="newUser.email" placeholder="Correo electrónico">
                                 </div>
                                 <div class="form-group">
                                     <label for="password">Password</label>
-                                    <input type="password" class="form-control" id="password" placeholder="Password">
+                                    <input type="password" class="form-control" id="password" v-model="newUser.password" placeholder="Password">
                                 </div>
                                 <div class="form-group">
-                                    <label for="password">Grupo</label>
-                                    <select name="group" id="group">
-                                        <option value=""></option>
+                                    <label for="password">Grupo:</label>
+                                    <select class="form-control" name="group" v-model="newUser.group_id" id="group">
+                                        <option v-for="group in groups" :key="group.id" :value="group.id">
+                                            {{group.name}}
+                                        </option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                <label for="exampleInputFile">File input</label>
-                                <input type="file" id="exampleInputFile">
+                                    <label for="password">Ocupacion:</label>
+                                    <select class="form-control" name="occupation" v-model="newUser.occupation_id" id="occupation">
+                                        <option v-for="occupation in occupations" :key="occupation.id" :value="occupation.id">
+                                            {{occupation.name}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                <label for="exampleInputFile">Foto</label>
+                                <input  type="file" id="exampleInputFile" name="image" @change="createImage">
 
-                                <p class="help-block">Example block-level help text here.</p>
+                                <p class="help-block">Seleccione la foto de perfil.</p>
                                 </div>
-                                <div class="checkbox">
-                                <label>
-                                    <input type="checkbox"> Check me out
-                                </label>
-                                </div>
+                                
                             </div>
                             <!-- /.box-body -->
 
@@ -50,8 +56,8 @@
                                 <button type="submit" class="btn btn-primary">Submit</button>
                             </div> -->
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-primary pull-left">Guardar</button>
-                                <button type="button" class="btn btn-default " data-dismiss="modal">Cerrar</button>
+                                <button type="button" @click="agregarUsuario()" class="btn btn-primary pull-left">Guardar</button>
+                                <button type="button" class="btn btn-default " ref="closeModal" data-dismiss="modal">Cerrar</button>
                             </div>
                         </form>
                     </div>
@@ -131,7 +137,20 @@
         return {
             msg: 'Welcome to Your Vue.js App',
             users: {},
-            groups: {}
+            groups: {},
+            occupations: {},
+            picture: '',
+            image: '',
+            newUser: {
+                name: '',
+                email: '',
+                password: '',
+                group_id: 0,
+                occupation_id: 0,
+                picture: 'sinimagen.jpg',
+                state: 1,
+                is_admin: 0   
+            }
         }
     },
     created () {       
@@ -141,7 +160,10 @@
             .then((res) => $('#tableUsuarios').DataTable())
         
         this.$store.dispatch('returnGroups')
-            .then((res) => this.groups = this.$store.state.allGroups)            
+            .then((res) => this.groups = this.$store.state.allGroups)
+            
+        this.$store.dispatch('returnOccupations')
+            .then((res) => this.occupations = this.$store.state.allOccupations)
 
 
     },
@@ -158,7 +180,24 @@
         editarTarea(id) {           
             // alert("Editar usuario!->"+id)
             this.$router.push(`/tareas/${id}`)
-        }
+        },
+
+        agregarUsuario(){  
+            
+            this.$store.dispatch('addNewUser', this.newUser)
+                .then((res) => this.$refs.closeModal.click())
+        },
+        createImage(e) {
+            console.log(e.target.files[0])
+            let reader = new FileReader();
+            reader.readAsDataURL(e.target.files[0])
+            let vm = this;
+            reader.onload = (e) => {
+                vm.newUser.picture = e.target.result;
+            };
+            // reader.readAsDataURL(file);
+            console.log(vm.newUser.picture)
+        },
     },
     computed: {
         allUsers () {           

@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import userService from './services/user'
 import taskService from './services/task'
 import groupService from './services/group'
+import occupationService from './services/occupation'
 
 Vue.use(Vuex)
 
@@ -13,7 +14,8 @@ const store = new Vuex.Store({
         allUsers: {},
         userTasks: {},
         allTasks: {},
-        allGroups: {}
+        allGroups: {},
+        allOccupations: {}
     },
 
     getters: {
@@ -38,6 +40,9 @@ const store = new Vuex.Store({
         addUser(state, infoUser) {
             state.user = infoUser
         },
+        MUTATION_addNewUser(state, infoUser) {
+            state.allUsers.push(infoUser)
+        },
         MUTATION_allUsers(state, infoUser) {
             state.allUsers = infoUser
         },
@@ -49,8 +54,11 @@ const store = new Vuex.Store({
         MUTATION_allTasks(state, infoTasks) {
             state.allTasks = infoTasks
         },
-        MUTATION_allGroups(state, infoTasks) {
-            state.allGroups = infoTasks
+        MUTATION_allGroups(state, info) {
+            state.allGroups = info
+        },
+        MUTATION_allOccupations(state, info) {
+            state.allOccupations = info
         }
 
 
@@ -72,6 +80,20 @@ const store = new Vuex.Store({
                 })
         },
 
+        addNewUser(context, payload) {
+            userService.addUser(payload)
+                .then(res => {
+                    // context.commit('MUTATION_addNewUser', res)
+                    // return res
+                    console.log("res=>", res)
+                    return userService.allUsers()
+                })
+                .then(res2 => {
+                    context.commit('MUTATION_allUsers', res2)
+                        // return res
+                })
+        },
+
         returnTasks(context) {
             return taskService.allTasks()
                 .then(res => {
@@ -83,6 +105,13 @@ const store = new Vuex.Store({
             return groupService.allGroups()
                 .then(res => {
                     context.commit('MUTATION_allGroups', res)
+                        //return res
+                })
+        },
+        returnOccupations(context) {
+            return occupationService.allOccupations()
+                .then(res => {
+                    context.commit('MUTATION_allOccupations', res)
                         //return res
                 })
         }
