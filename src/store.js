@@ -4,6 +4,7 @@ import userService from './services/user'
 import taskService from './services/task'
 import groupService from './services/group'
 import occupationService from './services/occupation'
+import projectService from './services/project'
 
 Vue.use(Vuex)
 
@@ -15,7 +16,8 @@ const store = new Vuex.Store({
         userTasks: {},
         allTasks: {},
         allGroups: {},
-        allOccupations: {}
+        allOccupations: {},
+        allProjects: {}
     },
 
     getters: {
@@ -59,6 +61,9 @@ const store = new Vuex.Store({
         },
         MUTATION_allOccupations(state, info) {
             state.allOccupations = info
+        },
+        MUTATION_allProjects(state, info) {
+            state.allProjects = info
         }
 
 
@@ -113,6 +118,14 @@ const store = new Vuex.Store({
                 .then(res => {
                     context.commit('MUTATION_allOccupations', res)
                         //return res
+                })
+        },
+
+        returnProjects(context) {
+            return projectService.allProjects()
+                .then(res => {
+                    context.commit('MUTATION_allProjects', res)
+                    return res
                 })
         }
     }

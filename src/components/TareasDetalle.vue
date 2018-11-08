@@ -66,12 +66,15 @@
     data () {
         return {
             msg: 'Welcome to Your Vue.js App',
+            tipoTarea: this.tipoTask,
             users: {},
             colors:{
                 "color3": 'box box-warning',
                 "color4": 'box box-success',
                 "color5": 'box box-danger'
             },
+            taskType: '',
+            retornarTareasEstado: {},
             idUser: ''
         }
     },
@@ -79,7 +82,8 @@
         //this.returnAllUsers() 
         this.idUser = this.$route.params.id  
         this.$store.dispatch('getUserTasks', {id: this.idUser})
-            .then((res) => $('#taskState').DataTable())           
+            .then((res1) => this.setearEstadoTareas())
+            // .then((res) => $('#taskState').DataTable())           
         // this.$store.dispatch('returnUsers')
         //     // .then((res) => this.users = res)
         //     .then((res) => $('#taskState').DataTable())
@@ -87,13 +91,13 @@
 
     },
     mounted: function () {        
-         $('#taskState').DataTable()        
+        //  $('#taskState').DataTable()        
     },
 
     methods: {
-        returnAllUsers () {   //Hacer llamado a la API que retorne total usuarios         
-            // this.$store.dispatch('returnUsers')
-            //     .then(() => console.log('Track loaded...'))
+        setearEstadoTareas () {   //Hacer llamado a la API que retorne total usuarios         
+            this.retornarTareasEstado = this.$store.state.userTasks.filter(tasks => tasks.state_id == this.tipoTask)
+            this.tipo = this.tipoTask
         },
 
         editarTarea(id) {           
@@ -107,14 +111,18 @@
             return this.colors[value]
         },
 
-        retornarTareasEstado(){            
-            return  this.$store.state.userTasks.filter(tasks => tasks.state_id == this.tipoTask)
-        },
+        // retornarTareasEstado(){            
+        //     return  this.$store.state.userTasks.filter(tasks => tasks.state_id == this.tipoTask)
+        // },
         validarTareas() {
             if(this.retornarTareasEstado.length > 0){
                 return true
             }
             return false
+        },
+
+        tipo(){
+            return this.tipoTask
         }
         
     },

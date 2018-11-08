@@ -203,10 +203,10 @@
     data () {
         return {
             msg: 'Welcome to Your Vue.js App',  
-            tasksPending:  this.$store.state.allTasks.filter(tasks => tasks.state_id == 5).length ,
-            tasksCompleted: this.$store.state.allTasks.filter(tasks => tasks.state_id == 4).length,
-            tasksReview: this.$store.state.allTasks.filter(tasks => tasks.state_id == 3).length,          
-            totalTasks: this.$store.state.allTasks.length
+            tasksPending: 0,
+            tasksCompleted: 0,
+            tasksReview: 0,
+            totalTasks: 0,
 
 
         }
@@ -214,7 +214,7 @@
     created () {       
         //this.returnAllUsers()                    
         this.$store.dispatch('returnTasks')
-            .then((res) => console.log(res))
+            .then((res) => this.setearValorTareas())
             // .then((res) => $('#tableUsuarios').DataTable())
 
 
@@ -225,10 +225,13 @@
 
     methods: {
        
-        eidtarUsuario(id) {           
-            // alert("Editar usuario!->"+id)
-            this.$router.push(`/tareas/${id}`)
-        }
+        setearValorTareas() {           
+            this.tasksPending   =  this.$store.state.allTasks.filter(tasks => tasks.state_id == 5).length ,
+            this.tasksCompleted = this.$store.state.allTasks.filter(tasks => tasks.state_id == 4).length,
+            this.tasksReview    = this.$store.state.allTasks.filter(tasks => tasks.state_id == 3).length,          
+            this.totalTasks     = this.$store.state.allTasks.length
+        },
+        
     },
     watch:{
         username(val){

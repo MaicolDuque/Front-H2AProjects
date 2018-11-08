@@ -31,6 +31,10 @@
             users: {}
         }
     },
+    created(){
+        this.$store.dispatch('returnProjects')
+            .then((res) => console.log(res))
+    },
      computed: {
         idTareas () {            
             return  this.$store.state.user.id

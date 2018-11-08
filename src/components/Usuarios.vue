@@ -91,11 +91,11 @@
                                                 <th>Correo</th>
                                                 <th>Estado</th>
                                                 <th>Grupo </th>
-                                                <th>Ver detalles</th>
+                                                <th>Ver tareas</th>
                                             </tr>
                                         </thead>
                                         <tbody >
-                                            <tr v-for="user in allUsers" :key="user.id">
+                                            <tr v-for="user in todosUsers" :key="user.id">
                                                 <td>{{ user.name }}</td>
                                                 <td>{{ user.email }}</td>
                                                 <td v-if="user.state"><span class="label label-success">Activo</span></td>
@@ -112,7 +112,7 @@
                                                 <th>Correo electrónico</th>
                                                 <th>Estado</th>
                                                 <th>Tareas</th>
-                                                <th>Ver detalles</th>
+                                                <th>Ver tareas</th>
                                             </tr>
                                         </tfoot>
                                     </table>
@@ -187,7 +187,25 @@
         agregarUsuario(){  
             
             this.$store.dispatch('addNewUser', this.newUser)
-                .then((res) => this.$refs.closeModal.click())
+                .then((res2)=> this.reiniciarPropiedades())
+               
+                
+
+          
+            
+            
+        },
+        reiniciarPropiedades(){
+            this.allUsers = this.$store.state.allUsers
+            this.newUser.name= '',
+            this.newUser.email= '',
+            this.newUser.password= '',
+            this.newUser.group_id= 0,
+            this.newUser.occupation_id= 0,
+            this.newUser.picture= 'sinimagen.jpg',
+            this.newUser.state= 1,
+            this.newUser.is_admin= 0   
+            this.$refs.closeModal.click()
         },
         createImage(e) {
             console.log(e.target.files[0])
@@ -202,7 +220,9 @@
         },
     },
     computed: {
-       
+      todosUsers(){
+          return this.allUsers
+      } 
     },
 
 }
