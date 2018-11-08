@@ -6,7 +6,7 @@
                     MIS TAREAS
                 </h1>              
             </section>
-{{getTaskPending}}
+{{taskPending}}
             <!-- Main content -->
             <section class="content">
                 <div class="row">
@@ -55,7 +55,7 @@
 
                             <div class="info-box-content">
                                 <span class="info-box-text">Tareas pendientes</span>
-                                <span class="info-box-number">{{getTaskPending}}</span>
+                                <span class="info-box-number">{{taskPending}}</span>
 
                                 <div class="progress">
                                     <div class="progress-bar" :style="{width: porcentagePending+'%'}"></div>
@@ -84,7 +84,14 @@
         return {
             msg: 'Welcome to Your Vue.js App',
             users: {},
-            userID: ''
+            userID: '',
+            totalTasks: 0,
+            taskPending: 0,
+            porcentagePending: 0,
+            completedTasks: 0,
+            porcentageCompleted: 0,
+            reviewTasks: 0,
+            porcentageReview: 0
         }
     },
     created () {       
@@ -92,7 +99,7 @@
         this.userID =  this.$route.params.id           
         const idUser = this.$route.params.id
         this.$store.dispatch('getUserTasks', {id: idUser})
-            .then((res) => console.log('Res->', res))
+            .then((res) => this.setearData())
     },
     mounted: function () {
         
@@ -102,40 +109,27 @@
         // detalleTareas () { 
         //     alert("aca")
         // },
-
         detalleTareas(id,idTask) {    
-             this.$router.push({
+            this.$router.push({
                 name: 'detalles-tarea',
                 params: { id: id, tipoTask: idTask }
             });                 
             //  this.$router.push(`/tareas/${id}/detalles`)
+        },
+        setearData(){
+            this.totalTasks = this.$store.state.userTasks.length
+            if(this.totalTasks > 0){
+                this.taskPending =  this.$store.state.userTasks.filter(tasks => tasks.state_id == 5).length
+                this.porcentagePending = (this.taskPending*100)/this.totalTasks
+                this.completedTasks = this.$store.state.userTasks.filter(tasks => tasks.state_id == 4).length   
+                this.porcentageCompleted = (this.completedTasks*100)/this.totalTasks
+                this.reviewTasks =  this.$store.state.userTasks.filter(tasks => tasks.state_id == 3).length    
+                this.porcentageReview =  (this.reviewTasks*100)/this.totalTasks             
+            }
         }
     },
     computed: {
-        totalTasks() {
-            return  this.$store.state.userTasks.length
-        },
-        getTaskPending () {                       
-            return  this.$store.state.userTasks.filter(tasks => tasks.state_id == 5).length           
-        },
-        porcentagePending(){
-            return (this.getTaskPending*100)/this.totalTasks
-        },
-        completedTasks (){
-            return  this.$store.state.userTasks.filter(tasks => tasks.state_id == 4).length           
-        },
-
-        porcentageCompleted(){
-            return (this.completedTasks*100)/this.totalTasks
-        },
-
-        reviewTasks (){
-            return  this.$store.state.userTasks.filter(tasks => tasks.state_id == 3).length           
-        },
-
-        porcentageReview(){
-            return (this.reviewTasks*100)/this.totalTasks
-        }
+            
 
     },
 
