@@ -136,6 +136,7 @@
     data () {
         return {
             msg: 'Welcome to Your Vue.js App',
+            allUsers: {},
             users: {},
             groups: {},
             occupations: {},
@@ -157,6 +158,7 @@
         //this.returnAllUsers()                    
         this.$store.dispatch('returnUsers')
             // .then((res) => this.users = res)
+            .then((us) => this.allUsers = this.$store.state.allUsers)
             .then((res) => $('#tableUsuarios').DataTable())
         
         this.$store.dispatch('returnGroups')
@@ -168,7 +170,7 @@
 
     },
     mounted: function () {        
-        $('#tableUsuarios').DataTable()        
+        // $('#tableUsuarios').DataTable()        
     },
 
     methods: {
@@ -200,9 +202,7 @@
         },
     },
     computed: {
-        allUsers () {           
-            return  this.$store.state.allUsers
-        }
+       
     },
 
 }
