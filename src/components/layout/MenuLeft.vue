@@ -11,10 +11,12 @@
                     <router-link :to="{name: 'grupos'}" tag="li"><a><i class="fa fa-group"></i>Grupos</a></router-link>   
                     <router-link :to="{name: 'mis-taraes', params: {id: idTareas}}" tag="li"><a><i class="fa fa-tasks"></i>Mis tareas</a></router-link>                                                            
                     <li class="header">PROYECTOS</li>                    
-                    <router-link :to="{name: 'proyectos', params: {id: 1}}" tag="li"><a><i class="fa fa-circle-o text-red"></i>Proyecto 1</a></router-link>                                                            
-                    <!-- <router-link :to="{name: 'proyectos'}" tag="li"><a><i class="fa fa-circle-o text-red"></i>Proyecto 11</a></router-link>                                                             -->
+                    <!-- <router-link :to="{name: 'proyectos', params: {id: 1}}" tag="li"><a><i class="fa fa-circle-o text-red"></i>Proyecto 1</a></router-link>                                                             -->
+                    <router-link v-for="project in projects" :key="project.id" :to="{name: 'proyectos', params: {id: project.id}}" tag="li"><a><i :class="project.color.value"></i>{{project.name}}</a></router-link>                                                            
+                    
+                    <!-- <router-link :to="{name: 'proyectos'}" tag="li"><a><i class="fa fa-circle-o text-red"></i>Proyecto 11</a></router-link>                                                            
                     <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Proyecto 2</span></a></li>
-                    <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Proyecto 3</span></a></li>
+                    <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Proyecto 3</span></a></li> -->
                  
                 </ul>
             </section>
@@ -28,12 +30,17 @@
     data () {
         return {
             msg: 'Welcome to Your Vue.js App',
-            users: {}
+            projects: {}
         }
     },
     created(){
         this.$store.dispatch('returnProjects')
-            .then((res) => console.log(res))
+            .then((res) => this.setearProjects())
+    },
+    methods: {
+        setearProjects(){
+            this.projects = this.$store.state.allProjects
+        }
     },
      computed: {
         idTareas () {            

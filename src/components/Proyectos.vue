@@ -1,33 +1,7 @@
 <template>
     
         <div class="content-wrapper" style="position: relative">
-            <div id="secciones" style="padding: 1% 4%; ">
-                <!-- Content Header (Page header) -->
-                <section class="content-header">
-                    <div class="row">
-                        <div class="col-xs-8 col-md-8">
-                            <h1>
-                                Proyecto 1
-                            </h1>
-
-                        </div>
-                        <div class="col-xs-8 col-md-4" style="padding-top: 1.9em;">
-                            <!-- <div class="col-md-6">
-                                <button type="button" class="btn btn-block btn-info">Agregar tarea</button>
-                            </div> -->
-                            
-                                <button type="button" class="btn btn-block btn-info">Agregar sección</button>
-                            
-                        </div>
-
-                    </div>
-                    
-                </section>
-
-                <!-- Main content -->
-                <section class="content" style="position: relative">
-                    <div class="row">
-                        <div class="modal fade" id="modal-default">
+             <div class="modal fade" id="modal-default">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -71,6 +45,33 @@
                             </div>
                         <!-- /.modal-dialog -->
                         </div>
+            <div id="secciones" style="padding: 1% 4%; ">
+                <!-- Content Header (Page header) -->
+                <section class="content-header">
+                    <div class="row">
+                        <div class="col-xs-8 col-md-8">
+                            <h1>
+                                Proyecto 1
+                            </h1>
+
+                        </div>
+                        <div class="col-xs-8 col-md-4" style="padding-top: 1.9em;">
+                            <!-- <div class="col-md-6">
+                                <button type="button" class="btn btn-block btn-info">Agregar tarea</button>
+                            </div> -->
+                            
+                                <button type="button" class="btn btn-block btn-info">Agregar sección</button>
+                            
+                        </div>
+
+                    </div>
+                    
+                </section>
+
+                <!-- Main content -->
+                <section class="content" style="position: relative">
+                    <div class="row">
+                       
                     
 
                     </div>
