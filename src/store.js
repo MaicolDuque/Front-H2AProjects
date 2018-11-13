@@ -5,6 +5,7 @@ import taskService from './services/task'
 import groupService from './services/group'
 import occupationService from './services/occupation'
 import projectService from './services/project'
+import sectionService from './services/section'
 
 Vue.use(Vuex)
 
@@ -17,7 +18,9 @@ const store = new Vuex.Store({
         allTasks: {},
         allGroups: {},
         allOccupations: {},
-        allProjects: {}
+        allProjects: {},
+        taskDetail: {},
+        sectionProject: {}
     },
 
     getters: {
@@ -52,6 +55,9 @@ const store = new Vuex.Store({
         MUTATION_userTasks(state, infoUser) {
             state.userTasks = infoUser
         },
+        MUTATION_detailTask(state, info) {
+            state.userTastaskDetailks = info
+        },
 
         MUTATION_allTasks(state, infoTasks) {
             state.allTasks = infoTasks
@@ -64,8 +70,10 @@ const store = new Vuex.Store({
         },
         MUTATION_allProjects(state, info) {
             state.allProjects = info
+        },
+        MUTATION_sectionsProject(state, info) {
+            state.sectionProject = info
         }
-
 
     },
 
@@ -106,6 +114,14 @@ const store = new Vuex.Store({
                     return res
                 })
         },
+
+        returnDetailTask(id) {
+            return taskService.detailTask(id)
+                .then(res => {
+                    context.commit('MUTATION_detailTask', res)
+                        //return res
+                })
+        },
         returnGroups(context) {
             return groupService.allGroups()
                 .then(res => {
@@ -125,6 +141,14 @@ const store = new Vuex.Store({
             return projectService.allProjects()
                 .then(res => {
                     context.commit('MUTATION_allProjects', res)
+                    return res
+                })
+        },
+
+        returnSectionsProject(context, id) {
+            return sectionService.sectionsProject(id)
+                .then(res => {
+                    context.commit('MUTATION_sectionsProject', res)
                     return res
                 })
         }
