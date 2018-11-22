@@ -10,9 +10,9 @@
                     <router-link :to="{name: 'usuarios'}" tag="li"><a><i class="fa fa-users"></i>Usuarios</a></router-link> 
                     <router-link :to="{name: 'grupos'}" tag="li"><a><i class="fa fa-group"></i>Grupos</a></router-link>   
                     <router-link :to="{name: 'mis-taraes', params: {id: idTareas}}" tag="li"><a><i class="fa fa-tasks"></i>Mis tareas</a></router-link>                                                            
-                    <li class="header">PROYECTOS</li>                    
+                    <li  class="header">PROYECTOS</li>                    
                     <!-- <router-link :to="{name: 'proyectos', params: {id: 1}}" tag="li"><a><i class="fa fa-circle-o text-red"></i>Proyecto 1</a></router-link>                                                             -->
-                    <router-link v-for="project in projects" :key="project.id" :to="{name: 'proyectos', params: {id: project.id}}" tag="li"><a><i :class="project.color.value"></i>{{project.name}}</a></router-link>                                                            
+                    <router-link v-for="project in projects"  :key="project.id"  :to="{name: 'proyectos', params: {id: project.id}}" tag="li" ><a ><i  :class="project.color.value"></i> {{project.name}}</a></router-link>                                                            
                     
                     <!-- <router-link :to="{name: 'proyectos'}" tag="li"><a><i class="fa fa-circle-o text-red"></i>Proyecto 11</a></router-link>                                                            
                     <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Proyecto 2</span></a></li>
@@ -38,6 +38,9 @@
             .then((res) => this.setearProjects())
     },
     methods: {
+        cambiarEstado(){
+                alert("sias")
+            },
         setearProjects(){
             this.projects = this.$store.state.allProjects
         }

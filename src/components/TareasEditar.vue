@@ -1,7 +1,8 @@
 <template>
     <!-- <div id="contentEditar"  style="padding: 10px 47px;position: absolute; width: 50%; height: 50%; top: 0; right: -50%; margin-top: 5%;">                                        -->
     <div >
-        <h3 class="box-title">Quick Example</h3>              
+        <span class="close" @click="ocultarEditar"><i class=" fa fa-close"></i></span>  
+        <h3 class="box-title">Quick Example</h3>            
         <form role="form">
             <div class="box-body">
                 <div class="form-group">
@@ -28,23 +29,18 @@
 
 
 
-//  export default {  
-//     props: ['tipoTask'],
-//     data () {
-//         return {
-//             msg: 'Welcome to Your Vue.js App',
-//             tipoTarea: this.tipoTask,
-//             users: {},
-//             colors:{
-//                 "color3": 'box box-warning',
-//                 "color4": 'box box-success',
-//                 "color5": 'box box-danger'
-//             },
-//             taskType: '',
-//             retornarTareasEstado: {},
-//             idUser: ''
-//         }
-//     },
+ export default {  
+    props: ['id'],
+    data () {
+        return {
+            msg: 'Welcome to Your Vue.js App',
+            tipoTarea: this.tipoTask,
+            users: {},            
+            taskType: '',
+            retornarTareasEstado: {},
+            idUser: ''
+        }
+    },
 //     created () {       
 //         //this.returnAllUsers() 
 //         // this.idUser = this.$route.params.id  
@@ -57,21 +53,25 @@
 
 
 //     },
-//     mounted: function () {        
-//         //  $('#taskState').DataTable()        
-//     },
+    mounted: function () {        
+       console.log(this.id)
+    },
+    updated: function () {
+        console.log(this.id)
+    },
 
-//     methods: {
-//         setearEstadoTareas () {   //Hacer llamado a la API que retorne total usuarios         
-//             this.retornarTareasEstado = this.$store.state.userTasks.filter(tasks => tasks.state_id == this.tipoTask)
-//             this.tipo = this.tipoTask
-//         },
+    methods: {
+        setearEstadoTareas () {   //Hacer llamado a la API que retorne total usuarios         
+            this.retornarTareasEstado = this.$store.state.userTasks.filter(tasks => tasks.state_id == this.tipoTask)
+            this.tipo = this.tipoTask
+        },
 
-//         editarTarea(id) {           
-//             // alert("Editar usuario!->"+id)
-//             this.$router.push(`/tareas/${id}`)
-//         }
-//     },
+        ocultarEditar() {           
+            // alert("Editar usuario!->")
+            // this.$router.push(`/tareas/${id}`)
+            this.$emit('ocultar');
+        }
+    }
 //     computed: {
 //         colorTareas() {        
 //             let value = "color"+this.tipoTask              
@@ -94,5 +94,5 @@
         
 //     },
 
-// }
+}
 </script>

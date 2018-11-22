@@ -80,100 +80,61 @@
 
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="row">
+                            <div class="row" >
                                 <div class="col-xs-12 ">
 
                                     <!-- TABLE: LATEST ORDERS -->
-                                    <div class="box box-info">
-                                        <div class="box-header with-border">
+                                    <div  v-for="section in sections" :key="section.id">
+                                        
+                                    
+                                        <div class="box box-info" >
+                                            <div class="box-header with-border">
 
-                                            <h3 class="box-title">Sección 1</h3>
-                                            <div class="box-tools pull-right">
-                                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                                                <!-- <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button> -->
+                                                <h3 class="box-title">{{section.name}}</h3>
+                                                <div class="box-tools pull-right">
+                                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                                    <!-- <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button> -->
+                                                </div>
+                                                <i class="fa fa-pencil-square-o editarSeccion" @click="editarSection" style="cursor: pointer" ></i>
                                             </div>
-                                            <i class="fa fa-pencil-square-o editarSeccion" data-toggle="modal" data-target="#modal-default" aria-hidden="false"></i>
-                                        </div>
-                                        <!-- /.box-header -->
-                                        <div class="box-body">
-                                            <div class="table-responsive">
-                                                <table class="table no-margin">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>ID</th>
-                                                            <th>Tarea</th>
-                                                            <th>Estado</th>
-                                                            <th>Popularity</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td @click="editarTarea" style="cursor: pointer" >OR9842</td>
-                                                            <td>Call of Duty IV</td>
-                                                            <td><span class="label label-success">Shipped</span></td>
-                                                            <td>
-                                                                <div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td><a href="pages/examples/invoice.html">OR1848</a></td>
-                                                            <td>Samsung Smart TV</td>
-                                                            <td><span class="label label-warning">Pending</span></td>
-                                                            <td>
-                                                                <div class="sparkbar" data-color="#f39c12" data-height="20">90,80,-90,70,61,-83,68</div>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td><a href="pages/examples/invoice.html">OR7429</a></td>
-                                                            <td>iPhone 6 Plus</td>
-                                                            <td><span class="label label-danger">Delivered</span></td>
-                                                            <td>
-                                                                <div class="sparkbar" data-color="#f56954" data-height="20">90,-80,90,70,-61,83,63</div>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td><a href="pages/examples/invoice.html">OR7429</a></td>
-                                                            <td>Samsung Smart TV</td>
-                                                            <td><span class="label label-info">Processing</span></td>
-                                                            <td>
-                                                                <div class="sparkbar" data-color="#00c0ef" data-height="20">90,80,-90,70,-61,83,63</div>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td><a href="pages/examples/invoice.html">OR1848</a></td>
-                                                            <td>Samsung Smart TV</td>
-                                                            <td><span class="label label-warning">Pending</span></td>
-                                                            <td>
-                                                                <div class="sparkbar" data-color="#f39c12" data-height="20">90,80,-90,70,61,-83,68</div>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td><a href="pages/examples/invoice.html">OR7429</a></td>
-                                                            <td>iPhone 6 Plus</td>
-                                                            <td><span class="label label-danger">Delivered</span></td>
-                                                            <td>
-                                                                <div class="sparkbar" data-color="#f56954" data-height="20">90,-80,90,70,-61,83,63</div>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td><a href="pages/examples/invoice.html">OR9842</a></td>
-                                                            <td>Call of Duty IV</td>
-                                                            <td><span class="label label-success">Shipped</span></td>
-                                                            <td>
-                                                                <div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
+                                            <!-- /.box-header -->
+                                            <div class="box-body">
+                                                <div class="table-responsive">
+                                                    <table class="table no-margin">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>ID</th>
+                                                                <th>Tarea</th>
+                                                                <th>Prioridad</th>
+                                                                <th>Duración</th>
+                                                                <th>Fecha fin</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody v-for="task in section.tasks" :key="task.id">
+                                                            <tr>
+                                                                <td @click="editarTarea(task.id)" style="cursor: pointer" >{{task.id}}</td>
+                                                                <td>{{task.name}}</td>
+                                                                <td><span class="label label-success">{{task.priority}}</span></td>
+                                                                <td>
+                                                                    <div class="sparkbar" data-color="#00a65a" data-height="20">{{task.duration}} horas </div>
+                                                                </td>
+                                                                <td>
+                                                                    {{task.fecha_fin}}
+                                                                </td>
+                                                            </tr>
+                                                           
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <!-- /.table-responsive -->
                                             </div>
-                                            <!-- /.table-responsive -->
+                                            <!-- /.box-body -->
+                                            <div class="box-footer clearfix">
+                                                <a href="javascript:void(0)" class="btn btn-sm btn-info btn-flat pull-left">Agregar tarea</a>
+                                                <!-- <a href="javascript:void(0)" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a> -->
+                                            </div>
+                                            <!-- /.box-footer -->
                                         </div>
-                                        <!-- /.box-body -->
-                                        <div class="box-footer clearfix">
-                                            <a href="javascript:void(0)" class="btn btn-sm btn-info btn-flat pull-left">Agregar tarea</a>
-                                            <!-- <a href="javascript:void(0)" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a> -->
-                                        </div>
-                                        <!-- /.box-footer -->
                                     </div>
                                     <!-- /.box -->
 
@@ -183,108 +144,7 @@
                             </div>
                           
         
-                            <div class="row">
-                                <div class="col-xs-12 ">
-
-                                    <!-- TABLE: LATEST ORDERS -->
-                                    <div class="box box-info">
-                                        <div class="box-header with-border">
-                                            <h3 class="box-title">Sección 2</h3>
-
-                                            <div class="box-tools pull-right">
-                                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                                                <!-- <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button> -->
-                                            </div>
-                                            <i class="fa fa-pencil-square-o editarSeccion" aria-hidden="true"></i>
-                                        </div>
-                                        <!-- /.box-header -->
-                                        <div class="box-body">
-                                            <div class="table-responsive">
-                                                <table class="table no-margin">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>ID</th>
-                                                            <th>Tarea</th>
-                                                            <th>Estado</th>
-                                                            <th>Popularity</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td><a href="pages/examples/invoice.html">OR9842</a></td>
-                                                            <td>Call of Duty IV</td>
-                                                            <td><span class="label label-success">Shipped</span></td>
-                                                            <td>
-                                                                <div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td><a href="pages/examples/invoice.html">OR1848</a></td>
-                                                            <td>Samsung Smart TV</td>
-                                                            <td><span class="label label-warning">Pending</span></td>
-                                                            <td>
-                                                                <div class="sparkbar" data-color="#f39c12" data-height="20">90,80,-90,70,61,-83,68</div>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td><a href="pages/examples/invoice.html">OR7429</a></td>
-                                                            <td>iPhone 6 Plus</td>
-                                                            <td><span class="label label-danger">Delivered</span></td>
-                                                            <td>
-                                                                <div class="sparkbar" data-color="#f56954" data-height="20">90,-80,90,70,-61,83,63</div>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td><a href="pages/examples/invoice.html">OR7429</a></td>
-                                                            <td>Samsung Smart TV</td>
-                                                            <td><span class="label label-info">Processing</span></td>
-                                                            <td>
-                                                                <div class="sparkbar" data-color="#00c0ef" data-height="20">90,80,-90,70,-61,83,63</div>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td><a href="pages/examples/invoice.html">OR1848</a></td>
-                                                            <td>Samsung Smart TV</td>
-                                                            <td><span class="label label-warning">Pending</span></td>
-                                                            <td>
-                                                                <div class="sparkbar" data-color="#f39c12" data-height="20">90,80,-90,70,61,-83,68</div>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td><a href="pages/examples/invoice.html">OR7429</a></td>
-                                                            <td>iPhone 6 Plus</td>
-                                                            <td><span class="label label-danger">Delivered</span></td>
-                                                            <td>
-                                                                <div class="sparkbar" data-color="#f56954" data-height="20">90,-80,90,70,-61,83,63</div>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td><a href="pages/examples/invoice.html">OR9842</a></td>
-                                                            <td>Call of Duty IV</td>
-                                                            <td><span class="label label-success">Shipped</span></td>
-                                                            <td>
-                                                                <div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            <!-- /.table-responsive -->
-                                        </div>
-                                        <!-- /.box-body -->
-                                        <div class="box-footer clearfix">
-                                            <a href="javascript:void(0)" class="btn btn-sm btn-info btn-flat pull-left">Place New Order</a>
-                                            <a href="javascript:void(0)" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a>
-                                        </div>
-                                        <!-- /.box-footer -->
-                                    </div>
-                                    <!-- /.box -->
-
-
-                                </div>
-                                <!-- /.col -->
-                            </div>
-                            <!-- /.row -->                           
+                                                  
                         </div>                        
                     </div>
                     
@@ -322,8 +182,12 @@
 
 
 
-                <div id="contentEditar" class="box box-primary" style="padding: 10px 47px;position: absolute; width: 50%; height: 50%; top: 0; right: -50%; margin-top: 5%;">                                       
-                   <TareasEditar></TareasEditar>
+                <div id="contentEditar" class="box box-primary" style="padding: 10px 47px;position: absolute; width: 50%; height: 100%; top: 0; right: -55%; margin-top: 4%;box-shadow: 1px 3px 26px -1px rgba(0,0,0,0.75);">                                       
+                   <TareasEditar @ocultar="closeEditTask" :idTask="idTaskEdit" ></TareasEditar>
+                </div>
+
+                <div id="contentEditarSection" class="box box-primary" style="padding: 10px 47px;position: absolute; width: 50%; height: 50%; top: 0; right: -50%; margin-top: 5%;">                                                          
+                   <!-- <TareasEditar @ocultar="cambiarEstado"></TareasEditar> -->
                 </div>
             
         </div>
@@ -334,30 +198,102 @@
 <script>
  import TareasEditar from "./TareasEditar.vue"
  export default {  
-    name: 'EditarTarea',
+    name: 'Proyectos',
     components: {TareasEditar},
     data () {
         return {
             controlEditar: 0, 
             totalTasks: {},
-            idProject: ''
+            idProject: this.$route.params.id,
+            sections: {},
+            idTaskEdit: 0,
         }
+    },
+    watch: {
+    '$route.params.id': function (id) {
+        //this.setearSection(id)
+        
+        this.$store.dispatch('returnSectionsProject',id )
+            .then((res) => this.sections = this.$store.state.sectionProject)
+        },
+
+        '$route' (to, from) {
+            $('.box').boxWidget('toggle')
+      // react to route changes...
+      console.log("TO=>>",to)
+      console.log("fron=>>", from)
+    }
     },
 
     created() {
         this.idProject = this.$route.params.id
 
-        this.$store.dispatch('returnSectionsProject',this.idProject )
-            .then((res) => console.log("SECIONES PROJECT>",res))
+        this.$store.dispatch('returnSectionsProject',this.$route.params.id )
+            .then((res) => this.sections = this.$store.state.sectionProject)
+            .then((res)=> $('.box').boxWidget('toggle'))
+
+        //this.setearSection(this.$route.params.id)
 
 
     },
     mounted: function () {
-    //    $('.box').boxWidget('toggle')
+       
     },
+    updated: function () {
+        $('.box').boxWidget()
+    },
+    
 
     methods: {
-            editarTarea: function (event) {  
+            cambiarEstado(){
+                console.log("desde hijo")
+            },
+            setearSection: function(){
+                this.idProject = this.$route.params.id
+
+                this.$store.dispatch('returnSectionsProject',this.idProject )
+                    .then((res) => this.sections = this.$store.state.sectionProject)
+            },
+            editarTarea(idTarea) {   
+                // alert(id)
+                this.idTaskEdit = idTarea     
+               
+                let position = ""
+                let control = this.controlEditar
+               // console.log("control=>>>",this.controlEditar)
+                // if(control == 0){
+                position = "0%"
+                this.controlEditar = 1
+                // }else{
+                //     this.controlEditar = 0
+                //     position = "-55%"
+                // }
+
+                this.$store.dispatch('returnDetailTask', idTarea)
+                    .then((res) => console.log("TAREA=>",res))
+                    .then((res) => $( "#contentEditar" ).animate({right: position,}, 1300, function() {}))
+                  
+                
+            },
+
+            closeEditTask(){
+                //this.idTaskEdit = idTarea     
+               
+                let position = ""
+                let control = this.controlEditar
+               // console.log("control=>>>",this.controlEditar)
+                // if(control == 0){
+                //     position = "0%"
+                //     this.controlEditar = 1
+                // }else{
+                    this.controlEditar = 0
+                    position = "-55%"
+                // }
+
+                $( "#contentEditar" ).animate({right: position,}, 1300, function() {})
+            },
+
+            editarSection: function (event) {  
                 // alert("aca")      
                 let position = ""
                 let control = this.controlEditar
@@ -370,12 +306,20 @@
                     position = "-50%"
                 }
 
-                this.$store.dispatch('returnDetailTask', )
+                this.$store.dispatch('returnDetailTask', 2)
                     .then((res) => console.log("TAREA=>",res))
                     .then((res) => $( "#contentEditar" ).animate({right: position,}, 1300, function() {}))
                   
                 
             }
+        },
+
+        computed: {
+            idProyecto(){
+                return this.setearSection()
+            }
         }
+
+
 }
 </script>

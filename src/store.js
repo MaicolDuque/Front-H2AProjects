@@ -56,7 +56,7 @@ const store = new Vuex.Store({
             state.userTasks = infoUser
         },
         MUTATION_detailTask(state, info) {
-            state.userTastaskDetailks = info
+            state.taskDetail = info
         },
 
         MUTATION_allTasks(state, infoTasks) {
@@ -115,7 +115,7 @@ const store = new Vuex.Store({
                 })
         },
 
-        returnDetailTask(id) {
+        returnDetailTask(context, id) {
             return taskService.detailTask(id)
                 .then(res => {
                     context.commit('MUTATION_detailTask', res)
@@ -149,7 +149,7 @@ const store = new Vuex.Store({
             return sectionService.sectionsProject(id)
                 .then(res => {
                     context.commit('MUTATION_sectionsProject', res)
-                    return res
+                        // return res
                 })
         }
     }
