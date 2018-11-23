@@ -182,8 +182,8 @@
 
 
 
-                <div id="contentEditar" class="box box-primary" style="padding: 10px 47px;position: absolute; width: 50%; height: 100%; top: 0; right: -55%; margin-top: 4%;box-shadow: 1px 3px 26px -1px rgba(0,0,0,0.75);">                                       
-                   <TareasEditar @ocultar="closeEditTask" :idTask="idTaskEdit" ></TareasEditar>
+                <div id="contentEditar" class="box box-primary" style="padding: 10px 47px;position: absolute;overflow: hidden;overflow-y: scroll;width: 50%; height: 100%; top: 0; right: -55%; margin-top: 4%;box-shadow: 1px 3px 26px -1px rgba(0,0,0,0.75);">                                       
+                   <TareasEditar style="height: 100%;" @ocultar="closeEditTask" :idTask="idTaskEdit" ></TareasEditar>
                 </div>
 
                 <div id="contentEditarSection" class="box box-primary" style="padding: 10px 47px;position: absolute; width: 50%; height: 50%; top: 0; right: -50%; margin-top: 5%;">                                                          
@@ -290,7 +290,7 @@
                     position = "-55%"
                 // }
 
-                $( "#contentEditar" ).animate({right: position,}, 1300, function() {})
+                $( "#contentEditar" ).animate({right: position}, 1300, function() {})
             },
 
             editarSection: function (event) {  
