@@ -121,9 +121,9 @@
             return false
         },
 
-        tipo(){
-            return this.tipoTask
-        }
+        // tipo(){
+        //     return this.tipoTask
+        // }
         
     },
 

@@ -14,13 +14,15 @@ const store = new Vuex.Store({
         user: '',
         authenticate: false,
         allUsers: {},
+        userGroups: {},
         userTasks: {},
         allTasks: {},
         allGroups: {},
         allOccupations: {},
         allProjects: {},
         taskDetail: {},
-        sectionProject: {}
+        sectionProject: {},
+        currentProject: {}
     },
 
     getters: {
@@ -34,7 +36,11 @@ const store = new Vuex.Store({
             // return state.userTasks.filter(tasks => tasks.state_id == 3)
 
             return state.userTasks
-        }
+        },
+
+        // groupsCurrentProject(state) {
+        //     return state.currentProject.groups.map(project => project.id)
+        // }
 
     },
 
@@ -55,6 +61,11 @@ const store = new Vuex.Store({
         MUTATION_userTasks(state, infoUser) {
             state.userTasks = infoUser
         },
+
+        MUTATION_userForGroups(state, infoUser) {
+            state.userGroups = infoUser
+        },
+
         MUTATION_detailTask(state, info) {
             state.taskDetail = info
         },
@@ -71,6 +82,9 @@ const store = new Vuex.Store({
         MUTATION_allProjects(state, info) {
             state.allProjects = info
         },
+        MUTATION_projectDetail(state, info) {
+            state.currentProject = info
+        },
         MUTATION_sectionsProject(state, info) {
             state.sectionProject = info
         }
@@ -78,6 +92,8 @@ const store = new Vuex.Store({
     },
 
     actions: {
+
+        //USERS
         getUserTasks(context, payload) {
             return userService.userTasks(payload.id)
                 .then(res => {
@@ -85,6 +101,15 @@ const store = new Vuex.Store({
                     return res.tasks
                 })
         },
+
+        getUserForGroups(context, payload) {
+            return userService.allUsersGroups(payload)
+                .then(res => {
+                    context.commit('MUTATION_userForGroups', res)
+                    return res
+                })
+        },
+
         returnUsers(context) {
             return userService.allUsers()
                 .then(res => {
@@ -107,6 +132,11 @@ const store = new Vuex.Store({
                 })
         },
 
+
+
+
+
+        //TASKS
         returnTasks(context) {
             return taskService.allTasks()
                 .then(res => {
@@ -122,6 +152,10 @@ const store = new Vuex.Store({
                         //return res
                 })
         },
+
+
+
+        //GROUPS
         returnGroups(context) {
             return groupService.allGroups()
                 .then(res => {
@@ -129,6 +163,11 @@ const store = new Vuex.Store({
                         //return res
                 })
         },
+
+
+
+
+        //OCCUPATIONS
         returnOccupations(context) {
             return occupationService.allOccupations()
                 .then(res => {
@@ -137,10 +176,21 @@ const store = new Vuex.Store({
                 })
         },
 
+
+
+        //PROJECTS
         returnProjects(context) {
             return projectService.allProjects()
                 .then(res => {
                     context.commit('MUTATION_allProjects', res)
+                    return res
+                })
+        },
+
+        returnProjectDetail(context, id) {
+            return projectService.detailProject(id)
+                .then(res => {
+                    context.commit('MUTATION_projectDetail', res)
                     return res
                 })
         },

@@ -2,19 +2,28 @@
     <!-- <div id="contentEditar"  style="padding: 10px 47px;position: absolute; width: 50%; height: 50%; top: 0; right: -50%; margin-top: 5%;">                                        -->
     <div >
         <span class="close" @click="ocultarEditar"><i class=" fa fa-close"></i></span>  
-        <h3 class="box-title">Editar usuario</h3>   
+        <h3 class="box-title">Editar tarea</h3>   
           
-        <form role="form">
+        <form role="form" @submit.prevent="update">
             <div class="box-body">
                 
                 <div class="form-group">                   
                 <label for="nameTask">Tarea: </label>
-                <input type="email" class="form-control" id="nameTask" v-model="detalleTarea.name">
+                <input type="text" class="form-control" id="nameTask" v-model="detalleTarea.name">
+                </div>
+
+                <div class="form-group">                   
+                <label for="nameTask">Responsable: </label>
+                <!-- <input type="text" class="form-control" id="nameTask" v-model="detalleTarea.name"> -->
+                <select class="form-control" v-model="detalleTarea.user_id" name="responsable" id="responsable">                    
+                    <option v-for="user in users" :key="user.id" :value="user.id" v-if="user.id == detalleTarea.user_id"  selected  >{{user.name}}</option>
+                    <option :value="user.id" v-else >{{user.name}}</option>
+                </select>
                 </div>
                 
                 <div class="form-group">
                 <label for="description">Descripción: </label>
-                <textarea class="form-control" name="description" id="description" cols="10" rows="2">{{detalleTarea.description}}</textarea>                
+                <textarea class="form-control" name="description" id="description" cols="10" rows="2" v-model="detalleTarea.description" />
                 </div>
                 
                 <div class="form-group">
@@ -52,21 +61,19 @@
     props: ['id'],
     data () {
         return {
-            detailTask: this.$store.state.taskDetail
+            detailTask: this.$store.state.taskDetail,
+            
         }
     },
-//     created () {       
-//         //this.returnAllUsers() 
-//         // this.idUser = this.$route.params.id  
-//         // this.$store.dispatch('getUserTasks', {id: this.idUser})
-//         //     .then((res1) => this.setearEstadoTareas())
-//             // .then((res) => $('#taskState').DataTable())           
-//         // this.$store.dispatch('returnUsers')
-//         //     // .then((res) => this.users = res)
-//         //     .then((res) => $('#taskState').DataTable())
+    created () {   
+        
+        
+   
+        // this.$store.dispatch('getUserTasks', {id: this.idUser})
+        //     .then((res1) => this.setearEstadoTareas())
+            // .then((res) => $('#taskState').DataTable())           
 
-
-//     },
+    },
     mounted: function () {        
        console.log(this.id)
     },
@@ -84,26 +91,19 @@
             // alert("Editar usuario!->")
             // this.$router.push(`/tareas/${id}`)
             this.$emit('ocultar');
+        },
+
+        update(){
+            console.log("Actulizar=>", this.detalleTarea)
         }
     },
-    computed: {
-        // colorTareas() {        
-        //     let value = "color"+this.tipoTask              
-        //     return this.colors[value]
-        // },
-
-        // // retornarTareasEstado(){            
-        // //     return  this.$store.state.userTasks.filter(tasks => tasks.state_id == this.tipoTask)
-        // // },
-        // validarTareas() {
-        //     if(this.retornarTareasEstado.length > 0){
-        //         return true
-        //     }
-        //     return false
-        // },
-
+    computed: {      
         detalleTarea(){
             return this.$store.state.taskDetail
+        },
+
+        users(){
+            return this.$store.state.userGroups
         }
         
     },

@@ -52,3 +52,6 @@
     },
  }
 </script>
+
+<!-- * Reforzar conceptos de ciclos y aprender como funcionan los ciclos anidados.
+Realizar ejercicio propueto, que meustre la tabla de multiplicar de una cantidad de numeros-->

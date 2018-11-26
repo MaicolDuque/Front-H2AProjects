@@ -3,6 +3,7 @@
         <div class="content-wrapper" style="position: relative">
             <div id="secciones" style="padding: 1% 4%; ">
                 <!-- Content Header (Page header) -->
+                
                 <section class="content-header">
                     <div class="row">
                         <div class="col-xs-12 " style="padding-top: 1.9em;width: 20%;float: right">
@@ -17,7 +18,7 @@
                     <div class="row">
                         <div class="col-xs-8 col-md-8">
                             <h1>
-                                Proyecto 1
+                                {{project.name}}
                             </h1>
 
                         </div>
@@ -207,6 +208,8 @@
             idProject: this.$route.params.id,
             sections: {},
             idTaskEdit: 0,
+            project:{},
+            
         }
     },
     watch: {
@@ -227,17 +230,30 @@
 
     created() {
         this.idProject = this.$route.params.id
+        
+        this.$store.dispatch('returnProjectDetail',this.$route.params.id )
+            .then((res) => this.project = this.$store.state.currentProject)
+
+
+        // this.$store.dispatch('getUserForGroups',this.$store.getters.groupsCurrentProject )
+        //     .then((res) => console.log("USUSRIOS GROUPS=>>", res))
+
+        // console.log("GRIPUS STATE=>>",this.$store.currentProject.groups.map(project => project.id))
 
         this.$store.dispatch('returnSectionsProject',this.$route.params.id )
             .then((res) => this.sections = this.$store.state.sectionProject)
             .then((res)=> $('.box').boxWidget('toggle'))
 
+        
+        
         //this.setearSection(this.$route.params.id)
 
 
     },
     mounted: function () {
-       
+        
+
+        // console.log("gr=>",this.groupsProject)
     },
     updated: function () {
         $('.box').boxWidget()
@@ -245,6 +261,11 @@
     
 
     methods: {
+
+            returnUsersGroups(){
+                // this.$store.dispatch('getUserForGroups',this.groupsProject )
+                //     .then((res) => console.log("USUSRIOS GROUPS=>>", res))
+            },
             cambiarEstado(){
                 console.log("desde hijo")
             },
@@ -255,7 +276,10 @@
                     .then((res) => this.sections = this.$store.state.sectionProject)
             },
             editarTarea(idTarea) {   
-                // alert(id)
+                // alert(this.groupsProject)
+                this.$store.dispatch('getUserForGroups',this.groupsProject )
+                    .then((res) => console.log())
+                
                 this.idTaskEdit = idTarea     
                
                 let position = ""
@@ -317,6 +341,9 @@
         computed: {
             idProyecto(){
                 return this.setearSection()
+            },
+            groupsProject(){
+                return this.project.groups.map(project => project.id)
             }
         }
 

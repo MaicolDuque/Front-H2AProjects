@@ -21,6 +21,11 @@ userService.allUsers = function() {
         .then(res => res.data)
 }
 
+userService.allUsersGroups = function(data) {
+    return HTTP.post('/users/groups', { data: data })
+        .then(res => res.data)
+}
+
 userService.addUser = function(data) {
     return HTTP.post('/users', data)
         .then(res => res)
