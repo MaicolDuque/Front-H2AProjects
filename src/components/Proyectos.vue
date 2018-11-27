@@ -30,55 +30,7 @@
 
                 <!-- Main content -->
                 <section class="content" style="position: relative">
-                    <div class="row">
-                        <div class="modal fade" id="modal-default">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span></button>
-                                        <h4 class="modal-title">Editar sección</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="box box-primary">
-                                        
-                                            <h3 class="box-title">Quick Example</h3>
-                                            
-                                            <!-- /.box-header -->
-                                            <!-- form start -->
-                                            <form role="form">
-                                            <div class="box-body">
-                                                <div class="form-group">
-                                                <label for="exampleInputEmail1">Email address</label>
-                                                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
-                                                </div>
-                                                <div class="form-group">
-                                                <label for="exampleInputPassword11">Password</label>
-                                                <input type="password" class="form-control" id="exampleInputPassword11" placeholder="Password">
-                                                </div>
-                                                
-                                            </div>
-                                            <!-- /.box-body -->
-
-                                            <div class="box-footer">
-                                                <button type="submit" class="btn btn-primary">Submit</button>
-                                            </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary">Save changes</button>
-                                    </div>
-                                </div>
-                                <!-- /.modal-content -->
-                            </div>
-                        <!-- /.modal-dialog -->
-                        </div>
-                    
-
-                    </div>
-
+                 
                     <div class="row">
                         <div class="col-md-12">
                             <div class="row" >
@@ -96,7 +48,7 @@
                                                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                                                     <!-- <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button> -->
                                                 </div>
-                                                <i class="fa fa-pencil-square-o editarSeccion" @click="editarSection" style="cursor: pointer" ></i>
+                                                <i class="fa fa-pencil-square-o editarSeccion" @click="editarSection(section.id)" style="cursor: pointer" ></i>
                                             </div>
                                             <!-- /.box-header -->
                                             <div class="box-body">
@@ -131,9 +83,11 @@
                                             </div>
                                             <!-- /.box-body -->
                                             <div class="box-footer clearfix">
-                                                <a href="javascript:void(0)" class="btn btn-sm btn-info btn-flat pull-left">Agregar tarea</a>
+                                                <a @click="addTask(section.id)" class="btn btn-sm btn-info btn-flat pull-left">Agregar tarea</a>
                                                 <!-- <a href="javascript:void(0)" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a> -->
                                             </div>
+
+                                            
                                             <!-- /.box-footer -->
                                         </div>
                                     </div>
@@ -184,11 +138,15 @@
 
 
                 <div id="contentEditar" class="box box-primary" style="padding: 10px 47px;position: absolute;overflow: hidden;overflow-y: scroll;width: 50%; height: 100%; top: 0; right: -55%; margin-top: 4%;box-shadow: 1px 3px 26px -1px rgba(0,0,0,0.75);">                                       
-                   <TareasEditar style="height: 100%;" @ocultar="closeEditTask" :idTask="idTaskEdit" ></TareasEditar>
+                   <TareasEditar style="height: 100%;" @ocultar="closeEditTask(1)" :edit="1" titulo="Editar Tarea" textButton="Actualizar"></TareasEditar>
                 </div>
 
-                <div id="contentEditarSection" class="box box-primary" style="padding: 10px 47px;position: absolute; width: 50%; height: 50%; top: 0; right: -50%; margin-top: 5%;">                                                          
-                   <!-- <TareasEditar @ocultar="cambiarEstado"></TareasEditar> -->
+                <div id="contentAgregarTarea" class="box box-primary" style="padding: 10px 47px;position: absolute;overflow: hidden;overflow-y: scroll;width: 50%; height: 100%; top: 0; right: -55%; margin-top: 4%;box-shadow: 1px 3px 26px -1px rgba(0,0,0,0.75);">                                       
+                   <TareasEditar style="height: 100%;" @ocultarAdd="closeEditTask(0)" :edit="0" titulo="Agregar Tarea" textButton="Agregar"></TareasEditar>
+                </div>
+
+                <div id="contentEditSection" class="box box-primary" style="padding: 10px 47px;position: absolute;overflow: hidden;overflow-y: scroll;width: 50%; height: 100%; top: 0; right: -55%; margin-top: 4%;box-shadow: 1px 3px 26px -1px rgba(0,0,0,0.75);">                                       
+                   <SeccionEditar style="height: 100%;" @ocultarAdd="ocultarSection(1)" :edit="1" titulo="Editar Sección" textButton="Actualizar" ></SeccionEditar>
                 </div>
             
         </div>
@@ -198,9 +156,10 @@
 
 <script>
  import TareasEditar from "./TareasEditar.vue"
+ import SeccionEditar from "./SeccionEditar.vue"
  export default {  
     name: 'Proyectos',
-    components: {TareasEditar},
+    components: {TareasEditar,SeccionEditar},
     data () {
         return {
             controlEditar: 0, 
@@ -209,6 +168,7 @@
             sections: {},
             idTaskEdit: 0,
             project:{},
+            idCurrentSection: 0
             
         }
     },
@@ -223,7 +183,7 @@
         '$route' (to, from) {
             $('.box').boxWidget('toggle')
       // react to route changes...
-      console.log("TO=>>",to)
+      console.log("TO=>>", to)
       console.log("fron=>>", from)
     }
     },
@@ -232,22 +192,11 @@
         this.idProject = this.$route.params.id
         
         this.$store.dispatch('returnProjectDetail',this.$route.params.id )
-            .then((res) => this.project = this.$store.state.currentProject)
-
-
-        // this.$store.dispatch('getUserForGroups',this.$store.getters.groupsCurrentProject )
-        //     .then((res) => console.log("USUSRIOS GROUPS=>>", res))
-
-        // console.log("GRIPUS STATE=>>",this.$store.currentProject.groups.map(project => project.id))
+            .then((res) => this.project = this.$store.state.currentProject)       
 
         this.$store.dispatch('returnSectionsProject',this.$route.params.id )
             .then((res) => this.sections = this.$store.state.sectionProject)
-            .then((res)=> $('.box').boxWidget('toggle'))
-
-        
-        
-        //this.setearSection(this.$route.params.id)
-
+            .then((rest)=> $('.box').boxWidget('toggle'))
 
     },
     mounted: function () {
@@ -300,9 +249,9 @@
                 
             },
 
-            closeEditTask(){
-                //this.idTaskEdit = idTarea     
-               
+            closeEditTask(controlEditarTask){                          
+                this.$store.dispatch('returnSectionsProject',this.$route.params.id )
+                    .then((res) => this.sections = this.$store.state.sectionProject)
                 let position = ""
                 let control = this.controlEditar
                // console.log("control=>>>",this.controlEditar)
@@ -310,15 +259,26 @@
                 //     position = "0%"
                 //     this.controlEditar = 1
                 // }else{
-                    this.controlEditar = 0
-                    position = "-55%"
+                this.controlEditar = 0
+                position = "-55%"
                 // }
-
-                $( "#contentEditar" ).animate({right: position}, 1300, function() {})
+                if(controlEditarTask == 1){
+                    $( "#contentEditar" ).animate({right: position}, 1300, function() {})
+                }else{
+                    $( "#contentAgregarTarea" ).animate({right: position}, 1300, function() {})
+                }
             },
 
-            editarSection: function (event) {  
-                // alert("aca")      
+            editarSection(idSection) {  
+                // alert("aca"+idSection)  
+                console.log("Id seciont=", idSection)    
+                this.idCurrentSection = idSection
+                console.log("Id seciont=", this.idCurrentSection)
+
+                console.log("Actual section=>",this.currentSection)
+
+                this.$store.commit('MUTATION_currentSection',this.currentSection)
+
                 let position = ""
                 let control = this.controlEditar
                // console.log("control=>>>",this.controlEditar)
@@ -330,11 +290,34 @@
                     position = "-50%"
                 }
 
-                this.$store.dispatch('returnDetailTask', 2)
-                    .then((res) => console.log("TAREA=>",res))
-                    .then((res) => $( "#contentEditar" ).animate({right: position,}, 1300, function() {}))
+                $( "#contentEditSection" ).animate({right: position,}, 1300, function() {})
+            //     this.$store.dispatch('returnDetailTask', 2)
+            //         .then((res) => console.log("TAREA=>",res))
+            //         .then((res) => $( "#contentEditSection" ).animate({right: position,}, 1300, function() {}))
                   
                 
+            },
+
+            addTask(currentSection){
+                // alert("sas=>"+id);
+                 // alert("aca")     
+
+                //Traer usuarios del grupos
+                this.$store.dispatch('getUserForGroups',this.groupsProject )
+                    .then((res) => console.log(res)) 
+                let position = ""
+                let control = this.controlEditar
+               // console.log("control=>>>",this.controlEditar)
+                if(control == 0){
+                    position = "0%"
+                    this.controlEditar = 1
+                }else{
+                    this.controlEditar = 0
+                    position = "-50%"
+                }
+
+                this.$store.commit('MUTATION_detailTask', {archived: 0,created_at: "",description: '',duration: '',fecha_fin: '',id: '',name: '',priority: '',section_id: currentSection,state_id: 1,updated_at: '',user_id: ''});
+                $( "#contentAgregarTarea" ).animate({right: position,}, 1300, function() {})
             }
         },
 
@@ -344,7 +327,13 @@
             },
             groupsProject(){
                 return this.project.groups.map(project => project.id)
+            },
+            currentSection(){
+                let secionDetail = this.sections.filter(section => section.id == this.idCurrentSection)
+                return secionDetail[0];
             }
+
+
         }
 
 

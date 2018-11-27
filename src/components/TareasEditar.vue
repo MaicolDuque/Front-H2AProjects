@@ -2,16 +2,11 @@
     <!-- <div id="contentEditar"  style="padding: 10px 47px;position: absolute; width: 50%; height: 50%; top: 0; right: -50%; margin-top: 5%;">                                        -->
     <div >
         <span class="close" @click="ocultarEditar"><i class=" fa fa-close"></i></span>  
-        <h3 class="box-title">Editar tarea</h3>   
+        <h3 class="box-title">{{this.titulo}}</h3>   
           
-        <form role="form" @submit.prevent="update">
+        <form role="form" @submit.prevent="updateAdd">
             <div class="box-body">
                 
-                <div class="form-group">                   
-                <label for="nameTask">Tarea: </label>
-                <input type="text" class="form-control" id="nameTask" v-model="detalleTarea.name">
-                </div>
-
                 <div class="form-group">                   
                 <label for="nameTask">Responsable: </label>
                 <!-- <input type="text" class="form-control" id="nameTask" v-model="detalleTarea.name"> -->
@@ -20,6 +15,14 @@
                     <option :value="user.id" v-else >{{user.name}}</option>
                 </select>
                 </div>
+
+
+                <div class="form-group">                   
+                <label for="nameTask">Tarea: </label>
+                <input type="text" class="form-control" id="nameTask" v-model="detalleTarea.name">
+                </div>
+
+                
                 
                 <div class="form-group">
                 <label for="description">Descripción: </label>
@@ -46,7 +49,7 @@
        
 
             <div class="box-footer">
-                <button type="submit" class="btn btn-primary">Actualizar</button>
+                <button type="submit" class="btn btn-primary">{{this.textButton}}</button>
             </div>
         </form>
     </div>
@@ -58,43 +61,40 @@
 
 
  export default {  
-    props: ['id'],
+    props: ['edit', 'titulo', 'textButton'],
     data () {
         return {
-            detailTask: this.$store.state.taskDetail,
+            detailTask: {},
             
         }
     },
-    created () {   
-        
-        
-   
-        // this.$store.dispatch('getUserTasks', {id: this.idUser})
-        //     .then((res1) => this.setearEstadoTareas())
-            // .then((res) => $('#taskState').DataTable())           
-
+    created () {       
     },
     mounted: function () {        
-       console.log(this.id)
+       //console.log(this.edit)
     },
     updated: function () {
-        console.log(this.id)
+        // console.log(this.edit)
     },
 
-    methods: {
-        setearEstadoTareas () {   //Hacer llamado a la API que retorne total usuarios         
-            this.retornarTareasEstado = this.$store.state.userTasks.filter(tasks => tasks.state_id == this.tipoTask)
-            this.tipo = this.tipoTask
+    methods: {       
+        ocultarEditar() {                      
+            if(this.edit == 1){
+                this.$emit('ocultar');
+            }else{
+                this.$emit('ocultarAdd');
+            }
         },
 
-        ocultarEditar() {           
-            // alert("Editar usuario!->")
-            // this.$router.push(`/tareas/${id}`)
-            this.$emit('ocultar');
-        },
-
-        update(){
+        updateAdd(){
             console.log("Actulizar=>", this.detalleTarea)
+            if(this.edit == 1){
+                this.$store.dispatch('updateTask',this.detalleTarea )
+                    .then((res) => this.ocultarEditar())
+            }else{
+                this.$store.dispatch('addTask',this.detalleTarea )
+                    .then((res) => this.ocultarEditar())
+            }
         }
     },
     computed: {      

@@ -22,7 +22,8 @@ const store = new Vuex.Store({
         allProjects: {},
         taskDetail: {},
         sectionProject: {},
-        currentProject: {}
+        currentProject: {},
+        currentSection: {}
     },
 
     getters: {
@@ -87,13 +88,16 @@ const store = new Vuex.Store({
         },
         MUTATION_sectionsProject(state, info) {
             state.sectionProject = info
+        },
+        MUTATION_currentSection(state, info) {
+            state.currentSection = info
         }
 
     },
 
     actions: {
 
-        //USERS
+        ///////////////////        USERS       //////////////////////
         getUserTasks(context, payload) {
             return userService.userTasks(payload.id)
                 .then(res => {
@@ -136,7 +140,7 @@ const store = new Vuex.Store({
 
 
 
-        //TASKS
+        //////////////////////////      TASKS      //////////////////////////////////7
         returnTasks(context) {
             return taskService.allTasks()
                 .then(res => {
@@ -153,9 +157,34 @@ const store = new Vuex.Store({
                 })
         },
 
+        updateTask(context, payload) {
+            taskService.updateTask(payload)
+                .then(res => {
+                    context.commit('MUTATION_detailTask', res)
+                    console.log("ACTUALZANDO=>", res)
+                    return taskService.allTasks()
+                })
+                .then((resT) => context.commit('MUTATION_allTasks', resT))
+
+        },
+
+        addTask(context, payload) {
+            taskService.addTask(payload)
+                .then(res => {
+                    console.log("AGREGANDO=>", res)
+                    return taskService.allTasks()
+                })
+                .then((resT) => context.commit('MUTATION_allTasks', resT))
+        },
 
 
-        //GROUPS
+
+
+
+
+
+
+        /////////////////////       GROUPS      //////////////////////////
         returnGroups(context) {
             return groupService.allGroups()
                 .then(res => {
@@ -167,7 +196,7 @@ const store = new Vuex.Store({
 
 
 
-        //OCCUPATIONS
+        ////////////////////////        OCCUPATIONS     ///////////////////////
         returnOccupations(context) {
             return occupationService.allOccupations()
                 .then(res => {
@@ -178,7 +207,7 @@ const store = new Vuex.Store({
 
 
 
-        //PROJECTS
+        ////////////////////////7        PROJECTS       /////////////////////////
         returnProjects(context) {
             return projectService.allProjects()
                 .then(res => {
