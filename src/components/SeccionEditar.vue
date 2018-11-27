@@ -68,10 +68,10 @@
         updateAdd(){
             // console.log("Actulizar=>", this.detalleSeccion)
             if(this.edit == 1){
-                this.$store.dispatch('updateTask',this.detalleSeccion )
+                this.$store.dispatch('updateSection',this.detalleSeccion )
                     .then((res) => this.ocultarEditar())
             }else{
-                this.$store.dispatch('addTask',this.detalleSeccion )
+                this.$store.dispatch('addNewSection',this.detalleSeccion )
                     .then((res) => this.ocultarEditar())
             }
         }

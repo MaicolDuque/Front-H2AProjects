@@ -230,7 +230,24 @@ const store = new Vuex.Store({
                     context.commit('MUTATION_sectionsProject', res)
                         // return res
                 })
-        }
+        },
+
+        updateSection(context, info) {
+            return sectionService.updateSection(info)
+                .then(res => {
+                    //context.commit('MUTATION_sectionsProject', res)
+                        return res
+                })
+        },
+
+        addNewSection(context, info) {
+            return sectionService.addSection(info)
+                .then(res => {
+                    //context.commit('MUTATION_sectionsProject', res)
+                    return res
+                })
+        },
+        
     }
 })
 

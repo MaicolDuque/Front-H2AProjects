@@ -8,7 +8,7 @@
                     <div class="row">
                         <div class="col-xs-12 " style="padding-top: 1.9em;width: 20%;float: right">
                                                         
-                            <button type="button"  class="btn btn-block btn-info">Agregar sección</button>
+                            <button type="button"  @click="addSection" class="btn btn-block btn-info">Agregar sección</button>
                                 
                         </div>
                     </div>
@@ -146,7 +146,11 @@
                 </div>
 
                 <div id="contentEditSection" class="box box-primary" style="padding: 10px 47px;position: absolute;overflow: hidden;overflow-y: scroll;width: 50%; height: 100%; top: 0; right: -55%; margin-top: 4%;box-shadow: 1px 3px 26px -1px rgba(0,0,0,0.75);">                                       
-                   <SeccionEditar style="height: 100%;" @ocultarAdd="ocultarSection(1)" :edit="1" titulo="Editar Sección" textButton="Actualizar" ></SeccionEditar>
+                   <SeccionEditar style="height: 100%;" @ocultarSection="closeEditSection(1)" :edit="1" titulo="Editar Sección" textButton="Actualizar" ></SeccionEditar>
+                </div>
+
+                <div id="contentAddSection" class="box box-primary" style="padding: 10px 47px;position: absolute;overflow: hidden;overflow-y: scroll;width: 50%; height: 100%; top: 0; right: -55%; margin-top: 4%;box-shadow: 1px 3px 26px -1px rgba(0,0,0,0.75);">                                       
+                   <SeccionEditar style="height: 100%;" @ocultarSectionAdd="closeEditSection(0)" :edit="0" titulo="Agregar Sección" textButton="Agregar" ></SeccionEditar>
                 </div>
             
         </div>
@@ -178,13 +182,16 @@
         
         this.$store.dispatch('returnSectionsProject',id )
             .then((res) => this.sections = this.$store.state.sectionProject)
-        },
 
-        '$route' (to, from) {
-            $('.box').boxWidget('toggle')
-      // react to route changes...
-      console.log("TO=>>", to)
-      console.log("fron=>>", from)
+        this.$store.dispatch('returnProjectDetail',id )
+            .then((res) => this.project = this.$store.state.currentProject) 
+    },
+
+    '$route' (to, from) {
+        $('.box').boxWidget('toggle')
+    // react to route changes...
+    console.log("TO=>>", to)
+    console.log("fron=>>", from)
     }
     },
 
@@ -269,6 +276,26 @@
                 }
             },
 
+            closeEditSection(controlEditarSection){                          
+                this.$store.dispatch('returnSectionsProject',this.$route.params.id )
+                    .then((res) => this.sections = this.$store.state.sectionProject)
+                let position = ""
+                let control = this.controlEditar
+               // console.log("control=>>>",this.controlEditar)
+                // if(control == 0){
+                //     position = "0%"
+                //     this.controlEditar = 1
+                // }else{
+                this.controlEditar = 0
+                position = "-55%"
+                // }
+                if(controlEditarSection == 1){
+                    $( "#contentEditSection" ).animate({right: position}, 1300, function() {})
+                }else{
+                    $( "#contentAddSection" ).animate({right: position}, 1300, function() {})
+                }
+            },
+
             editarSection(idSection) {  
                 // alert("aca"+idSection)  
                 console.log("Id seciont=", idSection)    
@@ -318,6 +345,23 @@
 
                 this.$store.commit('MUTATION_detailTask', {archived: 0,created_at: "",description: '',duration: '',fecha_fin: '',id: '',name: '',priority: '',section_id: currentSection,state_id: 1,updated_at: '',user_id: ''});
                 $( "#contentAgregarTarea" ).animate({right: position,}, 1300, function() {})
+            },
+
+            addSection(){               
+                // this.$route.params.id                             
+                let position = ""
+                let control = this.controlEditar
+               // console.log("control=>>>",this.controlEditar)
+                if(control == 0){
+                    position = "0%"
+                    this.controlEditar = 1
+                }else{
+                    this.controlEditar = 0
+                    position = "-50%"
+                }                                
+
+                this.$store.commit('MUTATION_currentSection', {id: "",name: "",description: '',order: 0,project_id: this.$route.params.id});
+                $( "#contentAddSection" ).animate({right: position,}, 1300, function() {})
             }
         },
 

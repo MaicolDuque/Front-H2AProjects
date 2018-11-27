@@ -23,9 +23,9 @@
           <button type="submit" class="btn btn-primary btn-block btn-flat">Ingresar</button>
         </div>
 
-        <div class="col-xs-4">
+        <!-- <div class="col-xs-4">
           <button type="button" @click="loginFailed" class="btn btn-primary btn-block btn-flat">Ingresar</button>
-        </div>
+        </div> -->
         <!-- /.col -->
       </div>
     </form>
