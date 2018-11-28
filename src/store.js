@@ -21,6 +21,7 @@ const store = new Vuex.Store({
         allOccupations: {},
         allProjects: {},
         taskDetail: {},
+        currentTypeTaskDetail:'',
         sectionProject: {},
         currentProject: {},
         currentSection: {}
@@ -74,6 +75,11 @@ const store = new Vuex.Store({
         MUTATION_allTasks(state, infoTasks) {
             state.allTasks = infoTasks
         },
+
+        MUTATION_currentTypeTaskDetail(state, info){
+            state.currentTypeTaskDetail = info
+        },
+
         MUTATION_allGroups(state, info) {
             state.allGroups = info
         },

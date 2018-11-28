@@ -91,7 +91,8 @@
             completedTasks: 0,
             porcentageCompleted: 0,
             reviewTasks: 0,
-            porcentageReview: 0
+            porcentageReview: 0,
+            idTaskType: ''
         }
     },
     created () {       
@@ -109,12 +110,14 @@
         // detalleTareas () { 
         //     alert("aca")
         // },
-        detalleTareas(id,idTask) {    
+        detalleTareas(id,idTask) { 
+            this.idTaskType = idTask
+            this.$store.commit("MUTATION_currentTypeTaskDetail", idTask)   
             this.$router.push({
                 name: 'detalles-tarea',
-                params: { id: id, tipoTask: idTask }
+                params: { id: id, state: idTask}
             });                 
-            //  this.$router.push(`/tareas/${id}/detalles`)
+            //  this.$router.push(`/tarea-detalle/${id}`)
         },
         setearData(){
             this.totalTasks = this.$store.state.userTasks.length

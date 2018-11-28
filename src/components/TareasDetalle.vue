@@ -23,25 +23,23 @@
                                             <thead>
                                                     <tr class="text-center">
                                                     <th class="text-center">Tarea</th>
+                                                    <th class="text-center">Descripción</th>
                                                     <th class="text-center">Fecha entrega</th>
                                                     <th class="text-center">Duración</th>
                                                     <th class="text-center">Prioridad </th>
-                                                    <th class="text-center">Ver detalles</th>
                                                 </tr>
                                             </thead>
                                             <tbody style="text-align: center">                                                
                                                 <tr v-if="validarTareas" v-for="task in retornarTareasEstado" :key="task.id">
                                                     <td>{{ task.name }}</td>
+                                                    <td>{{ task.description }}</td>
                                                     <td>{{ task.fecha_fin }}</td>
                                                     <td><i class="fa fa-clock-o"></i> {{ task.duration }} horas</td>
                                                     <td>{{ task.priority }}</td>
-                                                    <td>{{ task.name }}</td>
                                                 </tr>
                                                 <tr v-else>
                                                     <td colspan="5">No hay tareas pendientes</td>
-                                                </tr>
-                                                
-
+                                                </tr>                                        
                                             </tbody>                                        
                                         </table>
                                     </div>
@@ -62,11 +60,11 @@
 
  <script>
  export default {  
-    props: ['tipoTask'],
+    // props: ['tipoTask'],
     data () {
         return {
             msg: 'Welcome to Your Vue.js App',
-            tipoTarea: this.tipoTask,
+            tipoTarea: '',
             users: {},
             colors:{
                 "color3": 'box box-warning',
@@ -75,12 +73,15 @@
             },
             taskType: '',
             retornarTareasEstado: {},
-            idUser: ''
+            idUser: '',
+            stateTask: ''
         }
     },
     created () {       
         //this.returnAllUsers() 
         this.idUser = this.$route.params.id  
+        this.stateTask = this.$route.params.state 
+        
         this.$store.dispatch('getUserTasks', {id: this.idUser})
             .then((res1) => this.setearEstadoTareas())
             // .then((res) => $('#taskState').DataTable())           
@@ -96,8 +97,8 @@
 
     methods: {
         setearEstadoTareas () {   //Hacer llamado a la API que retorne total usuarios         
-            this.retornarTareasEstado = this.$store.state.userTasks.filter(tasks => tasks.state_id == this.tipoTask)
-            this.tipo = this.tipoTask
+            this.retornarTareasEstado = this.$store.state.userTasks.filter(tasks => tasks.state_id == this.stateTask)
+            // this.tipo = this.$store.state.currentTypeTaskDetail
         },
 
         editarTarea(id) {           
@@ -107,7 +108,7 @@
     },
     computed: {
         colorTareas() {        
-            let value = "color"+this.tipoTask              
+            let value = "color"+this.stateTask              
             return this.colors[value]
         },
 
@@ -121,9 +122,9 @@
             return false
         },
 
-        // tipo(){
-        //     return this.tipoTask
-        // }
+        tipo(){
+            return this.$store.state.currentTypeTaskDetail
+        }
         
     },
 
