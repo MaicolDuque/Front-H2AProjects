@@ -21,10 +21,11 @@ const store = new Vuex.Store({
         allOccupations: {},
         allProjects: {},
         taskDetail: {},
-        currentTypeTaskDetail:'',
+        currentTypeTaskDetail: '',
         sectionProject: {},
         currentProject: {},
-        currentSection: {}
+        currentSection: {},
+        currentEditUser: {}
     },
 
     getters: {
@@ -68,6 +69,14 @@ const store = new Vuex.Store({
             state.userGroups = infoUser
         },
 
+        MUTATION_currentUserEdit(state, infoUser) {
+            state.currentEditUser = infoUser
+        },
+
+        MUTATION_updstePictureUser(state, infoUser) {
+            state.currentEditUser.picture = infoUser
+        },
+
         MUTATION_detailTask(state, info) {
             state.taskDetail = info
         },
@@ -76,7 +85,7 @@ const store = new Vuex.Store({
             state.allTasks = infoTasks
         },
 
-        MUTATION_currentTypeTaskDetail(state, info){
+        MUTATION_currentTypeTaskDetail(state, info) {
             state.currentTypeTaskDetail = info
         },
 
@@ -137,6 +146,20 @@ const store = new Vuex.Store({
                     return userService.allUsers()
                 })
                 .then(res2 => {
+                    context.commit('MUTATION_allUsers', res2)
+                        // return res
+                })
+        },
+
+        updateUser(context, info) {
+            console.log("llgó=>", info)
+            userService.updateUser(info)
+                .then(res => {
+                    console.log("res=>", res)
+                    return userService.allUsers()
+                })
+                .then(res2 => {
+                    console.log("New Users=>", res2)
                     context.commit('MUTATION_allUsers', res2)
                         // return res
                 })
@@ -242,7 +265,7 @@ const store = new Vuex.Store({
             return sectionService.updateSection(info)
                 .then(res => {
                     //context.commit('MUTATION_sectionsProject', res)
-                        return res
+                    return res
                 })
         },
 
@@ -253,7 +276,7 @@ const store = new Vuex.Store({
                     return res
                 })
         },
-        
+
     }
 })
 

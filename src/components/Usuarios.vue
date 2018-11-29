@@ -1,7 +1,7 @@
 
 <template>
  
-    <div class="content-wrapper">
+    <div class="content-wrapper" style="position: relative">
 
              <div class="modal fade" id="addUser">
                 <div class="modal-dialog">
@@ -13,7 +13,7 @@
                     </div>
                     <div class="modal-body">
                         <form role="form">
-                            <div class="box-body">
+                            <!-- <div class="box-body">
                                 <div class="form-group">
                                     <label for="name">Nombre completo</label>
                                     <input type="text" class="form-control" id="name" v-model="newUser.name" placeholder="Nombre completo">
@@ -49,7 +49,7 @@
                                 <p class="help-block">Seleccione la foto de perfil.</p>
                                 </div>
                                 
-                            </div>
+                            </div> -->
                             <!-- /.box-body -->
 
                             <!-- <div class="box-footer">
@@ -96,7 +96,7 @@
                                         </thead>
                                         <tbody >
                                             <tr v-for="user in todosUsers" :key="user.id">
-                                                <td>{{ user.name }}</td>
+                                                <td style="cursor: pointer;" @click="editarUsuario(user.id)" >{{ user.name }}</td>
                                                 <td>{{ user.email }}</td>
                                                 <td v-if="user.state"><span class="label label-success">Activo</span></td>
                                                 <td v-else><span class="label label-danger">Inactivo</span></td>
@@ -121,10 +121,18 @@
                             </div>
                             <!-- /.box -->
                             </div>
+                            <div id="contentEditar" class="box box-primary" style="z-index: 4;padding: 10px 47px;position: absolute;overflow: hidden;overflow-y: scroll;width: 50%; height: 100%; top: 0; right: -55%; margin-top: 4%;box-shadow: 1px 3px 26px -1px rgba(0,0,0,0.75);">                                       
+                                <UsuariosAgregarEditar style="height: 100%;" @ocultar="closeEditUser(1)" :edit="1" titulo="Editar Tarea" textButton="Actualizar"></UsuariosAgregarEditar>
+                            </div>
+
+                            <div id="contentAgregarUsuario" class="box box-primary" style="z-index: 4;padding: 10px 47px;position: absolute;overflow: hidden;overflow-y: scroll;width: 50%; height: 100%; top: 0; right: -55%; margin-top: 4%;box-shadow: 1px 3px 26px -1px rgba(0,0,0,0.75);">                                       
+                                <UsuariosAgregarEditar style="height: 100%;" @ocultarAdd="closeEditUser(0)" :edit="0" titulo="Agregar Tarea" textButton="Agregar"></UsuariosAgregarEditar>
+                            </div>
                         </div>
+            
+            
             </section>
 
-            
     </div>
     
     
@@ -132,16 +140,20 @@
 </template>
 
  <script>
- export default {  
+ import UsuariosAgregarEditar from "./UsuariosAgregarEditar.vue"
+ export default { 
+    components: {UsuariosAgregarEditar},
     data () {
         return {
             msg: 'Welcome to Your Vue.js App',
             allUsers: {},
             users: {},
+            controlEditar: '',
             groups: {},
             occupations: {},
             picture: '',
             image: '',
+            editUser: 0,
             newUser: {
                 name: '',
                 email: '',
@@ -151,7 +163,8 @@
                 picture: 'sinimagen.jpg',
                 state: 1,
                 is_admin: 0   
-            }
+            },
+            idUserEdit: 0
         }
     },
     created () {       
@@ -174,7 +187,44 @@
     },
 
     methods: {
-        returnAllUsers () {   //Hacer llamado a la API que retorne total usuarios         
+         editarUsuario(idUsuario) {   
+                
+                this.idUserEdit = idUsuario
+                console.log("editar user=>", this.usuarioEditar)
+                this.$store.commit('MUTATION_currentUserEdit', this.usuarioEditar)                              
+                let position = ""
+                let control = this.controlEditar
+               // console.log("control=>>>",this.controlEditar)
+                // if(control == 0){
+                position = "0%"
+                this.controlEditar = 1
+                // }else{
+                //     this.controlEditar = 0
+                //     position = "-55%"
+                // }
+                $( "#contentEditar" ).animate({right: position,}, 1300, function() {})
+                // this.$store.dispatch('returnDetailTask', idUsuario)
+                //     .then((res) => console.log("TAREA=>",res))
+                //     .then((res) => )
+                  
+                
+        },
+
+        closeEditUser(controlEditarTask){                                         
+                let position = ""
+                let control = this.controlEditar               
+                this.controlEditar = 0
+                position = "-55%"
+                // }
+                if(controlEditarTask == 1){
+                    $( "#contentEditar" ).animate({right: position}, 1300, function() {})
+                }else{
+                    $( "#contentAgregarUsuario" ).animate({right: position}, 1300, function() {})
+                }
+        },
+
+        editarUser() { 
+            console.log("acacaaa")
             // this.$store.dispatch('returnUsers')
             //     .then(() => console.log('Track loaded...'))
         },
@@ -188,12 +238,7 @@
             
             this.$store.dispatch('addNewUser', this.newUser)
                 .then((res2)=> this.reiniciarPropiedades())
-               
-                
-
-          
-            
-            
+                        
         },
         reiniciarPropiedades(){
             this.allUsers = this.$store.state.allUsers
@@ -221,8 +266,11 @@
     },
     computed: {
       todosUsers(){
-          return this.allUsers
-      } 
+          return this.$store.state.allUsers
+      },
+      usuarioEditar(){
+          return this.allUsers.filter((user) => user.id == this.idUserEdit)[0]
+      }
     },
 
 }
