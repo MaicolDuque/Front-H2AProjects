@@ -23,16 +23,16 @@
                         <!-- User Account: style can be found in dropdown.less -->
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <img src="/src/assets/img/user2-160x160.jpg" class="user-image" alt="User Image">
-                                <span class="hidden-xs">{{userName}}</span>
+                                <img :src="'http://127.0.0.1:8000/uploads/'+currentUser.picture" class="user-image" alt="User Image">
+                                <span class="hidden-xs">{{currentUser.name}}</span>
                             </a>
                             <ul class="dropdown-menu">
                                 <!-- User image -->
                                 <li class="user-header">
-                                    <img src="/src/assets/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                                    <img :src="'http://127.0.0.1:8000/uploads/'+currentUser.picture" class="img-circle" alt="User Image">
 
                                     <p>
-                                        {{userName}} - Web Developer
+                                        {{currentUser.name}} - Web Developer
                                         <small>Member since Nov. 2012</small>
                                     </p>
                                 </li>
@@ -90,13 +90,13 @@ export default {
     },
 
     computed: {
-        userName() {               
-            return this.$store.state.user.name
+        currentUser() {               
+            return this.$store.state.user
         }
     },
 
     mounted: function () {
-       //this.userName()
+       //this.currentUser()
     }
 
 }

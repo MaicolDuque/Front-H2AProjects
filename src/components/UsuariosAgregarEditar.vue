@@ -35,8 +35,8 @@
                     </select>
                 </div>
                 <div class="form-group">
-                <label for="exampleInputFile">Foto</label>
-                <input  type="file" id="exampleInputFile" name="image" @change="createImage">
+                <label for="imageUser">Foto</label>
+                <input  type="file" id="imageUser" name="image" @change="createImages">
 
                 <p class="help-block">Seleccione la foto de perfil.</p>
                 </div>
@@ -96,13 +96,14 @@
             }
         },
 
-        createImage(e) {
+        createImages(e) {
             console.log(e.target.files[0])
             let reader = new FileReader();
             reader.readAsDataURL(e.target.files[0])
             let vm = this;
-            reader.onload = (e) => {                
-                this.$store.commit('MUTATION_updstePictureUser', e.target.result)
+            reader.onload = (e) => {    
+                // console.log("iimag=>", e.target.result)            
+                this.$store.commit('MUTATION_updatePictureUser', e.target.result)
                 // vm.infoUser.picture = e.target.result;
             };
             // reader.readAsDataURL(file);

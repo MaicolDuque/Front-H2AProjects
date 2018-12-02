@@ -73,7 +73,7 @@ const store = new Vuex.Store({
             state.currentEditUser = infoUser
         },
 
-        MUTATION_updstePictureUser(state, infoUser) {
+        MUTATION_updatePictureUser(state, infoUser) {
             state.currentEditUser.picture = infoUser
         },
 

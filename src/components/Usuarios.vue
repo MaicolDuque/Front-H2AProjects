@@ -122,11 +122,11 @@
                             <!-- /.box -->
                             </div>
                             <div id="contentEditar" class="box box-primary" style="z-index: 4;padding: 10px 47px;position: absolute;overflow: hidden;overflow-y: scroll;width: 50%; height: 100%; top: 0; right: -55%; margin-top: 4%;box-shadow: 1px 3px 26px -1px rgba(0,0,0,0.75);">                                       
-                                <UsuariosAgregarEditar style="height: 100%;" @ocultar="closeEditUser(1)" :edit="1" titulo="Editar Tarea" textButton="Actualizar"></UsuariosAgregarEditar>
+                                <UsuariosAgregarEditar style="height: 100%;" @ocultar="closeEditUser(1)" :edit="1" titulo="Editar Usuario" textButton="Actualizar"></UsuariosAgregarEditar>
                             </div>
 
                             <div id="contentAgregarUsuario" class="box box-primary" style="z-index: 4;padding: 10px 47px;position: absolute;overflow: hidden;overflow-y: scroll;width: 50%; height: 100%; top: 0; right: -55%; margin-top: 4%;box-shadow: 1px 3px 26px -1px rgba(0,0,0,0.75);">                                       
-                                <UsuariosAgregarEditar style="height: 100%;" @ocultarAdd="closeEditUser(0)" :edit="0" titulo="Agregar Tarea" textButton="Agregar"></UsuariosAgregarEditar>
+                                <UsuariosAgregarEditar style="height: 100%;" @ocultarAdd="closeEditUser(0)" :edit="0" titulo="Agregar Usuario" textButton="Agregar"></UsuariosAgregarEditar>
                             </div>
                         </div>
             
