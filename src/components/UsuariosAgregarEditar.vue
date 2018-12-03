@@ -34,6 +34,23 @@
                         </option>
                     </select>
                 </div>
+
+                <div class="form-group">
+                    <label for="password">Rol:</label>
+                    <select class="form-control" name="is_admin" v-model="infoUser.is_admin" >
+                        <option value="0">Usuario</option>
+                        <option value="1">Administrador</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Estado:</label>
+                    <select class="form-control" name="is_admin" v-model="infoUser.state" >
+                        <option value="1">Activo</option>
+                        <option value="0">Inactivo</option>
+                    </select>
+                </div>
+
                 <div class="form-group">
                 <label for="imageUser">Foto</label>
                 <input  type="file" id="imageUser" name="image" @change="createImages">
@@ -91,8 +108,8 @@
                 this.$store.dispatch('updateUser',this.infoUser )
                     .then((res) => this.ocultarEditar())
             }else{
-                this.$store.dispatch('addNewSection',this.infoUser )
-                    .then((res) => this.ocultarEditar())
+                this.$store.dispatch('addNewUser', this.infoUser)
+                    .then((res2)=> this.ocultarEditar())                
             }
         },
 

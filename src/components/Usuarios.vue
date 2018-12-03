@@ -6,10 +6,10 @@
              <div class="modal fade" id="addUser">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <div class="">
+                        <button type="button">
                         <span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">Agregar usuario</h4>
+                        <h4>Agregar usuario</h4>
                     </div>
                     <div class="modal-body">
                         <form role="form">
@@ -74,7 +74,7 @@
                     <h1>
                         Usuarios
                     </h1> 
-                    <button type="button" data-toggle="modal" data-target="#addUser" style="float: right;width: 10%;margin-bottom: 15px" class="btn btn-block btn-info btn-sm">Agregar &nbsp;<i class="fa fa-plus"></i></button>              
+                    <button type="button" @click="agregarUsuario" style="float: right;width: 10%;margin-bottom: 15px" class="btn btn-block btn-info btn-sm">Agregar &nbsp;<i class="fa fa-plus"></i></button>              
                 </div>
             </section>
             <section class="content">
@@ -235,9 +235,15 @@
         },
 
         agregarUsuario(){  
-            
-            this.$store.dispatch('addNewUser', this.newUser)
-                .then((res2)=> this.reiniciarPropiedades())
+           
+            let position = ""
+            let control = this.controlEditar            
+            position = "0%"
+            this.controlEditar = 1
+            this.$store.commit('MUTATION_currentUserEdit', {})         
+            $( "#contentAgregarUsuario" ).animate({right: position,}, 1300, function() {})
+
+           
                         
         },
         reiniciarPropiedades(){
@@ -269,7 +275,7 @@
           return this.$store.state.allUsers
       },
       usuarioEditar(){
-          return this.allUsers.filter((user) => user.id == this.idUserEdit)[0]
+          return this.todosUsers.filter((user) => user.id == this.idUserEdit)[0]
       }
     },
 
