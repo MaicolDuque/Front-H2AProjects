@@ -14,4 +14,9 @@ projectService.allProjects = function() {
         .then(res => res.data)
 }
 
+projectService.updateProject = function(info) {
+    return HTTP.put(`/projects/${info.content.id}`, info)
+        .then(res => res.data)
+}
+
 export default projectService

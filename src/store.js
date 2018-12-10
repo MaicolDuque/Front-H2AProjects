@@ -6,6 +6,7 @@ import groupService from './services/group'
 import occupationService from './services/occupation'
 import projectService from './services/project'
 import sectionService from './services/section'
+import colorProjects from './services/colorProjects'
 
 Vue.use(Vuex)
 
@@ -20,6 +21,7 @@ const store = new Vuex.Store({
         allGroups: {},
         allOccupations: {},
         allProjects: {},
+        allColorsProject: {},
         taskDetail: {},
         currentTypeTaskDetail: '',
         sectionProject: {},
@@ -106,6 +108,9 @@ const store = new Vuex.Store({
         },
         MUTATION_currentSection(state, info) {
             state.currentSection = info
+        },
+        MUTATION_allColorsProject(state, info) {
+            state.allColorsProject = info
         }
 
     },
@@ -261,6 +266,37 @@ const store = new Vuex.Store({
                 })
         },
 
+        updateProject(context, info) {
+            console.log("store=>", info)
+            projectService.updateProject(info)
+                .then(res => {
+                    console.log("Actualizó=>>>", res)
+                    return projectService.allProjects()
+                        // return res
+                })
+                .then(res2 => {
+                    context.commit('MUTATION_allProjects', res2)
+                    console.log("acaaaaa", res2)
+                    return res2
+                })
+        },
+        returnColorProjects(context) {
+            return colorProjects.allColors()
+                .then(res => {
+                    context.commit('MUTATION_allColorsProject', res)
+                    console.log("colros", res)
+                    return res
+                })
+        },
+
+
+
+
+
+
+
+        ///////////// SECCIONES ///////////////77
+
         updateSection(context, info) {
             return sectionService.updateSection(info)
                 .then(res => {
@@ -269,6 +305,8 @@ const store = new Vuex.Store({
                 })
         },
 
+
+
         addNewSection(context, info) {
             return sectionService.addSection(info)
                 .then(res => {
@@ -276,6 +314,8 @@ const store = new Vuex.Store({
                     return res
                 })
         },
+
+
 
     }
 })

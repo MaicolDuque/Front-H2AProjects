@@ -614,7 +614,7 @@ a:focus {
 }
 
 .sidebar-menu li.header {
-    padding: 10px 25px 10px 15px;
+    padding: 10px 13px 10px 15px;
     font-size: 12px;
 }
 
@@ -6035,4 +6035,17 @@ table.text-center th {
     .table-responsive>.table tr td {
         white-space: normal !important;
     }
+}
+
+.editarProyecto {
+    cursor: pointer;
+    color: #fff;
+    float: right;
+    top: 15px;
+    right: 8px;
+    position: absolute;
+}
+
+.icheckbox_flat-green {
+    background-position: 0 0;
 }
