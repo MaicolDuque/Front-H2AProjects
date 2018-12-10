@@ -107,7 +107,7 @@ import UsuariosAgregarEditar from "../UsuariosAgregarEditar.vue"
     },
     created(){
         this.$store.dispatch('returnProjects')
-            .then((res) => this.setearProjects())
+            .then((res) => console.log())
 
         this.$store.dispatch('returnGroups')
             .then((res) => this.groups = this.$store.state.allGroups)
@@ -117,7 +117,7 @@ import UsuariosAgregarEditar from "../UsuariosAgregarEditar.vue"
     },
     methods: {       
         setearProjects(){
-            this.projects = this.$store.state.allProjects
+            // this.projects = this.$store.state.allProjects
         },
         
 
@@ -140,7 +140,7 @@ import UsuariosAgregarEditar from "../UsuariosAgregarEditar.vue"
             if(this.idProject){
                 this.$store.dispatch('updateProject', {content: this.currentProject, groups: this.groupsChecked})
                     .then(res => {                       
-                        this.projects = this.$store.state.allProjects
+                        // this.projects = this.$store.state.allProjects
                         this.currentProject = {
                             id: 0,
                             name: '',
