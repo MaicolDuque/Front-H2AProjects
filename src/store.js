@@ -267,19 +267,27 @@ const store = new Vuex.Store({
         },
 
         updateProject(context, info) {
-            console.log("store=>", info)
             projectService.updateProject(info)
                 .then(res => {
-                    console.log("Actualizó=>>>", res)
                     return projectService.allProjects()
-                        // return res
                 })
                 .then(res2 => {
                     context.commit('MUTATION_allProjects', res2)
-                    console.log("acaaaaa", res2)
                     return res2
                 })
         },
+
+        addProject(context, info) {
+            projectService.addProject(info)
+                .then(res => {
+                    return projectService.allProjects()
+                })
+                .then(res2 => {
+                    context.commit('MUTATION_allProjects', res2)
+                    return res2
+                })
+        },
+
         returnColorProjects(context) {
             return colorProjects.allColors()
                 .then(res => {

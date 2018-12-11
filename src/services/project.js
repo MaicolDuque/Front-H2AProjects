@@ -19,4 +19,9 @@ projectService.updateProject = function(info) {
         .then(res => res.data)
 }
 
+projectService.addProject = function(info) {
+    return HTTP.post(`/projects`, info)
+        .then(res => res.data)
+}
+
 export default projectService

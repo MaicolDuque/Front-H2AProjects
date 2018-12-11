@@ -12,11 +12,11 @@
                     <router-link :to="{name: 'usuarios'}" tag="li"><a><i class="fa fa-users"></i>Usuarios</a></router-link> 
                     <router-link :to="{name: 'grupos'}" tag="li"><a><i class="fa fa-group"></i>Grupos</a></router-link>   
                     <router-link :to="{name: 'mis-taraes', params: {id: idTareas}}" tag="li"><a><i class="fa fa-tasks"></i>Mis tareas</a></router-link>                                                            
-                    <li  class="header">PROYECTOS <i class="fa fa-plus" style="color:#fff;float: right;cursor: pointer; " title="Agregar proyecto"></i></li>                    
+                    <li  class="header">PROYECTOS <i class="fa fa-plus" style="color:#fff;float: right;cursor: pointer; " title="Agregar proyecto"  data-toggle="modal" data-target="#addEditProject" @click="addProject()"></i></li>                    
                     <!-- <router-link :to="{name: 'proyectos', params: {id: 1}}" tag="li"><a><i class="fa fa-circle-o text-red"></i>Proyecto 1</a></router-link>                                                             -->
                     <router-link v-for="project in projects"  :key="project.id"  :to="{name: 'proyectos', params: {id: project.id}}" tag="li" >
                         <a ><i  :class="project.color.value"></i> {{project.name}}</a>
-                        <i class="fa fa-pencil-square-o editarProyecto" ref="editProject" title="Editar proyecto" data-toggle="modal" data-target="#addUser" @click="editProject(project.id)"></i>                    
+                        <i class="fa fa-pencil-square-o editarProyecto" ref="editProject" title="Editar proyecto" data-toggle="modal" data-target="#addEditProject" @click="editProject(project.id)"></i>                    
                     </router-link>                                                            
                     
                     <!-- <router-link :to="{name: 'proyectos'}" tag="li"><a><i class="fa fa-circle-o text-red"></i>Proyecto 11</a></router-link>                                                            
@@ -28,7 +28,7 @@
             <!-- /.sidebar -->
         </aside>
 
-        <div class="modal fade" id="addUser">
+        <div class="modal fade" id="addEditProject">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -129,6 +129,23 @@ import UsuariosAgregarEditar from "../UsuariosAgregarEditar.vue"
             this.groupsChecked = this.currentProject.groups.map((group) => group.id);
         },
 
+        addProject(){            
+            this.textProject = 'Agregar Proyecto';
+            this.textButton = 'Guardar';
+            this.idProject = 0
+            // this.currentProject = this.projects.filter((project) => project.id == id)[0];   
+            this.currentProject =   {
+                                        id: 0,
+                                        name: '',
+                                        description: '',
+                                        color_id: '',
+                                        color:{
+                                            id: 0
+                                        }
+                                    }        
+            this.groupsChecked = [];
+        },
+
 
         validarChecked(id){
             return this.currentProject.groups.map((group) => group.id == id)
@@ -144,17 +161,33 @@ import UsuariosAgregarEditar from "../UsuariosAgregarEditar.vue"
                         this.currentProject = {
                             id: 0,
                             name: '',
-                            description,
+                            description: '',
+                            color_id: '',
+                            color:{
+                                id: 0
+                            }
+                        }
+                        // this.currentProject = projects.filter((project) => project.id == this.currentProject.id)                       
+                    })
+            }else{
+                this.$store.dispatch('addProject', {content: this.currentProject, groups: this.groupsChecked})
+                    .then(res => {                                               
+                        this.currentProject = {
+                            id: 0,
+                            name: '',
+                            description: '',
                             color_id: '',
                             color:{
                                 id: 0
                             }
                         }
                         // this.currentProject = projects.filter((project) => project.id == this.currentProject.id)
-                        const elem = this.$refs.closeModal
-                        elem.click()
+                       
                     })
             }
+
+            const elem = this.$refs.closeModal
+            elem.click()
         }
 
 
