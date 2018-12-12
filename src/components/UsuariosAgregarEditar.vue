@@ -52,8 +52,8 @@
                 </div>
 
                 <div class="form-group">
-                <label for="imageUser">Foto</label>
-                <input  type="file" id="imageUser" name="image" @change="createImages">
+                <label for="imageUser2">Foto</label>
+                <input  type="file" id="imageUser2" name="image" @change="createImages">
 
                 <p class="help-block">Seleccione la foto de perfil.</p>
                 </div>

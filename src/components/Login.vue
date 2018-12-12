@@ -59,8 +59,10 @@ export default {
           email: this.email,
           password: this.password
         }
+        console.log(credentials)
       HTTP.post('auth_login', credentials)
         .then(response => {
+          console.log("res=>", response)
             this.loginSuccessful(response)
             // console.log(response)
         })

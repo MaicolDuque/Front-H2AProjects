@@ -19,6 +19,7 @@
                         <div class="col-xs-8 col-md-8">
                             <h1>
                                 {{project.name}}
+                                
                             </h1>
 
                         </div>
@@ -35,11 +36,10 @@
                         <div class="col-md-12">
                             <div class="row" >
                                 <div class="col-xs-12 ">
-
                                     <!-- TABLE: LATEST ORDERS -->
                                     <div  v-for="section in sections" :key="section.id">
                                         
-                                    
+                                        
                                         <div class="box box-info" >
                                             <div class="box-header with-border">
 
@@ -56,22 +56,26 @@
                                                     <table class="table no-margin">
                                                         <thead>
                                                             <tr>
-                                                                <th>ID</th>
-                                                                <th>Tarea</th>
-                                                                <th>Prioridad</th>
-                                                                <th>Duración</th>
-                                                                <th>Fecha fin</th>
+                                                                <th class="centrar">ID</th>
+                                                                <th class="centrar">Tarea</th>
+                                                                <th class="centrar">Responsable</th>
+                                                                <th class="centrar">Estado</th>
+                                                                <th class="centrar">Prioridad</th>
+                                                                <th class="centrar">Duración</th>
+                                                                <th class="centrar">Fecha fin</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody v-for="task in section.tasks" :key="task.id">
                                                             <tr>
-                                                                <td @click="editarTarea(task.id)" style="cursor: pointer" >{{task.id}}</td>
+                                                                <td class="centrar" @click="editarTarea(task.id)" style="cursor: pointer; text-decoration: underline;" >{{task.id}}</td>
                                                                 <td>{{task.name}}</td>
-                                                                <td><span class="label label-success">{{task.priority}}</span></td>
-                                                                <td>
+                                                                <td style="text-align: center; width: 13%;"><img :src="'http://127.0.0.1:8000/uploads/'+userTask(task.user_id)[0].picture" class="responsablesTareas" :alt="userTask(task.user_id)[0].name"  :title="userTask(task.user_id)[0].name"></td>
+                                                                <td class="centrar"><span :class="stateTask[task.state_id]">{{task.state.name}}</span></td>
+                                                                <td class="centrar"><span :class="priorities[task.priority]">{{task.priority}}</span></td>
+                                                                <td class="centrar">
                                                                     <div class="sparkbar" data-color="#00a65a" data-height="20">{{task.duration}} horas </div>
                                                                 </td>
-                                                                <td>
+                                                                <td class="centrar">
                                                                     {{task.fecha_fin}}
                                                                 </td>
                                                             </tr>
@@ -107,36 +111,6 @@
                 <!-- /.content -->
             </div>
 
-
-
-           
-                <!-- <div id="contentEditar" class="box box-primary" style="padding: 10px 47px;position: absolute; width: 50%; height: 50%; top: 0; right: -50%; margin-top: 5%;">
-                                       
-                    <h3 class="box-title">Quick Example</h3>
-                    
-                  
-                    <form role="form">
-                    <div class="box-body">
-                        <div class="form-group">
-                        <label for="exampleInputEmail12">Email address</label>
-                        <input type="email" class="form-control" id="exampleInputEmail12" placeholder="Enter email">
-                        </div>
-                        <div class="form-group">
-                        <label for="exampleInputPassword1">Password</label>
-                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                        </div>
-                        
-                    </div>
-                  
-
-                    <div class="box-footer">
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
-                    </form>
-                </div> -->
-
-
-
                 <div id="contentEditar" class="box box-primary" style="padding: 10px 47px;position: absolute;overflow: hidden;overflow-y: scroll;width: 50%; height: 100%; top: 0; right: -55%; margin-top: 4%;box-shadow: 1px 3px 26px -1px rgba(0,0,0,0.75);">                                       
                    <TareasEditar style="height: 100%;" @ocultar="closeEditTask(1)" :edit="1" titulo="Editar Tarea" textButton="Actualizar"></TareasEditar>
                 </div>
@@ -171,8 +145,19 @@
             idProject: this.$route.params.id,
             sections: {},
             idTaskEdit: 0,
-            project:{},
-            idCurrentSection: 0
+            // project:{},
+            idCurrentSection: 0,
+            priorities: {
+                Baja: 'label boder-bottom-primary',
+                Media: 'label boder-bottom-warning',
+                Alta: 'label boder-bottom-danger'
+            },
+
+            stateTask:{
+                3: 'label label-warning',
+                4: 'label label-success',
+                5: 'label label-danger',
+            }
             
         }
     },
@@ -184,7 +169,7 @@
             .then((res) => this.sections = this.$store.state.sectionProject)
 
         this.$store.dispatch('returnProjectDetail',id )
-            .then((res) => this.project = this.$store.state.currentProject) 
+            // .then((res) => this.project = this.$store.state.currentProject) 
     },
 
     '$route' (to, from) {
@@ -198,8 +183,10 @@
     created() {
         this.idProject = this.$route.params.id
         
+        this.$store.dispatch('returnUsers');
+
         this.$store.dispatch('returnProjectDetail',this.$route.params.id )
-            .then((res) => this.project = this.$store.state.currentProject)       
+            // .then((res) => this.project = this.$store.state.currentProject)       
 
         this.$store.dispatch('returnSectionsProject',this.$route.params.id )
             .then((res) => this.sections = this.$store.state.sectionProject)
@@ -362,6 +349,10 @@
 
                 this.$store.commit('MUTATION_currentSection', {id: "",name: "",description: '',order: 0,project_id: this.$route.params.id});
                 $( "#contentAddSection" ).animate({right: position,}, 1300, function() {})
+            },
+
+            userTask(idUsuario){
+                return this.$store.state.allUsers.filter((user) => user.id == idUsuario)
             }
         },
 
@@ -375,7 +366,13 @@
             currentSection(){
                 let secionDetail = this.sections.filter(section => section.id == this.idCurrentSection)
                 return secionDetail[0];
-            }
+            },
+
+            project(){
+                return this.$store.state.currentProject
+            },
+
+            
 
 
         }

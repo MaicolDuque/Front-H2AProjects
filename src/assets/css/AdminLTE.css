@@ -6049,3 +6049,27 @@ table.text-center th {
 .icheckbox_flat-green {
     background-position: 0 0;
 }
+
+.responsablesTareas {
+    width: 27%;
+    border-radius: 41%;
+}
+
+.centrar {
+    text-align: center
+}
+
+.boder-bottom-warning{
+    border-bottom: 2px solid #f39c12;
+    color: #8a8a8a;
+}
+
+.boder-bottom-danger{
+    border-bottom: 2px solid #ec331d;
+    color: #8a8a8a;
+}
+
+.boder-bottom-primary{
+    border-bottom: 2px solid #3c8dbc;
+    color: #8a8a8a;
+}

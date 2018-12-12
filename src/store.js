@@ -7,6 +7,7 @@ import occupationService from './services/occupation'
 import projectService from './services/project'
 import sectionService from './services/section'
 import colorProjects from './services/colorProjects'
+import stateService from './services/state'
 
 Vue.use(Vuex)
 
@@ -21,6 +22,7 @@ const store = new Vuex.Store({
         allGroups: {},
         allOccupations: {},
         allProjects: {},
+        allStates: {},
         allColorsProject: {},
         taskDetail: {},
         currentTypeTaskDetail: '',
@@ -85,6 +87,10 @@ const store = new Vuex.Store({
 
         MUTATION_allTasks(state, infoTasks) {
             state.allTasks = infoTasks
+        },
+
+        MUTATION_allStates(state, info) {
+            state.allStates = info
         },
 
         MUTATION_currentTypeTaskDetail(state, info) {
@@ -211,6 +217,16 @@ const store = new Vuex.Store({
                 .then((resT) => context.commit('MUTATION_allTasks', resT))
         },
 
+
+
+        /////////////////  STATES   //////////////////////
+        returnAllStates(context) {
+            return stateService.allStates()
+                .then(res => {
+                    context.commit('MUTATION_allStates', res)
+                    return res
+                })
+        },
 
 
 

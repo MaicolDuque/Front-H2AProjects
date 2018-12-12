@@ -28,10 +28,24 @@
                 <label for="description">Descripción: </label>
                 <textarea class="form-control" name="description" id="description" cols="10" rows="2" v-model="detalleTarea.description" />
                 </div>
+
+                <div class="form-group">                   
+                <label for="nameTask">Estado: </label>
+                <!-- <input type="text" class="form-control" id="nameTask" v-model="detalleTarea.name"> -->
+                <select class="form-control" v-model="detalleTarea.state_id" name="state" id="state">                    
+                    <option v-for="state in statesTask" :key="state.id" :value="state.id" >{{state.name}}</option>                   
+                </select>
+                </div>
                 
                 <div class="form-group">
                 <label for="priority">Prioridad: </label>
-                <input type="text" class="form-control" id="priority" v-model="detalleTarea.priority">
+                <!-- <input type="text" class="form-control" id="priority" v-model="detalleTarea.priority"> -->
+
+                <select class="form-control" v-model="detalleTarea.priority" name="priority" id="priority">                    
+                    <option  :value="priorities.Baja"  > {{priorities.Baja}}</option>
+                    <option  :value="priorities.Media"  > {{priorities.Media}}</option>
+                    <option  :value="priorities.Alta"  > {{priorities.Alta}}</option>                    
+                </select>
                 </div>
 
                 <div class="form-group">
@@ -65,10 +79,18 @@
     data () {
         return {
             detailTask: {},
+            priorities: {
+                Baja: 'Baja',
+                Media: 'Media',
+                Alta: 'Alta'
+            },
+            statesTask: {}
             
         }
     },
-    created () {       
+    created () { 
+         this.$store.dispatch('returnAllStates')
+            .then((res) => this.statesTask = res)      
     },
     mounted: function () {        
        //console.log(this.edit)
