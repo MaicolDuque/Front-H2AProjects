@@ -18,6 +18,11 @@
                     <label for="password">Password</label>
                     <input type="password" class="form-control"  v-model="infoUser.password" placeholder="Password">
                 </div>
+
+                 
+                <input type="hidden"  class="form-control" name="password2" :value="infoUser.password2" placeholder="Password">
+                
+
                 <div class="form-group">
                     <label for="password">Grupo:</label>
                     <select class="form-control" name="group" v-model="infoUser.group_id" >
@@ -40,8 +45,18 @@
                     <select class="form-control" name="is_admin" v-model="infoUser.is_admin" >
                         <option value="0">Usuario</option>
                         <option value="1">Administrador</option>
+                        <option  v-if="rolAdministrador == 2" value="2">Super Administrador</option>
                     </select>
                 </div>
+
+                <!-- <div class="form-group" v-if="infoUser.is_admin == '1'">
+                    <label for="password">Administrador del grupo:</label>
+                    <select class="form-control" name="groupAdmin" v-model="infoUser.group_id" >
+                        <option v-for="group in groups" :key="group.id" :value="group.id">
+                            {{group.name}}
+                        </option>
+                    </select>
+                </div> -->
 
                 <div class="form-group">
                     <label for="password">Estado:</label>
@@ -105,7 +120,7 @@
         updateAdd(){
             // console.log("Actulizar=>", this.detalleSeccion)
             if(this.edit == 1){
-                this.$store.dispatch('updateUser',this.infoUser )
+                this.$store.dispatch('updateUser',{info: this.infoUser, currentPass: this.currentPassword} )
                     .then((res) => this.ocultarEditar())
             }else{
                 this.$store.dispatch('addNewUser', this.infoUser)
@@ -139,12 +154,20 @@
         infoUser(){
             return this.$store.state.currentEditUser
         },
+
+        currentPassword(){
+            return this.$store.state.currentPassword
+        },
         occupations(){
             return this.$store.state.allOccupations
         },
 
         groups(){
             return this.$store.state.allGroups
+        },
+
+        rolAdministrador(){
+            return this.$store.state.user.is_admin
         }
         
     },

@@ -32,7 +32,7 @@ userService.addUser = function(data) {
 }
 
 userService.updateUser = function(data) {
-    return HTTP.put(`users/${data.id}`, data)
+    return HTTP.put(`users/${data.info.id}`, data)
         .then(res => res)
 }
 

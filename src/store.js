@@ -29,7 +29,8 @@ const store = new Vuex.Store({
         sectionProject: {},
         currentProject: {},
         currentSection: {},
-        currentEditUser: {}
+        currentEditUser: {},
+        currentPassword: ''
     },
 
     getters: {
@@ -75,6 +76,10 @@ const store = new Vuex.Store({
 
         MUTATION_currentUserEdit(state, infoUser) {
             state.currentEditUser = infoUser
+        },
+
+        MUTATION_currentPassword(state, infoUser) {
+            state.currentPassword = infoUser
         },
 
         MUTATION_updatePictureUser(state, infoUser) {

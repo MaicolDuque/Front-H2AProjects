@@ -88,7 +88,8 @@
                                         <thead>
                                             <tr>
                                                 <th>Nombre completo</th>
-                                                <th>Correo</th>
+                                                <th>Correo electrónico</th>
+                                                <th>Rol</th>
                                                 <th>Estado</th>
                                                 <th>Grupo </th>
                                                 <th>Ver tareas</th>
@@ -98,6 +99,7 @@
                                             <tr v-for="user in todosUsers" :key="user.id">
                                                 <td style="cursor: pointer;" @click="editarUsuario(user.id)" >{{ user.name }}</td>
                                                 <td>{{ user.email }}</td>
+                                                <td>{{ rolUSer(user.is_admin) }}</td>
                                                 <td v-if="user.state"><span class="label label-success">Activo</span></td>
                                                 <td v-else><span class="label label-danger">Inactivo</span></td>
                                                 <td> {{ user.group.name }}</td>
@@ -110,8 +112,9 @@
                                             <tr>
                                                 <th>Nombre completo</th>
                                                 <th>Correo electrónico</th>
+                                                <th>Rol</th>
                                                 <th>Estado</th>
-                                                <th>Tareas</th>
+                                                <th>Grupo</th>
                                                 <th>Ver tareas</th>
                                             </tr>
                                         </tfoot>
@@ -164,7 +167,12 @@
                 state: 1,
                 is_admin: 0   
             },
-            idUserEdit: 0
+            idUserEdit: 0,
+            roles:{
+                0: 'Usuario',
+                1: 'Administrador',
+                2: 'Super Administrador'
+            }
         }
     },
     created () {       
@@ -187,11 +195,17 @@
     },
 
     methods: {
-         editarUsuario(idUsuario) {   
+        //Validar si es administrador o usuario (1 => Administrador, 2=> Usuario)
+        rolUSer(isAdmin){
+            return this.roles[isAdmin]
+        },
+        
+        editarUsuario(idUsuario) {   
                 
                 this.idUserEdit = idUsuario
                 console.log("editar user=>", this.usuarioEditar)
-                this.$store.commit('MUTATION_currentUserEdit', this.usuarioEditar)                              
+                this.$store.commit('MUTATION_currentUserEdit', this.usuarioEditar)  
+                this.$store.commit('MUTATION_currentPassword', this.usuarioEditar.password)                              
                 let position = ""
                 let control = this.controlEditar
                // console.log("control=>>>",this.controlEditar)
