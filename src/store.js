@@ -18,6 +18,7 @@ const store = new Vuex.Store({
         allUsers: {},
         userGroups: {},
         userTasks: {},
+        usersCantByGroup: {},
         allTasks: {},
         allGroups: {},
         allOccupations: {},
@@ -68,6 +69,10 @@ const store = new Vuex.Store({
 
         MUTATION_userTasks(state, infoUser) {
             state.userTasks = infoUser
+        },
+
+        MUTATION_usersCantByGroup(state, infoUser) {
+            state.usersCantByGroup = infoUser
         },
 
         MUTATION_userForGroups(state, infoUser) {
@@ -149,6 +154,14 @@ const store = new Vuex.Store({
             return userService.allUsers()
                 .then(res => {
                     context.commit('MUTATION_allUsers', res)
+                    return res
+                })
+        },
+
+        returnUsersCantByGroup(context) {
+            return userService.usersCantByGroup()
+                .then(res => {
+                    context.commit('MUTATION_usersCantByGroup', res)
                     return res
                 })
         },
