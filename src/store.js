@@ -31,7 +31,8 @@ const store = new Vuex.Store({
         currentProject: {},
         currentSection: {},
         currentEditUser: {},
-        currentPassword: ''
+        currentPassword: '',
+        totalProjectHours: {}
     },
 
     getters: {
@@ -121,6 +122,9 @@ const store = new Vuex.Store({
         },
         MUTATION_sectionsProject(state, info) {
             state.sectionProject = info
+        },
+        MUTATION_totalProjectHours(state, info) {
+            state.totalProjectHours = info
         },
         MUTATION_currentSection(state, info) {
             state.currentSection = info
@@ -321,6 +325,14 @@ const store = new Vuex.Store({
                     return res2
                 })
         },
+        returnTotalProjectHours(context) {
+            return projectService.totalProjectHours()
+                .then(res => {
+                    context.commit('MUTATION_totalProjectHours', res)
+                    // console.log("colros", res)
+                    return res
+                })
+        },
 
         returnColorProjects(context) {
             return colorProjects.allColors()
@@ -330,6 +342,8 @@ const store = new Vuex.Store({
                     return res
                 })
         },
+
+        
 
 
 

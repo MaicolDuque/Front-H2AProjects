@@ -32,12 +32,21 @@ const isAuthenticated = function() {
     return localStorage.token
 }
 
+const isAdmin = function() {
+    let info = JSON.parse(localStorage.user)
+    return info.is_admin
+}
+
 router.beforeEach((to, from, next) => {
     if (!to.meta.isPublic && !isAuthenticated()) {
         return next({ name: 'login' })
     }
 
     if (to.name === 'login' && isAuthenticated()) {
+        return next({ name: 'home' })
+    }
+
+    if ((to.name === 'usuarios' || to.name === 'grupos') && !isAdmin()) {
         return next({ name: 'home' })
     }
 

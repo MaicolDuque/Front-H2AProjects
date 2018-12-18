@@ -6,10 +6,10 @@
                     H2A PROJECTS
 
                 </h1>
-                <ol class="breadcrumb">
+                <!-- <ol class="breadcrumb">
                     <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
 
-                </ol>
+                </ol> -->
             </section>
 
             <!-- Main content -->
@@ -69,53 +69,33 @@
                             <!-- /.box-header -->
                             <div class="box-body">
                                 <div class="row">
-                                    <div class="col-md-8">
+                                    <div class="col-md-7">
                                        <div class="box-body chart-responsive">
                                           <div class="chart" id="sales-chart" style="height: 300px; position: relative;"></div>
                                         </div>
                                     </div>
                                     <!-- /.col -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-5">
                                         <p class="text-center">
-                                            <strong>Goal Completion</strong>
+                                            <strong>Proyecto / Horas </strong>
                                         </p>
 
-                                        <div class="progress-group">
-                                            <span class="progress-text">Add Products to Cart</span>
-                                            <span class="progress-number"><b>160</b>/200</span>
+                                        <table id="tableProjectHours" class="table table-bordered table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th class="centrar">Proyecto</th>
+                                                    <th class="centrar">Horas</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr v-for="projectsH in projectsHours" :key="projectsH.id">
+                                                    <td>{{projectsH.project}}</td>
+                                                    <td class="centrar" v-if="projectsH.cant">{{projectsH.cant}}</td>
+                                                    <td class="centrar" v-else>0</td>
+                                                </tr>
 
-                                            <div class="progress sm">
-                                                <div class="progress-bar progress-bar-aqua" style="width: 80%"></div>
-                                            </div>
-                                        </div>
-                                        <!-- /.progress-group -->
-                                        <div class="progress-group">
-                                            <span class="progress-text">Complete Purchase</span>
-                                            <span class="progress-number"><b>310</b>/400</span>
-
-                                            <div class="progress sm">
-                                                <div class="progress-bar progress-bar-red" style="width: 80%"></div>
-                                            </div>
-                                        </div>
-                                        <!-- /.progress-group -->
-                                        <div class="progress-group">
-                                            <span class="progress-text">Visit Premium Page</span>
-                                            <span class="progress-number"><b>480</b>/800</span>
-
-                                            <div class="progress sm">
-                                                <div class="progress-bar progress-bar-green" style="width: 80%"></div>
-                                            </div>
-                                        </div>
-                                        <!-- /.progress-group -->
-                                        <div class="progress-group">
-                                            <span class="progress-text">Send Inquiries</span>
-                                            <span class="progress-number"><b>250</b>/500</span>
-
-                                            <div class="progress sm">
-                                                <div class="progress-bar progress-bar-yellow" style="width: 80%"></div>
-                                            </div>
-                                        </div>
-                                        <!-- /.progress-group -->
+                                            </tbody>
+                                        </table>
                                     </div>
                                     <!-- /.col -->
                                 </div>
@@ -182,7 +162,8 @@
             tasksReview: 0,
             totalTasks: 0,
             groups: {},
-            miInfo:  []
+            miInfo:  [],
+            projectsHours: {}
 
 
         }
@@ -197,13 +178,27 @@
                 this.groups = this.$store.state.usersCantByGroup
                 this.setearGroups()
                 this.Morris()
+                
             })
             // .then((res) => $('#tableUsuarios').DataTable())
-
+        this.$store.dispatch('returnTotalProjectHours')
+            .then(res => {
+                this.projectsHours = res
+                
+            })
+            .then(res => { 
+                // $('#tableProjectHours').DataTable()
+                $('#tableProjectHours').DataTable( {
+                    dom: 'Bfrtip',
+        buttons: [
+            'excel'
+        ]
+                } );
+            })
 
     },
     mounted: function () {                
-        
+    //    $('#tableProjectHours').DataTable()
     },
 
     methods: {

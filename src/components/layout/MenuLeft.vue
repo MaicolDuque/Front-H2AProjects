@@ -9,8 +9,8 @@
                     <li class="header">MENÚ DE NAEGACIÓN</li>
                     <!-- <li class="active"><a href="index.html"><i class="fa fa-dashboard"></i>Inicio</a></li> -->
                     <router-link to="/" tag="li"> <a><i class="fa fa-dashboard"></i>Inicio</a> </router-link>
-                    <router-link :to="{name: 'usuarios'}" tag="li"><a><i class="fa fa-users"></i>Usuarios</a></router-link> 
-                    <router-link :to="{name: 'grupos'}" tag="li"><a><i class="fa fa-group"></i>Grupos</a></router-link>   
+                    <router-link v-if="user.is_admin" :to="{name: 'usuarios'}" tag="li"><a><i class="fa fa-users"></i>Usuarios</a></router-link> 
+                    <router-link v-if="user.is_admin" :to="{name: 'grupos'}" tag="li"><a><i class="fa fa-group"></i>Grupos</a></router-link>   
                     <router-link :to="{name: 'mis-taraes', params: {id: idTareas}}" tag="li"><a><i class="fa fa-tasks"></i>Mis tareas</a></router-link>                                                            
                     <li  class="header">PROYECTOS <i class="fa fa-plus" style="color:#fff;float: right;cursor: pointer; " title="Agregar proyecto"  data-toggle="modal" data-target="#addEditProject" @click="addProject()"></i></li>                    
                     <!-- <router-link :to="{name: 'proyectos', params: {id: 1}}" tag="li"><a><i class="fa fa-circle-o text-red"></i>Proyecto 1</a></router-link>                                                             -->
@@ -94,6 +94,7 @@ import UsuariosAgregarEditar from "../UsuariosAgregarEditar.vue"
             idProject: 0,
             textProject: '',
             textButton: '',
+            user:{},
             currentProject: {
                 name: '',
                 color:{
@@ -114,6 +115,8 @@ import UsuariosAgregarEditar from "../UsuariosAgregarEditar.vue"
 
         this.$store.dispatch('returnColorProjects')
             .then((res) => this.colors = this.$store.state.allColorsProject)
+        
+        this.user = this.$store.state.user;
     },
     methods: {       
         setearProjects(){
