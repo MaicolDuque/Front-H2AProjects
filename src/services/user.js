@@ -1,43 +1,44 @@
-import HTTP from './config'
+// import HTTP from './config'
+import ApiService from './api.service'
 
 const userService = {}
 
 userService.search = function(q) {
     const type = 'track'
 
-    return HTTP.get('/search', {
+    return ApiService.get('/search', {
             params: { q, type }
         })
         .then(res => res.data)
 }
 
 userService.userTasks = function(id) {
-    return HTTP.get(`/user_tasks/${id}`)
+    return ApiService.get(`/user_tasks/${id}`)
         .then(res => res.data)
 }
 
 userService.allUsers = function() {
-    return HTTP.get('/users')
+    return ApiService.get('/users')
         .then(res => res.data)
 }
 
 userService.usersCantByGroup = function() {
-    return HTTP.get('cant/users/by-group')
+    return ApiService.get('cant/users/by-group')
         .then(res => res.data)
 }
 
 userService.allUsersGroups = function(data) {
-    return HTTP.post('/users/groups', { data: data })
+    return ApiService.post('/users/groups', { data: data })
         .then(res => res.data)
 }
 
 userService.addUser = function(data) {
-    return HTTP.post('/users', data)
+    return ApiService.post('/users', data)
         .then(res => res)
 }
 
 userService.updateUser = function(data) {
-    return HTTP.put(`users/${data.info.id}`, data)
+    return ApiService.put(`users/${data.info.id}`, data)
         .then(res => res)
 }
 

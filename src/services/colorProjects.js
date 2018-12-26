@@ -1,4 +1,6 @@
-import HTTP from './config'
+// import HTTP from './config'
+import ApiService from './api.service'
+
 
 const colorProjects = {}
 
@@ -10,7 +12,7 @@ const colorProjects = {}
 // }
 
 colorProjects.allColors = function() {
-    return HTTP.get('/color-projects')
+    return ApiService.get('/color-projects')
         .then(res => res.data)
 }
 

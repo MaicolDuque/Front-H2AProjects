@@ -1,16 +1,18 @@
-import HTTP from './config'
+// import HTTP from './config'
+import ApiService from './api.service'
+
 
 const occupationService = {}
 
 
 
 occupationService.detailTask = function(id) {
-    return HTTP.get(`/occupations/${id}`)
+    return ApiService.get(`/occupations/${id}`)
         .then(res => res.data)
 }
 
 occupationService.allOccupations = function() {
-    return HTTP.get('/occupations')
+    return ApiService.get('/occupations')
         .then(res => res.data)
 }
 

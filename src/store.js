@@ -31,6 +31,7 @@ const store = new Vuex.Store({
         currentProject: {},
         currentSection: {},
         currentEditUser: {},
+        currentEditGroup: {},
         currentPassword: '',
         totalProjectHours: {}
     },
@@ -111,6 +112,11 @@ const store = new Vuex.Store({
         MUTATION_allGroups(state, info) {
             state.allGroups = info
         },
+
+        MUTATION_currentGroupEdit(state, info) {
+            state.currentEditGroup = info
+        },
+
         MUTATION_allOccupations(state, info) {
             state.allOccupations = info
         },
@@ -264,6 +270,27 @@ const store = new Vuex.Store({
                         //return res
                 })
         },
+        updateGroup(context, payload) {
+            groupService.updateGroup(payload)
+                .then(res => {
+                    return groupService.allGroups()
+                })
+                .then((resT) => context.commit('MUTATION_allGroups', resT))
+        },
+        addNewGroup(context, payload) {
+            groupService.addGroup(payload)
+                .then(res => {
+                    // context.commit('MUTATION_addNewUser', res)
+                    // return res
+                    // console.log("res=>", res)
+                    return groupService.allGroups()
+                })
+                .then(res2 => {
+                    context.commit('MUTATION_allGroups', res2)
+                        // return res
+                })
+        },
+
 
 
 
@@ -329,7 +356,7 @@ const store = new Vuex.Store({
             return projectService.totalProjectHours()
                 .then(res => {
                     context.commit('MUTATION_totalProjectHours', res)
-                    // console.log("colros", res)
+                        // console.log("colros", res)
                     return res
                 })
         },
@@ -343,7 +370,7 @@ const store = new Vuex.Store({
                 })
         },
 
-        
+
 
 
 

@@ -39,7 +39,11 @@
 </template>
 
 <script>
+import axios from 'axios';
 import HTTP from '../services/config.js';
+import { TokenService } from '../services/storage.service'
+import ApiService from '../services/api.service'
+
 
 export default {
 
@@ -60,7 +64,7 @@ export default {
           password: this.password
         }
         console.log(credentials)
-      HTTP.post('auth_login', credentials)
+      ApiService.post('auth_login', credentials)
         .then(response => {
           console.log("res=>", response)
             this.loginSuccessful(response)
@@ -79,7 +83,13 @@ export default {
       // console.log(req.data.user)
 
       let us = req.data.user
-      localStorage.token = req.data.token
+
+      TokenService.saveToken(req.data.token)
+      TokenService.saveRefreshToken(req.data.token)
+      ApiService.setHeader()
+      axios.defaults.headers.common["Authorization"] = `Bearer ${TokenService.getToken()}`
+      // console.log(xios.defaults.headers)
+      // localStorage.token = req.data.token
       localStorage.user  = JSON.stringify(req.data.user)
       // localStorage.user  = req.data.user
      
@@ -93,7 +103,10 @@ export default {
     loginFailed () {
       this.error = 'Login failed!'
       this.$store.commit('setAthenticate', false)
-      delete localStorage.token
+
+      TokenService.removeToken()
+      TokenService.removeRefreshToken()
+      // delete localStorage.token
       this.$router.push('/')
     }
   }

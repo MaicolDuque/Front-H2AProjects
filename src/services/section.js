@@ -1,31 +1,32 @@
-import HTTP from './config'
+// import HTTP from './config'
+import ApiService from './api.service'
 
 const sectionService = {}
 
 
 
 sectionService.detailSection = function(id) {
-    return HTTP.get(`/sections/${id}`)
+    return ApiService.get(`/sections/${id}`)
         .then(res => res.data)
 }
 
 sectionService.allSections = function() {
-    return HTTP.get('/sections')
+    return ApiService.get('/sections')
         .then(res => res.data)
 }
 
 sectionService.updateSection = function(info) {
-    return HTTP.put(`/sections/${info.id}`, info)
+    return ApiService.put(`/sections/${info.id}`, info)
         .then(res => res.data)
 }
 
 sectionService.addSection = function(info) {
-    return HTTP.post(`/sections`, info)
+    return ApiService.post(`/sections`, info)
         .then(res => res.data)
 }
 
 sectionService.sectionsProject = function(id) {
-    return HTTP.get(`/sections_project/${id}`)
+    return ApiService.get(`/sections_project/${id}`)
         .then(res => res.data)
 }
 

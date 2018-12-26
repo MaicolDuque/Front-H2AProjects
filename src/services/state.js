@@ -1,4 +1,5 @@
-import HTTP from './config'
+// import HTTP from './config'
+import ApiService from './api.service'
 
 const stateService = {}
 
@@ -10,7 +11,7 @@ const stateService = {}
 // }
 
 stateService.allStates = function() {
-    return HTTP.get('/states')
+    return ApiService.get('/states')
         .then(res => res.data)
 }
 
