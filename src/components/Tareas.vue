@@ -6,7 +6,7 @@
                     MIS TAREAS
                 </h1>              
             </section>
-{{taskPending}}
+<!-- {{taskPending}} -->
             <!-- Main content -->
             <section class="content">
                 <div class="row">

@@ -286,6 +286,11 @@
     },
     computed: {
       todosUsers(){
+          let perfil = this.$store.state.user.is_admin;
+          if(perfil == 1){
+              let grupo = this.$store.state.user.group_id;
+              return this.$store.state.allUsers.filter((user)=> user.group_id == grupo)
+          }
           return this.$store.state.allUsers
       },
       usuarioEditar(){

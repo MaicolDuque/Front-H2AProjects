@@ -206,7 +206,21 @@ import UsuariosAgregarEditar from "../UsuariosAgregarEditar.vue"
         },
 
         projects(){
-           return this.$store.state.allProjects
+            let perfil = this.$store.state.user.is_admin;            
+            if(perfil < 2){
+                if(Array.isArray(this.$store.state.allProjects)){
+                    let grupo = this.$store.state.user.group_id;
+                    let projectsAll = this.$store.state.allProjects.filter(project => {
+                        let arrayGrops = project.groups.map((group) => group.id);                    
+                        let buscar = arrayGrops.indexOf(grupo);                   
+                        return buscar > -1;
+                    })
+    
+                    return projectsAll;
+                }
+            }
+
+            return this.$store.state.allProjects
         },
         
 
