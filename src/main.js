@@ -22,7 +22,7 @@ if (TokenService.getToken()) {
     ApiService.setHeader()
         // axios.defaults.headers.common["Authorization"] = `Bearer ${TokenService.getToken()}`
 }
-
+ApiService.mount401Interceptor();
 
 Vue.use(VueAxios, HTTP)
 

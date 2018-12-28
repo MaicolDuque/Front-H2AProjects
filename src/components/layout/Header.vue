@@ -72,6 +72,8 @@
 </template>
 
 <script>
+import ApiService from '../../services/api.service'
+import { TokenService } from '../../services/storage.service'
 export default {
     data () {
         return {
@@ -84,7 +86,10 @@ export default {
             this.error = 'Login failed!'
             this.$store.commit('setAthenticate', false)
             this.$store.commit('MUTATION_allUsers', {})
-            delete localStorage.token
+            TokenService.removeToken()
+            TokenService.removeRefreshToken()
+            // NOTE: Again, we'll cover the 401 Interceptor a bit later. 
+            ApiService.unmount401Interceptor()
             this.$router.push('/')
         }
     },

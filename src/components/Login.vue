@@ -87,6 +87,9 @@ export default {
       TokenService.saveToken(req.data.token)
       TokenService.saveRefreshToken(req.data.token)
       ApiService.setHeader()
+      // NOTE: We haven't covered this yet in our ApiService 
+      //       but don't worry about this just yet - I'll come back to it later
+      ApiService.mount401Interceptor();
       axios.defaults.headers.common["Authorization"] = `Bearer ${TokenService.getToken()}`
       // console.log(xios.defaults.headers)
       // localStorage.token = req.data.token
@@ -106,6 +109,9 @@ export default {
 
       TokenService.removeToken()
       TokenService.removeRefreshToken()
+      // NOTE: Again, we'll cover the 401 Interceptor a bit later. 
+      ApiService.unmount401Interceptor()
+
       // delete localStorage.token
       this.$router.push('/')
     }
