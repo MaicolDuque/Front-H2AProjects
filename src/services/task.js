@@ -26,4 +26,9 @@ taskService.allTasks = function() {
         .then(res => res.data)
 }
 
+taskService.allTasksByGroup = function(idGrupo) {
+    return ApiService.get(`/tasksByGroup/${idGrupo}`)
+        .then(res => res.data)
+}
+
 export default taskService

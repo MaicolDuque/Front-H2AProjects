@@ -217,6 +217,14 @@ const store = new Vuex.Store({
                 })
         },
 
+        returnTasksByGroup(context, idGroup) {
+            return taskService.allTasksByGroup(idGroup)
+                .then(res => {
+                    context.commit('MUTATION_allTasks', res)
+                    return res
+                })
+        },
+
         returnDetailTask(context, id) {
             return taskService.detailTask(id)
                 .then(res => {

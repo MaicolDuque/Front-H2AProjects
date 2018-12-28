@@ -169,9 +169,16 @@
         }
     },
     created () {       
-        //this.returnAllUsers()                    
-        this.$store.dispatch('returnTasks')
-            .then((res) => this.setearValorTareas())
+        //this.returnAllUsers()
+        
+        let user = this.$store.state.user
+        if(user.is_admin == 2){
+            this.$store.dispatch('returnTasks')
+                .then((res) => this.setearValorTareas())
+        }else{
+            this.$store.dispatch('returnTasksByGroup', user.group_id )
+                .then((res) => this.setearValorTareas())
+        }
 
         this.$store.dispatch('returnUsersCantByGroup')
             .then(res => {
