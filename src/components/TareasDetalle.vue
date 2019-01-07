@@ -12,7 +12,15 @@
             </section>
             <section class="content">
                         <div class="row">
+                            
                             <div class="col-xs-12">
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <input type="text" v-model="search" class="form-control" placeholder="Buscar tarea..."/>        
+                                    </div>
+                                </div>
+
                                 <div var="sss" :class="[colorTareas]">
 
                                        <!-- /.box-header -->
@@ -29,7 +37,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>                                                
-                                                <tr v-if="validarTareas" v-for="task in retornarTareasEstado" :key="task.id">
+                                                <tr v-if="validarTareas" v-for="task in filteredTasks" :key="task.id">
                                                     <td class="centrar" @click="editarTarea(task.id)" style="cursor: pointer; text-decoration: underline;" >{{task.id}}</td>
                                                     <td >{{ task.name }}</td>
                                                     <td>{{ task.description }}</td>
@@ -70,6 +78,7 @@
     components: {TareasEditar},
     data () {
         return {
+            search: '',
             msg: 'Welcome to Your Vue.js App',
             tipoTarea: '',
             users: {},
@@ -173,6 +182,15 @@
         allGroupsIds(){
             return this.groups.map(group => group.id)
         },
+
+
+        filteredTasks() { //Retornar array con los nombres de las tareas que contengan el texto de la variable 'search' 
+            if(this.retornarTareasEstado.length > 0){
+                return this.retornarTareasEstado.filter(task => {
+                    return task.name.toLowerCase().includes(this.search.toLowerCase())
+                })
+            }
+        }
         
     },
 
