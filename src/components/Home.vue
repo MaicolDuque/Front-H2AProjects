@@ -52,7 +52,7 @@
                             <span class="info-box-icon bg-yellow"><i class="ion ion-ios-eye"></i></span>
 
                             <div class="info-box-content">
-                                <span class="info-box-text">TAREAS EN REVISIÓN</span>
+                                <span class="info-box-text">TAREAS EN PROCESO</span>
                                 <span class="info-box-number">{{tasksReview}}</span>
                             </div>
                             <!-- /.info-box-content -->
@@ -70,6 +70,9 @@
                             <div class="box-body">
                                 <div class="row">
                                     <div class="col-md-7">
+                                        <p class="text-center">
+                                            <strong>Grupo / Usuarios </strong>
+                                        </p>
                                        <div class="box-body chart-responsive">
                                           <div class="chart" id="sales-chart" style="height: 300px; position: relative;"></div>
                                         </div>

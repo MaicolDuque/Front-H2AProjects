@@ -2,14 +2,12 @@
 
 <template>
  
-    <div class="content-wrapper">
+    <div class="content-wrapper" style="position: relative">
 
              
             <section class="content-header">
                 <h1>
-                    Detalle tareas
-                    {{idUser}}
-                    {{tipoTask}}
+                    Detalle tareas                   
                 </h1>               
             </section>
             <section class="content">
@@ -22,6 +20,7 @@
                                         <table id="" class="table table-bordered table-striped">
                                             <thead>
                                                     <tr class="text-center">
+                                                    <th class="text-center">ID</th>
                                                     <th class="text-center">Tarea</th>
                                                     <th class="text-center">Descripción</th>
                                                     <th class="text-center">Fecha entrega</th>
@@ -29,13 +28,14 @@
                                                     <th class="text-center">Prioridad </th>
                                                 </tr>
                                             </thead>
-                                            <tbody style="text-align: center">                                                
+                                            <tbody>                                                
                                                 <tr v-if="validarTareas" v-for="task in retornarTareasEstado" :key="task.id">
-                                                    <td>{{ task.name }}</td>
+                                                    <td class="centrar" @click="editarTarea(task.id)" style="cursor: pointer; text-decoration: underline;" >{{task.id}}</td>
+                                                    <td >{{ task.name }}</td>
                                                     <td>{{ task.description }}</td>
-                                                    <td>{{ task.fecha_fin }}</td>
-                                                    <td><i class="fa fa-clock-o"></i> {{ task.duration }} horas</td>
-                                                    <td>{{ task.priority }}</td>
+                                                    <td class="centrar">{{ task.fecha_fin }}</td>
+                                                    <td class="centrar"><i class="fa fa-clock-o"></i> {{ task.duration }} horas</td>
+                                                    <td class="centrar">{{ task.priority }}</td>
                                                 </tr>
                                                 <tr v-else>
                                                     <td colspan="5">No hay tareas pendientes</td>
@@ -51,6 +51,10 @@
                         </div>
             </section>
 
+            <div id="contentEditar" class="box box-primary" style="padding: 10px 47px;position: absolute;overflow: hidden;overflow-y: scroll;width: 50%; height: 100%; top: 0; right: -55%; margin-top: 4%;box-shadow: 1px 3px 26px -1px rgba(0,0,0,0.75);">                                       
+                <TareasEditar style="height: 100%;" @ocultar="closeEditTask(1)" :edit="1" titulo="Editar Tarea" textButton="Actualizar"></TareasEditar>
+            </div>
+
             
     </div>
     
@@ -59,8 +63,11 @@
 </template>
 
  <script>
+ import TareasEditar from "./TareasEditar.vue"
  export default {  
     // props: ['tipoTask'],
+    name: "tareas-detalle",
+    components: {TareasEditar},
     data () {
         return {
             msg: 'Welcome to Your Vue.js App',
@@ -74,7 +81,10 @@
             taskType: '',
             retornarTareasEstado: {},
             idUser: '',
-            stateTask: ''
+            stateTask: '',
+            idTaskEdit: 0,
+            controlEditar: 0, 
+            groups: {}
         }
     },
     created () {       
@@ -89,6 +99,12 @@
         //     // .then((res) => this.users = res)
         //     .then((res) => $('#taskState').DataTable())
 
+        this.$store.dispatch('returnGroups')
+            .then(res => {
+                this.groups = this.$store.state.allGroups
+                // $('#tableGroups').DataTable() 
+            })
+
 
     },
     mounted: function () {        
@@ -101,10 +117,38 @@
             // this.tipo = this.$store.state.currentTypeTaskDetail
         },
 
-        editarTarea(id) {           
-            // alert("Editar usuario!->"+id)
-            this.$router.push(`/tareas/${id}`)
-        }
+        editarTarea(idTarea) {                       
+            this.$store.dispatch('getUserForGroups',this.allGroupsIds )
+                .then((res) => console.log(res))
+            
+            this.idTaskEdit = idTarea     
+            
+            let position = ""
+            let control = this.controlEditar
+            
+            position = "0%"
+            this.controlEditar = 1               
+            this.$store.dispatch('returnDetailTask', idTarea)
+                .then((res) => console.log("TAREA=>",res))
+                .then((res) => $( "#contentEditar" ).animate({right: position,}, 1300, function() {}))                                  
+        },
+
+        closeEditTask(controlEditarTask){                          
+            this.$store.dispatch('getUserTasks', {id: this.idUser})
+                .then((res1) => this.setearEstadoTareas())
+                
+            let position = ""
+            let control = this.controlEditar
+            
+            this.controlEditar = 0
+            position = "-55%"
+            // }
+            if(controlEditarTask == 1){
+                $( "#contentEditar" ).animate({right: position}, 1300, function() {})
+            }else{
+                $( "#contentAgregarTarea" ).animate({right: position}, 1300, function() {})
+            }
+        },
     },
     computed: {
         colorTareas() {        
@@ -124,7 +168,11 @@
 
         tipo(){
             return this.$store.state.currentTypeTaskDetail
-        }
+        },
+
+        allGroupsIds(){
+            return this.groups.map(group => group.id)
+        },
         
     },
 

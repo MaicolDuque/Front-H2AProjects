@@ -16,7 +16,7 @@
                             <span class="info-box-icon"><i @click="detalleTareas(userID, 3)" style="cursor:pointer" class="ion ion-ios-eye"></i></span>
 
                             <div class="info-box-content">
-                                <span class="info-box-text">Tareas en revisión</span>
+                                <span class="info-box-text">Tareas en proceso</span>
                                 <span class="info-box-number">{{reviewTasks}}</span>
 
                                 <div class="progress">

@@ -32,32 +32,18 @@
                                     <img :src="'http://127.0.0.1:8000/uploads/'+currentUser.picture" class="img-circle" alt="User Image">
 
                                     <p>
-                                        {{currentUser.name}} - Web Developer
-                                        <small>Member since Nov. 2012</small>
+                                        {{currentUser.name}}  <br>  
+                                        <small>- {{occupationUser[0].name}} -</small>                                    
                                     </p>
                                 </li>
-                                <!-- Menu Body -->
-                                <li class="user-body">
-                                    <div class="row">
-                                        <div class="col-xs-4 text-center">
-                                            <a href="#">Followers</a>
-                                        </div>
-                                        <div class="col-xs-4 text-center">
-                                            <a href="#">Sales</a>
-                                        </div>
-                                        <div class="col-xs-4 text-center">
-                                            <a href="#">Friends</a>
-                                        </div>
-                                    </div>
-                                    <!-- /.row -->
-                                </li>
+                                
                                 <!-- Menu Footer-->
                                 <li class="user-footer">
-                                    <div class="pull-left">
-                                        <a href="#" class="btn btn-default btn-flat">Profile</a>
-                                    </div>
+                                    <!-- <div class="pull-left">
+                                        <a href="#" class="btn btn-default btn-flat">Mi Perfil</a>
+                                    </div> -->
                                     <div class="pull-right">
-                                        <button @click="loginFailed" class="btn btn-default btn-flat">Sign out</button>
+                                        <button @click="loginFailed" class="btn btn-default btn-flat">Cerrar sesión</button>
                                     </div>
                                 </li>
                             </ul>
@@ -77,8 +63,18 @@ import { TokenService } from '../../services/storage.service'
 export default {
     data () {
         return {
-           nameUser: ''
+           nameUser: '',
+           occupations: {},
+           occupationUser: ''
         }
+    },
+
+    created(){
+         this.$store.dispatch('returnOccupations')
+            .then( res => {
+                this.occupations = this.$store.state.allOccupations
+                this.occupationUser = this.occupations.filter(occupation => occupation.id == this.currentUser.occupation_id)
+            } )
     },
     methods: {
         loginFailed () {
@@ -97,7 +93,11 @@ export default {
     computed: {
         currentUser() {               
             return this.$store.state.user
-        }
+        },
+
+        // occupationUser(){
+        //     return this.occupations.filter(occupation => occupation.id == this.currentUser.occupation_id)
+        // }
     },
 
     mounted: function () {
