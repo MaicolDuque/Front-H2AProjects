@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 import Search from './components/Search.vue'
 import Usuarios from './components/Usuarios.vue'
 import Grupos from './components/Grupos.vue'
+import Ocupaciones from './components/Ocupaciones.vue'
 import Tareas from './components/Tareas.vue'
 import TareasDetalle from './components/TareasDetalle.vue'
 import Proyectos from './components/Proyectos.vue'
@@ -13,6 +14,7 @@ const routes = [
     { path: '/', component: Search, name: 'home' },
     { path: '/usuarios', component: Usuarios, name: 'usuarios' },
     { path: '/grupos', component: Grupos, name: 'grupos' },
+    { path: '/ocupaciones', component: Ocupaciones, name: 'ocupaciones' },
     { path: '/tareas/:id', component: Tareas, name: 'mis-taraes' },
     { path: '/tareas/:id/detalle/:state', component: TareasDetalle, name: 'detalles-tarea', props: true },
     { path: '/proyecto/:id', component: Proyectos, name: 'proyectos' },
@@ -46,7 +48,7 @@ router.beforeEach((to, from, next) => {
         return next({ name: 'home' })
     }
 
-    if ((to.name === 'usuarios' || to.name === 'grupos') && !isAdmin()) {
+    if ((to.name === 'usuarios' || to.name === 'grupos' || to.name === 'ocupaciones') && !isAdmin()) {
         return next({ name: 'home' })
     }
 

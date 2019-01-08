@@ -19,16 +19,18 @@
                                     <table id="tableGroups" class="table table-bordered table-striped">
                                         <thead>
                                             <tr>
-                                                <th>ID</th>
-                                                <th>Nombre</th>
-                                                <th>Descripción</th>                                               
+                                                <th class="centrar">ID</th>
+                                                <th class="centrar">Nombre</th>
+                                                <th class="centrar">Descripción</th> 
+                                                                                   
                                             </tr>
                                         </thead>
                                         <tbody >
                                             <tr v-for="group in allGroups" :key="group.id">
-                                                <td style="cursor: pointer;" @click="editarUsuario(group.id)">{{ group.id }}</td>
+                                                <td style="cursor: pointer;text-decoration: underline;" @click="editarUsuario(group.id)">{{ group.id }}</td>
                                                 <td   >{{ group.name }}</td>
-                                                <td>{{ group.description }}</td>                                              
+                                                <td>{{ group.description }}</td> 
+                                                                                          
                                             </tr>
                                             
 

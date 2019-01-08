@@ -32,6 +32,7 @@ const store = new Vuex.Store({
         currentSection: {},
         currentEditUser: {},
         currentEditGroup: {},
+        currentEditOccupation: {},
         currentPassword: '',
         totalProjectHours: {}
     },
@@ -115,6 +116,10 @@ const store = new Vuex.Store({
 
         MUTATION_currentGroupEdit(state, info) {
             state.currentEditGroup = info
+        },
+
+        MUTATION_currentOccupationEdit(state, info) {
+            state.currentEditOccupation = info
         },
 
         MUTATION_allOccupations(state, info) {
@@ -309,6 +314,23 @@ const store = new Vuex.Store({
                 .then(res => {
                     context.commit('MUTATION_allOccupations', res)
                         //return res
+                })
+        },
+        updateOccupation(context, payload) {
+            occupationService.updateOccupation(payload)
+                .then(res => {
+                    return occupationService.allOccupations()
+                })
+                .then((resT) => context.commit('MUTATION_allOccupations', resT))
+        },
+        addNewOccupation(context, payload) {
+            occupationService.addOccupation(payload)
+                .then(res => {
+                    return occupationService.allOccupations()
+                })
+                .then(res2 => {
+                    context.commit('MUTATION_allOccupations', res2)
+                        // return res
                 })
         },
 

@@ -6059,17 +6059,26 @@ table.text-center th {
     text-align: center
 }
 
-.boder-bottom-warning{
+.boder-bottom-warning {
     border-bottom: 2px solid #f39c12;
     color: #8a8a8a;
 }
 
-.boder-bottom-danger{
+.boder-bottom-danger {
     border-bottom: 2px solid #ec331d;
     color: #8a8a8a;
 }
 
-.boder-bottom-primary{
+.boder-bottom-primary {
     border-bottom: 2px solid #3c8dbc;
     color: #8a8a8a;
+}
+
+.eliminar {
+    text-align: center;
+    cursor: pointer;
+}
+
+.eliminar :hover {
+    font-size: 1.4em;
 }

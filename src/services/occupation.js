@@ -16,4 +16,14 @@ occupationService.allOccupations = function() {
         .then(res => res.data)
 }
 
+occupationService.updateOccupation = function(info) {
+    return ApiService.put(`/occupations/${info.id}`, info)
+        .then(res => res.data)
+}
+
+occupationService.addOccupation = function(info) {
+    return ApiService.post(`/occupations`, info)
+        .then(res => res.data)
+}
+
 export default occupationService
