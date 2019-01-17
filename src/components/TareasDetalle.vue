@@ -36,18 +36,20 @@
                                                     <th class="text-center">Prioridad </th>
                                                 </tr>
                                             </thead>
-                                            <tbody>                                                
-                                                <tr v-if="validarTareas" v-for="task in filteredTasks" :key="task.id">
-                                                    <td class="centrar" @click="editarTarea(task.id)" style="cursor: pointer; text-decoration: underline;" >{{task.id}}</td>
-                                                    <td >{{ task.name }}</td>
-                                                    <td>{{ task.description }}</td>
-                                                    <td class="centrar">{{ task.fecha_fin }}</td>
-                                                    <td class="centrar"><i class="fa fa-clock-o"></i> {{ task.duration }} horas</td>
-                                                    <td class="centrar">{{ task.priority }}</td>
-                                                </tr>
-                                                <tr v-else>
+                                            <tbody>  
+                                                <!-- <div v-if="validarTareas"> -->
+                                                    <tr  v-for="task in filteredTasks" :key="task.id">
+                                                        <td class="centrar" @click="editarTarea(task.id)" style="cursor: pointer; text-decoration: underline;" >{{task.id}}</td>
+                                                        <td >{{ task.name }}</td>
+                                                        <td>{{ task.description }}</td>
+                                                        <td class="centrar">{{ task.fecha_fin }}</td>
+                                                        <td class="centrar"><i class="fa fa-clock-o"></i> {{ task.duration }} horas</td>
+                                                        <td class="centrar">{{ task.priority }}</td>
+                                                    </tr>
+                                                <!-- </div>                                               -->
+                                                <!-- <tr v-else>
                                                     <td colspan="5">No hay tareas pendientes</td>
-                                                </tr>                                        
+                                                </tr>                                         -->
                                             </tbody>                                        
                                         </table>
                                     </div>
@@ -100,9 +102,13 @@
         //this.returnAllUsers() 
         this.idUser = this.$route.params.id  
         this.stateTask = this.$route.params.state 
-        
-        this.$store.dispatch('getUserTasks', {id: this.idUser})
-            .then((res1) => this.setearEstadoTareas())
+        if(this.idUser > 0){
+            this.$store.dispatch('getUserTasks', {id: this.idUser})
+                .then((res1) => this.setearEstadoTareas(this.idUser))
+        }else{
+            this.$store.dispatch('returnTasks')
+                .then((res1) => this.setearEstadoTareas(this.idUser))
+        }
             // .then((res) => $('#taskState').DataTable())           
         // this.$store.dispatch('returnUsers')
         //     // .then((res) => this.users = res)
@@ -121,9 +127,13 @@
     },
 
     methods: {
-        setearEstadoTareas () {   //Hacer llamado a la API que retorne total usuarios         
-            this.retornarTareasEstado = this.$store.state.userTasks.filter(tasks => tasks.state_id == this.stateTask)
-            // this.tipo = this.$store.state.currentTypeTaskDetail
+        setearEstadoTareas (idUser) {   //Hacer llamado a la API que retorne total usuarios  
+            //Validar que idUSer sea mayor a 0, de lo contrario traera el total de tareas
+            if(idUser > 0){
+                this.retornarTareasEstado = this.$store.state.userTasks.filter(tasks => tasks.state_id == this.stateTask)
+            }else{
+                this.retornarTareasEstado = this.$store.state.allTasks.filter(tasks => tasks.state_id == this.stateTask)
+            }        
         },
 
         editarTarea(idTarea) {                       
@@ -142,9 +152,14 @@
                 .then((res) => $( "#contentEditar" ).animate({right: position,}, 1300, function() {}))                                  
         },
 
-        closeEditTask(controlEditarTask){                          
-            this.$store.dispatch('getUserTasks', {id: this.idUser})
-                .then((res1) => this.setearEstadoTareas())
+        closeEditTask(controlEditarTask){   
+            if(this.idUser > 0){
+                this.$store.dispatch('getUserTasks', {id: this.idUser})
+                    .then((res1) => this.setearEstadoTareas(this.idUser))
+            }else{
+                this.$store.dispatch('returnTasks')
+                    .then((res1) => this.setearEstadoTareas(this.idUser))
+            }                    
                 
             let position = ""
             let control = this.controlEditar

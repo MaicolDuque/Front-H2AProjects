@@ -218,8 +218,7 @@
                 this.$store.dispatch('returnSectionsProject',this.idProject )
                     .then((res) => this.sections = this.$store.state.sectionProject)
             },
-            editarTarea(idTarea) {   
-                // alert(this.groupsProject)
+            editarTarea(idTarea) {                   
                 this.$store.dispatch('getUserForGroups',this.groupsProject )
                     .then((res) => console.log())
                 
@@ -227,20 +226,12 @@
                
                 let position = ""
                 let control = this.controlEditar
-               // console.log("control=>>>",this.controlEditar)
-                // if(control == 0){
+               
                 position = "0%"
-                this.controlEditar = 1
-                // }else{
-                //     this.controlEditar = 0
-                //     position = "-55%"
-                // }
-
+                this.controlEditar = 1               
                 this.$store.dispatch('returnDetailTask', idTarea)
                     .then((res) => console.log("TAREA=>",res))
-                    .then((res) => $( "#contentEditar" ).animate({right: position,}, 1300, function() {}))
-                  
-                
+                    .then((res) => $( "#contentEditar" ).animate({right: position,}, 1300, function() {}))                                  
             },
 
             closeEditTask(controlEditarTask){                          

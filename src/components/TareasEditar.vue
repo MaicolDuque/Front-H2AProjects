@@ -11,8 +11,8 @@
                 <label for="nameTask">Responsable: </label>
                 <!-- <input type="text" class="form-control" id="nameTask" v-model="detalleTarea.name"> -->
                 <select class="form-control" v-model="detalleTarea.user_id" name="responsable" id="responsable">                    
-                    <option v-for="user in users" :key="user.id" :value="user.id" v-if="user.id == detalleTarea.user_id"  selected  >{{user.name}}</option>
-                    <option :value="user.id" v-else >{{user.name}}</option>
+                    <option v-for="user in users" :key="user.id" :value="user.id"   >{{user.name}}</option>
+                    <!-- <option :value="user.id" v-else >{{user.name}}</option> -->
                 </select>
                 </div>
 
@@ -28,39 +28,58 @@
                 <label for="description">Descripción: </label>
                 <textarea class="form-control" name="description" id="description" cols="10" rows="2" v-model="detalleTarea.description" />
                 </div>
-
-                <div class="form-group">                   
-                <label for="nameTask">Estado: </label>
-                <!-- <input type="text" class="form-control" id="nameTask" v-model="detalleTarea.name"> -->
-                <select class="form-control" v-model="detalleTarea.state_id" name="state" id="state">                    
-                    <option v-for="state in statesTask" :key="state.id" :value="state.id" >{{state.name}}</option>                   
-                </select>
-                </div>
                 
-                <div class="form-group">
-                <label for="priority">Prioridad: </label>
-                <!-- <input type="text" class="form-control" id="priority" v-model="detalleTarea.priority"> -->
 
-                <select class="form-control" v-model="detalleTarea.priority" name="priority" id="priority">                    
-                    <option  :value="priorities.Baja"  > {{priorities.Baja}}</option>
-                    <option  :value="priorities.Media"  > {{priorities.Media}}</option>
-                    <option  :value="priorities.Alta"  > {{priorities.Alta}}</option>                    
-                </select>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">                   
+                            <label for="nameTask">Estado: </label>
+                            <!-- <input type="text" class="form-control" id="nameTask" v-model="detalleTarea.name"> -->
+                            <select class="form-control" v-model="detalleTarea.state_id" name="state" id="state">                    
+                                <option v-for="state in statesTask" :key="state.id" :value="state.id" >{{state.name}}</option>                   
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="priority">Prioridad: </label>
+                            <!-- <input type="text" class="form-control" id="priority" v-model="detalleTarea.priority"> -->
+
+                            <select class="form-control" v-model="detalleTarea.priority" name="priority" id="priority">                    
+                                <option  :value="priorities.Baja"  > {{priorities.Baja}}</option>
+                                <option  :value="priorities.Media"  > {{priorities.Media}}</option>
+                                <option  :value="priorities.Alta"  > {{priorities.Alta}}</option>                    
+                            </select>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="form-group">
-                <label for="duration">Duración (horas): </label>
-                <input type="number" class="form-control" id="duration" v-model="detalleTarea.duration">
-                </div>
+                
+                
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="duration">Duración (horas): </label>
+                            <input type="number" class="form-control" id="duration" v-model="detalleTarea.duration">
+                        </div>
+                    </div>
 
-
-                <div class="form-group">
-                <label for="fecha_fin">Fecha fin: </label>
-                <input type="date" class="form-control" id="fecha_fin" v-model="detalleTarea.fecha_fin">
-                </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="fecha_fin">Fecha fin: </label>
+                            <input type="date" class="form-control" id="fecha_fin" v-model="detalleTarea.fecha_fin">
+                        </div>
+                    </div>
+                </div>                                
                 
             </div>
-       
+
+            <!-- <hr>
+            <div class="form-group">                
+                 <input type="text" class="form-control" id="newcomment" placeholder="Agregar comentario" @click="addComment" >
+            </div> -->
 
             <div class="box-footer">
                 <button type="submit" class="btn btn-primary">{{this.textButton}}</button>
@@ -99,7 +118,10 @@
         // console.log(this.edit)
     },
 
-    methods: {       
+    methods: {  
+        addComment(){
+            alert("acaa");
+        },  
         ocultarEditar() {                      
             if(this.edit == 1){
                 this.$emit('ocultar');

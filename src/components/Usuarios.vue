@@ -287,9 +287,9 @@
     computed: {
       todosUsers(){
           let perfil = this.$store.state.user.is_admin;
-          if(perfil == 1){
+          if(perfil == 1){ //Validar si es tipo administrador 
               let grupo = this.$store.state.user.group_id;
-              return this.$store.state.allUsers.filter((user)=> user.group_id == grupo)
+              return this.$store.state.allUsers.filter((user)=> user.group_id == grupo) //Retornar usuarios que pertenezcan al grupo del amdinistardor
           }
           return this.$store.state.allUsers
       },

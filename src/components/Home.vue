@@ -19,7 +19,7 @@
 
                     <div class="col-md-3 col-sm-6 col-xs-12">
                         <div class="info-box">
-                            <span class="info-box-icon bg-red"><i class="ion ion-ios-eye"></i></span>
+                            <span class="info-box-icon bg-red"><i @click="detalleTareas(5)" style="cursor:pointer" class="ion ion-ios-eye"></i></span>
 
                             <div class="info-box-content">
                                 <span class="info-box-text">TAREAS PENDIENTES</span>
@@ -36,7 +36,7 @@
 
                     <div class="col-md-3 col-sm-6 col-xs-12">
                         <div class="info-box">
-                            <span class="info-box-icon bg-green"><i class="ion ion-ios-eye"></i></span>
+                            <span class="info-box-icon bg-green"><i @click="detalleTareas(4)" style="cursor:pointer" class="ion ion-ios-eye"></i></span>
 
                             <div class="info-box-content">
                                 <span class="info-box-text">TAREAS FINALIZADAS</span>
@@ -49,7 +49,7 @@
                     <!-- /.col -->
                     <div class="col-md-3 col-sm-6 col-xs-12">
                         <div class="info-box">
-                            <span class="info-box-icon bg-yellow"><i class="ion ion-ios-eye"></i></span>
+                            <span class="info-box-icon bg-yellow"><i @click="detalleTareas(3)" style="cursor:pointer" class="ion ion-ios-eye"></i></span>
 
                             <div class="info-box-content">
                                 <span class="info-box-text">TAREAS EN PROCESO</span>
@@ -104,48 +104,7 @@
                                 </div>
                                 <!-- /.row -->
                             </div>
-                            <!-- ./box-body -->
-                            <div class="box-footer">
-                                <div class="row">
-                                    <div class="col-sm-3 col-xs-6">
-                                        <div class="description-block border-right">
-                                            <span class="description-percentage text-green"><i class="fa fa-caret-up"></i> 17%</span>
-                                            <h5 class="description-header">$35,210.43</h5>
-                                            <span class="description-text">TOTAL REVENUE</span>
-                                        </div>
-                                        <!-- /.description-block -->
-                                    </div>
-                                    <!-- /.col -->
-                                    <div class="col-sm-3 col-xs-6">
-                                        <div class="description-block border-right">
-                                            <span class="description-percentage text-yellow"><i class="fa fa-caret-left"></i> 0%</span>
-                                            <h5 class="description-header">$10,390.90</h5>
-                                            <span class="description-text">TOTAL COST</span>
-                                        </div>
-                                        <!-- /.description-block -->
-                                    </div>
-                                    <!-- /.col -->
-                                    <div class="col-sm-3 col-xs-6">
-                                        <div class="description-block border-right">
-                                            <span class="description-percentage text-green"><i class="fa fa-caret-up"></i> 20%</span>
-                                            <h5 class="description-header">$24,813.53</h5>
-                                            <span class="description-text">TOTAL PROFIT</span>
-                                        </div>
-                                        <!-- /.description-block -->
-                                    </div>
-                                    <!-- /.col -->
-                                    <div class="col-sm-3 col-xs-6">
-                                        <div class="description-block">
-                                            <span class="description-percentage text-red"><i class="fa fa-caret-down"></i> 18%</span>
-                                            <h5 class="description-header">1200</h5>
-                                            <span class="description-text">GOAL COMPLETIONS</span>
-                                        </div>
-                                        <!-- /.description-block -->
-                                    </div>
-                                </div>
-                                <!-- /.row -->
-                            </div>
-                            <!-- /.box-footer -->
+                           
                         </div>
                         <!-- /.box -->
                     </div>
@@ -212,6 +171,15 @@
     },
 
     methods: {
+        detalleTareas(idTask) { 
+            // this.idTaskType = idTask
+            // this.$store.commit("MUTATION_currentTypeTaskDetail", idTask)   
+            this.$router.push({
+                name: 'detalles-tarea-all',
+                params: { id: 0, state: idTask}
+            });                 
+            //  this.$router.push(`/tarea-detalle/${id}`)
+        },
         setearGroups(){            
             let cant = this.cantUserGroups.length                            
             for (let index = 0; index < cant; index++) {
