@@ -1,5 +1,6 @@
 <template>
-  <div id="app">  
+  <div id="app"> 
+      
       <div v-if="isAuth">
         <MDheaders></MDheaders>
         <MDmenuLeft></MDmenuLeft> 

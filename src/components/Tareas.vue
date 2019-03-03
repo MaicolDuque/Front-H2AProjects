@@ -1,5 +1,5 @@
 <template>
-    <div class="content-wrapper">
+    <div class="content-wrapper" style="position: relative">
             <!-- Content Header (Page header) -->
             <section class="content-header">
                 <h1>
@@ -75,11 +75,17 @@
                 <!-- /.row -->
             </section>
             <!-- /.content -->
+
+            <Cargando v-if="cargando"></Cargando>
         </div>
 </template>
 
  <script>
- export default {  
+import Cargando from './Cargando.vue'
+
+export default {
+    name: 'mis-taras', 
+    components: {Cargando}, 
     data () {
         return {
             msg: 'Welcome to Your Vue.js App',
@@ -92,15 +98,18 @@
             porcentageCompleted: 0,
             reviewTasks: 0,
             porcentageReview: 0,
-            idTaskType: ''
+            idTaskType: '',
+            cargando: false
         }
     },
     created () {       
-        //this.returnAllUsers()        
+        //this.returnAllUsers()   
+        this.cargando = true     
         this.userID =  this.$route.params.id           
         const idUser = this.$route.params.id
         this.$store.dispatch('getUserTasks', {id: idUser})
             .then((res) => this.setearData())
+            .then((res) => this.cargando = false)
     },
     mounted: function () {
         

@@ -1,5 +1,5 @@
 <template>
-    <div class="content-wrapper">
+    <div class="content-wrapper" style="position:relative">
             <!-- Content Header (Page header) -->
             <section class="content-header">
                 <h1>
@@ -112,10 +112,14 @@
                 </div>
                 <!-- /.row -->
             </section>
+            <Cargando v-if="cargando"></Cargando>
     </div>
 </template>
  <script>
+ import Cargando from './Cargando.vue'
  export default {  
+    name: 'home',
+    components: {Cargando},
     data () {
         return {
             msg: 'Welcome to Your Vue.js App',  
@@ -125,14 +129,15 @@
             totalTasks: 0,
             groups: {},
             miInfo:  [],
-            projectsHours: {}
+            projectsHours: {},
+            cargando: false
 
 
         }
     },
     created () {       
         //this.returnAllUsers()
-        
+        this.cargando = true;
         let user = this.$store.state.user
         if(user.is_admin == 2){
             this.$store.dispatch('returnTasks')
@@ -159,10 +164,12 @@
                 // $('#tableProjectHours').DataTable()
                 $('#tableProjectHours').DataTable( {
                     dom: 'Bfrtip',
-        buttons: [
-            'excel'
-        ]
+                        buttons: [
+                            'excel'
+                        ]
                 } );
+
+                this.cargando = false;
             })
 
     },

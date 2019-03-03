@@ -1,10 +1,10 @@
 <template>
-    <div class="login-box">
+<div class="login-box">
   <div class="login-logo" style="color: #fff">
     <b>Login</b>
   </div>
   <!-- /.login-logo -->
-  <div class="login-box-body">
+  <div class="login-box-body" style="position: relative">
     <p class="login-box-msg">Sign in to start your session</p>
     <div class="alert alert-danger" v-if="error">{{ error }}</div>
     <form @submit.prevent="login">
@@ -33,8 +33,11 @@
     <!-- <a href="#">I forgot my password</a><br>
     <a href="register.html" class="text-center">Register a new membership</a> -->
 
+    <Cargando v-if="cargando"></Cargando>
   </div>
-  <!-- /.login-box-body -->
+  
+  
+  <!-- /.login-box-bodyCargando -->
 </div>
 </template>
 
@@ -43,31 +46,33 @@ import axios from 'axios';
 import HTTP from '../services/config.js';
 import { TokenService } from '../services/storage.service'
 import ApiService from '../services/api.service'
+import Cargando from './Cargando.vue'
 
 
 export default {
-
+  name: 'Login',
+  components: {Cargando},
   data () {
         return {
             email: '',
             password: '',
-            error: false
+            error: false,
+            cargando: false
         }
   },
 
   methods: {
-    login() {
-      // console.log(this.email)
-      // console.log(this.password)
-      var credentials = {
+    login() {  
+      this.cargando = true; //Mostrar gif cargando...
+      let credentials = {
           email: this.email,
           password: this.password
         }
         console.log(credentials)
       ApiService.post('auth_login', credentials)
-        .then(response => {
-          console.log("res=>", response)
+        .then(response => {          
             this.loginSuccessful(response)
+            this.cargando = false; 
             // console.log(response)
         })
         .catch(e => {

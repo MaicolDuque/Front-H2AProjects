@@ -136,6 +136,8 @@
             
             </section>
 
+            <Cargando v-if="cargando"></Cargando>
+
     </div>
     
     
@@ -144,8 +146,9 @@
 
  <script>
  import UsuariosAgregarEditar from "./UsuariosAgregarEditar.vue"
+ import Cargando from "./Cargando.vue"
  export default { 
-    components: {UsuariosAgregarEditar},
+    components: {UsuariosAgregarEditar,Cargando},
     data () {
         return {
             msg: 'Welcome to Your Vue.js App',
@@ -172,13 +175,15 @@
                 0: 'Usuario',
                 1: 'Administrador',
                 2: 'Super Administrador'
-            }
+            },
+            cargando: false
         }
     },
     created () {       
-        //this.returnAllUsers()                    
+        //this.returnAllUsers()  
+        this.cargando = true;                  
         this.$store.dispatch('returnUsers')
-            // .then((res) => this.users = res)
+            .then((res) => this.cargando = false)
             .then((us) => this.allUsers = this.$store.state.allUsers)
             .then((res) => $('#tableUsuarios').DataTable())
         
@@ -186,7 +191,10 @@
             .then((res) => this.groups = this.$store.state.allGroups)
             
         this.$store.dispatch('returnOccupations')
-            .then((res) => this.occupations = this.$store.state.allOccupations)
+            .then( res => {
+                this.occupations = this.$store.state.allOccupations
+                
+        })
 
 
     },

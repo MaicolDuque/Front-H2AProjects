@@ -37,63 +37,70 @@
                             <div class="row" >
                                 <div class="col-xs-12 ">
                                     <!-- TABLE: LATEST ORDERS -->
-                                    <div  v-for="section in sections" :key="section.id">
-                                        
-                                        
-                                        <div class="box box-info" >
-                                            <div class="box-header with-border">
-
-                                                <h3 class="box-title">{{section.name}}</h3>
-                                                <div class="box-tools pull-right">
-                                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                                                    <!-- <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button> -->
-                                                </div>
-                                                <i class="fa fa-pencil-square-o editarSeccion" @click="editarSection(section.id)" style="cursor: pointer" ></i>
-                                            </div>
-                                            <!-- /.box-header -->
-                                            <div class="box-body">
-                                                <div class="table-responsive">
-                                                    <table class="table no-margin">
-                                                        <thead>
-                                                            <tr>
-                                                                <th class="centrar">ID</th>
-                                                                <th class="centrar">Tarea</th>
-                                                                <th class="centrar">Responsable</th>
-                                                                <th class="centrar">Estado</th>
-                                                                <th class="centrar">Prioridad</th>
-                                                                <th class="centrar">Duración</th>
-                                                                <th class="centrar">Fecha fin</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody v-for="task in section.tasks" :key="task.id">
-                                                            <tr>
-                                                                <td class="centrar" @click="editarTarea(task.id)" style="cursor: pointer; text-decoration: underline;" >{{task.id}}</td>
-                                                                <td>{{task.name}}</td>
-                                                                <td style="text-align: center; width: 13%;"><img :src="'http://127.0.0.1:8000/uploads/'+userTask(task.user_id)[0].picture" class="responsablesTareas" :alt="userTask(task.user_id)[0].name"  :title="userTask(task.user_id)[0].name"></td>
-                                                                <td class="centrar"><span :class="stateTask[task.state_id]">{{task.state.name}}</span></td>
-                                                                <td class="centrar"><span :class="priorities[task.priority]">{{task.priority}}</span></td>
-                                                                <td class="centrar">
-                                                                    <div class="sparkbar" data-color="#00a65a" data-height="20">{{task.duration}} horas </div>
-                                                                </td>
-                                                                <td class="centrar">
-                                                                    {{task.fecha_fin}}
-                                                                </td>
-                                                            </tr>
-                                                           
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <!-- /.table-responsive -->
-                                            </div>
-                                            <!-- /.box-body -->
-                                            <div class="box-footer clearfix">
-                                                <a @click="addTask(section.id)" class="btn btn-sm btn-info btn-flat pull-left">Agregar tarea</a>
-                                                <!-- <a href="javascript:void(0)" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a> -->
-                                            </div>
-
+                                    <div v-if="sections.length" class="testValidar">
+                                        <div  v-for="section in sections" :key="section.id">
                                             
-                                            <!-- /.box-footer -->
+                                            
+                                            <div class="box box-info" >
+                                                <div class="box-header with-border">
+
+                                                    <h3 class="box-title">{{section.name}}</h3>
+                                                    <div class="box-tools pull-right">
+                                                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                                        <!-- <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button> -->
+                                                    </div>
+                                                    <i class="fa fa-pencil-square-o editarSeccion" @click="editarSection(section.id)" style="cursor: pointer" ></i>
+                                                </div>
+                                                <!-- /.box-header -->
+                                                <div class="box-body">
+                                                    <div class="table-responsive">
+                                                        <table class="table no-margin">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th class="centrar">ID</th>
+                                                                    <th class="centrar">Tarea</th>
+                                                                    <th class="centrar">Responsable</th>
+                                                                    <th class="centrar">Estado</th>
+                                                                    <th class="centrar">Prioridad</th>
+                                                                    <th class="centrar">Duración</th>
+                                                                    <th class="centrar">Fecha fin</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody v-for="task in section.tasks" :key="task.id">
+                                                                <tr>
+                                                                    <td class="centrar" @click="editarTarea(task.id)" style="cursor: pointer; text-decoration: underline;" >{{task.id}}</td>
+                                                                    <td>{{task.name}}</td>
+                                                                    <td style="text-align: center; width: 13%;"><img :src="ruta+'/uploads/'+userTask(task.user_id)[0].picture" class="responsablesTareas" :alt="userTask(task.user_id)[0].name"  :title="userTask(task.user_id)[0].name"></td>
+                                                                    <td class="centrar"><span :class="stateTask[task.state_id]">{{task.state.name}}</span></td>
+                                                                    <td class="centrar"><span :class="priorities[task.priority]">{{task.priority}}</span></td>
+                                                                    <td class="centrar">
+                                                                        <div class="sparkbar" data-color="#00a65a" data-height="20">{{task.duration}} horas </div>
+                                                                    </td>
+                                                                    <td class="centrar">
+                                                                        {{task.fecha_fin}}
+                                                                    </td>
+                                                                </tr>
+                                                            
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <!-- /.table-responsive -->
+                                                </div>
+                                                <!-- /.box-body -->
+                                                <div class="box-footer clearfix">
+                                                    <a @click="addTask(section.id)" class="btn btn-sm btn-info btn-flat pull-left">Agregar tarea</a>
+                                                    <!-- <a href="javascript:void(0)" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a> -->
+                                                </div>
+
+                                                
+                                                <!-- /.box-footer -->
+                                            </div>
                                         </div>
+                                    </div>
+                                    <div v-else>
+                                        <h3 v-if="cantSections">
+                                            No hay secciones creadas.
+                                        </h3>
                                     </div>
                                     <!-- /.box -->
 
@@ -126,7 +133,8 @@
                 <div id="contentAddSection" class="box box-primary" style="padding: 10px 47px;position: absolute;overflow: hidden;overflow-y: scroll;width: 50%; height: 100%; top: 0; right: -55%; margin-top: 4%;box-shadow: 1px 3px 26px -1px rgba(0,0,0,0.75);">                                       
                    <SeccionEditar style="height: 100%;" @ocultarSectionAdd="closeEditSection(0)" :edit="0" titulo="Agregar Sección" textButton="Agregar" ></SeccionEditar>
                 </div>
-            
+
+                <Cargando v-if="cargando"></Cargando>
         </div>
 
 </template>
@@ -135,9 +143,11 @@
 <script>
  import TareasEditar from "./TareasEditar.vue"
  import SeccionEditar from "./SeccionEditar.vue"
+ import Cargando from "./Cargando.vue"
+ import config from '../services/config'
  export default {  
     name: 'Proyectos',
-    components: {TareasEditar,SeccionEditar},
+    components: {TareasEditar,SeccionEditar,Cargando},
     data () {
         return {
             controlEditar: 0, 
@@ -157,7 +167,10 @@
                 3: 'label label-warning',
                 4: 'label label-success',
                 5: 'label label-danger',
-            }
+            },
+            ruta: config.url,
+            cantSections: false,
+            cargando: false
             
         }
     },
@@ -166,7 +179,13 @@
         //this.setearSection(id)
         
         this.$store.dispatch('returnSectionsProject',id )
-            .then((res) => this.sections = this.$store.state.sectionProject)
+            .then( res => { 
+                this.sections = this.$store.state.sectionProject
+                this.cargando = false
+                if(this.sections.length == 0){
+                    this.cantSections = true
+                }
+            })
 
         this.$store.dispatch('returnProjectDetail',id )
             // .then((res) => this.project = this.$store.state.currentProject) 
@@ -181,6 +200,7 @@
     },
 
     created() {
+        this.cargando = true
         this.idProject = this.$route.params.id
         
         this.$store.dispatch('returnUsers');
@@ -191,6 +211,12 @@
         this.$store.dispatch('returnSectionsProject',this.$route.params.id )
             .then((res) => this.sections = this.$store.state.sectionProject)
             .then((rest)=> $('.box').boxWidget('toggle'))
+            .then(res => {
+                this.cargando = false
+                if(this.sections.length == 0){
+                    this.cantSections = true
+                }
+            })
 
     },
     mounted: function () {

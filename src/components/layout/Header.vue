@@ -23,13 +23,13 @@
                         <!-- User Account: style can be found in dropdown.less -->
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <img :src="'http://127.0.0.1:8000/uploads/'+currentUser.picture" class="user-image" alt="User Image">
+                                <img :src="ruta+'/uploads/'+currentUser.picture" class="user-image" alt="User Image">
                                 <span class="hidden-xs">{{currentUser.name}}</span>
                             </a>
                             <ul class="dropdown-menu">
                                 <!-- User image -->
                                 <li class="user-header">
-                                    <img :src="'http://127.0.0.1:8000/uploads/'+currentUser.picture" class="img-circle" alt="User Image">
+                                    <img :src="ruta+'/uploads/'+currentUser.picture" class="img-circle" alt="User Image">
 
                                     <p>
                                         {{currentUser.name}}  <br>  
@@ -60,16 +60,18 @@
 <script>
 import ApiService from '../../services/api.service'
 import { TokenService } from '../../services/storage.service'
+import config from '../../services/config'
 export default {
     data () {
         return {
            nameUser: '',
            occupations: {},
-           occupationUser: ''
+           occupationUser: '',
+           ruta: config.url
         }
     },
 
-    created(){
+    created(){    
          this.$store.dispatch('returnOccupations')
             .then( res => {
                 this.occupations = this.$store.state.allOccupations
